@@ -5,227 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Developing Writing Skill — Exam Notes</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #12121a;
-  --card: #1c1c28;
-  --card2: #22223a;
-  --border: #2e2e48;
-  --yellow: #ffe566;
-  --coral: #ff6b6b;
-  --mint: #4ecca3;
-  --sky: #6eb5ff;
-  --purple: #c77dff;
-  --orange: #ff9f43;
-  --text: #eeeef5;
-  --muted: #8888aa;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
-::selection { background: var(--yellow); color: #000; }
-
-/* SCROLL */
-::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-/* NAV */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(18,18,26,0.92); backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 20px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-}
-.nav-logo { font-family: 'Syne', sans-serif; font-size: 1.1rem; color: var(--yellow); margin-right: 8px; }
-nav a {
-  font-size: 12px; font-weight: 700; text-decoration: none;
-  padding: 4px 12px; border-radius: 20px; border: 1.5px solid var(--border);
-  color: var(--muted); transition: all 0.2s;
-}
-nav a:hover { color: var(--yellow); border-color: var(--yellow); background: rgba(255,229,102,0.08); }
-
-/* HERO */
-.hero {
-  text-align: center; padding: 60px 20px 40px;
-  background: radial-gradient(ellipse at center top, rgba(255,229,102,0.08) 0%, transparent 60%);
-}
-.hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem,7vw,4.5rem); color: var(--yellow); line-height: 1.1; margin-bottom: 12px; }
-.hero p { color: var(--muted); font-size: 1rem; max-width: 480px; margin: 0 auto 24px; }
-.hero-pills { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-.hero-pill { background: var(--card); border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 700; color: var(--muted); }
-
-/* WRAP */
-.wrap { max-width: 860px; margin: 0 auto; padding: 20px 20px 80px; }
-
-/* SECTION */
-.q-section { margin-bottom: 50px; scroll-margin-top: 70px; }
-
-.q-header {
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 20px; padding: 16px 20px;
-  background: var(--card); border-radius: 12px;
-  border: 1.5px solid var(--border);
-}
-.q-num {
-  font-family: 'Syne', sans-serif; font-size: 2rem; line-height: 1;
-  min-width: 48px; text-align: center;
-}
-.q-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; }
-.q-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
-
-/* COLOR ACCENTS PER Q */
-.q1 .q-num { color: var(--yellow); } .q1 .q-header { border-color: rgba(255,229,102,0.25); }
-.q2 .q-num { color: var(--mint); } .q2 .q-header { border-color: rgba(78,204,163,0.25); }
-.q3 .q-num { color: var(--sky); } .q3 .q-header { border-color: rgba(110,181,255,0.25); }
-.q4 .q-num { color: var(--coral); } .q4 .q-header { border-color: rgba(255,107,107,0.25); }
-.q5 .q-num { color: var(--orange); } .q5 .q-header { border-color: rgba(255,159,67,0.25); }
-.q6 .q-num { color: var(--purple); } .q6 .q-header { border-color: rgba(199,125,255,0.25); }
-.q7 .q-num { color: var(--coral); } .q7 .q-header { border-color: rgba(255,107,107,0.25); }
-.q8 .q-num { color: var(--mint); } .q8 .q-header { border-color: rgba(78,204,163,0.25); }
-.q9 .q-num { color: var(--yellow); } .q9 .q-header { border-color: rgba(255,229,102,0.25); }
-
-/* CARDS */
-.card { background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: 18px 22px; margin-bottom: 14px; }
-.card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; margin-bottom: 10px; }
-.card p { margin-bottom: 8px; font-size: 14.5px; }
-.card p:last-child { margin-bottom: 0; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media(max-width:620px) { .grid2 { grid-template-columns: 1fr; } }
-
-/* CALLOUTS */
-.brain {
-  background: linear-gradient(135deg, rgba(255,229,102,0.08), rgba(78,204,163,0.06));
-  border: 1.5px solid rgba(255,229,102,0.4); border-radius: 10px;
-  padding: 14px 18px; margin: 12px 0; font-size: 14px;
-}
-.brain::before { content: '🧠 BRAIN BOMB · '; font-weight: 800; color: var(--yellow); font-size: 12px; letter-spacing: 1px; display: block; margin-bottom: 5px; }
-
-.tip {
-  background: rgba(78,204,163,0.06); border: 1.5px solid rgba(78,204,163,0.3);
-  border-radius: 10px; padding: 14px 18px; margin: 12px 0; font-size: 14px;
-}
-.tip::before { content: '✅ PRO TIP · '; font-weight: 800; color: var(--mint); font-size: 12px; letter-spacing: 1px; display: block; margin-bottom: 5px; }
-
-.warn {
-  background: rgba(255,107,107,0.06); border: 1.5px solid rgba(255,107,107,0.3);
-  border-radius: 10px; padding: 14px 18px; margin: 12px 0; font-size: 14px;
-}
-.warn::before { content: '🚫 DON\'T MESS THIS UP · '; font-weight: 800; color: var(--coral); font-size: 12px; letter-spacing: 1px; display: block; margin-bottom: 5px; }
-
-/* ESSAY BOX */
-.essay {
-  background: var(--card2); border: 1.5px solid var(--border);
-  border-radius: 10px; padding: 20px 24px; font-size: 14.5px; line-height: 2;
-  margin: 12px 0;
-}
-.essay p { margin-bottom: 14px; }
-.essay p:last-child { margin-bottom: 0; }
-.essay-label {
-  font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 10px;
-}
-
-/* UNDERLINES */
-.th { border-bottom: 2.5px solid var(--coral); padding-bottom: 1px; }
-.ts { border-bottom: 2.5px solid var(--mint); padding-bottom: 1px; }
-.sd { border-bottom: 2px dashed var(--sky); padding-bottom: 1px; }
-.re { border-bottom: 2.5px solid var(--purple); padding-bottom: 1px; }
-
-.legend {
-  display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 0 18px;
-  padding: 12px 16px; background: var(--card); border-radius: 8px;
-  font-size: 13px;
-}
-.leg { display: flex; align-items: center; gap: 7px; }
-.leg span { width: 22px; height: 3px; border-radius: 2px; display: inline-block; }
-
-/* DIAGRAM */
-.diagram { margin: 16px 0; }
-.dbox {
-  border: 2px solid; border-radius: 8px; padding: 10px 18px;
-  margin: 5px auto; max-width: 500px; text-align: center;
-  font-weight: 700; font-size: 14px;
-}
-.db-intro { border-color: var(--yellow); color: var(--yellow); background: rgba(255,229,102,0.06); }
-.db-body { border-color: var(--sky); color: var(--sky); background: rgba(110,181,255,0.06); }
-.db-conc { border-color: var(--mint); color: var(--mint); background: rgba(78,204,163,0.06); }
-.db-sub { border: 1.5px dashed var(--border); color: var(--muted); font-weight: 400; font-size: 12px; max-width: 430px; background: transparent; }
-.darrow { text-align: center; color: var(--muted); font-size: 1.3rem; margin: 2px 0; }
-
-/* TABLE */
-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0; }
-th { background: var(--card2); color: var(--yellow); padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 14px; }
-tr:hover td { background: rgba(255,255,255,0.02); }
-
-/* PARA DIAGRAM */
-.para-d { border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; margin: 12px 0; }
-.para-row { display: flex; align-items: flex-start; gap: 14px; padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 13.5px; }
-.para-row:last-child { border-bottom: none; }
-.plabel { min-width: 100px; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; padding: 4px 8px; border-radius: 5px; text-align: center; flex-shrink: 0; margin-top: 2px; text-transform: uppercase; }
-
-/* GRAMMAR */
-.g-item { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 16px 20px; margin: 12px 0; }
-.g-type { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
-.g-wrong { color: var(--coral); font-size: 14px; font-style: italic; margin-bottom: 6px; }
-.g-wrong::before { content: '✗ '; font-weight: 900; }
-.g-right { color: var(--mint); font-weight: 700; font-size: 14px; margin-bottom: 10px; }
-.g-right::before { content: '✓ '; }
-.g-why { font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 8px; line-height: 1.6; }
-
-/* FLOW */
-.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin: 14px 0; }
-.fstep { background: var(--yellow); color: #1a1a00; font-weight: 800; font-size: 12px; padding: 7px 14px; border-radius: 6px; }
-.farrow { color: var(--muted); font-size: 1.2rem; padding: 0 2px; }
-
-/* COLLAPSIBLE */
-details { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; margin: 10px 0; overflow: hidden; }
-summary { padding: 14px 18px; font-weight: 700; cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; justify-content: space-between; font-size: 14.5px; }
-summary::after { content: '▼'; font-size: 11px; color: var(--muted); transition: transform 0.2s; }
-details[open] summary::after { transform: rotate(180deg); }
-details[open] summary { border-bottom: 1px solid var(--border); }
-.details-body { padding: 16px 20px; }
-
-/* BADGE */
-.badge { display: inline-block; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; margin: 2px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px; }
-.b-yellow { background: rgba(255,229,102,0.15); color: var(--yellow); }
-.b-mint { background: rgba(78,204,163,0.15); color: var(--mint); }
-.b-sky { background: rgba(110,181,255,0.15); color: var(--sky); }
-.b-coral { background: rgba(255,107,107,0.15); color: var(--coral); }
-.b-orange { background: rgba(255,159,67,0.15); color: var(--orange); }
-.b-purple { background: rgba(199,125,255,0.15); color: var(--purple); }
-
-ul, ol { padding-left: 22px; margin: 8px 0; }
-li { margin-bottom: 6px; font-size: 14.5px; }
-h3 { font-family: 'Syne', sans-serif; font-size: 1rem; margin: 18px 0 8px; color: var(--text); }
-h4 { font-size: 0.95rem; font-weight: 700; color: var(--muted); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12px; }
-p { font-size: 14.5px; margin-bottom: 8px; }
-hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
-strong { color: var(--text); }
-em { color: var(--sky); font-style: normal; font-weight: 600; }
-
-/* TOPIC CARD */
-.topic-card {
-  background: var(--card2); border: 1.5px solid var(--border);
-  border-radius: 10px; padding: 14px 18px; margin: 10px 0;
-}
-.topic-card .tc-head { font-family: 'Syne', sans-serif; font-size: 0.95rem; margin-bottom: 8px; }
-.topic-card .thesis-line { border-left: 3px solid var(--coral); padding-left: 12px; font-size: 14px; font-style: italic; color: #ddd; line-height: 1.7; }
-.topic-card .points { margin-top: 10px; font-size: 13.5px; }
-.topic-card .points li { margin-bottom: 4px; }
-
-/* PREWRITING CLUSTER */
-.cluster { font-family: monospace; font-size: 13px; background: var(--card2); border: 1.5px solid var(--border); border-radius: 10px; padding: 20px; line-height: 2; white-space: pre-wrap; color: var(--muted); overflow-x: auto; }
-.cluster .center { color: var(--yellow); font-weight: 900; }
-.cluster .node { color: var(--mint); font-weight: 700; }
-.cluster .leaf { color: var(--sky); }
-
-/* TRANSITION TABLE */
-.trans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin: 10px 0; }
-.trans-chip { background: var(--card2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 12.5px; text-align: center; font-weight: 600; }
-
-/* FUN ANALOGY BOX */
-.analogy { background: rgba(199,125,255,0.06); border: 1.5px solid rgba(199,125,255,0.3); border-radius: 10px; padding: 14px 18px; margin: 12px 0; font-size: 14px; }
-.analogy::before { content: '💡 ANALOGY · '; font-weight: 800; color: var(--purple); font-size: 12px; letter-spacing: 1px; display: block; margin-bottom: 5px; }
-</style>
+<link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="assets/css/notes.css">
 </head>
 <body>
 
@@ -240,31 +21,31 @@ em { color: var(--sky); font-style: normal; font-weight: 600; }
   <a href="#q7">Q7 Grammar</a>
   <a href="#q8">Q8 Prewriting</a>
   <a href="#q9">Q9 Assertion</a>
+  <a href="#q10">Q10 Vocab Builder</a>
 </nav>
 
 <div class="hero">
-  <h1>Developing Writing Skill</h1>
+  <h1>✍️ Boost Your Writing Skills 🚀</h1>
   <div class="hero-pills">
-    <span class="hero-pill">9 Question Types</span>
-    <span class="hero-pill">4 Full Essays</span>
-    <span class="hero-pill">6 Paragraph Types</span>
-    <span class="hero-pill">10 Grammar Fixes</span>
+    <span class="hero-pill">10 fun sections 🎉</span>
+    <span class="hero-pill">4 full essays 📚</span>
+    <span class="hero-pill">6 paragraph types 📄</span>
+    <span class="hero-pill">10 handy grammar fixes 🛠️</span>
   </div>
+  <p class="hero-tagline">Let's turn essay writing into a game! 🎮</p>
 </div>
 
 <div class="wrap">
 
-<!-- ===================== Q1 ===================== -->
-<div class="q-section q1" id="q1">
-  <div class="q-header">
-    <div class="q-num">Q1</div>
-    <div>
-      <div class="q-title">Argumentative Essay ✍️</div>
-      <div class="q-sub">Write 500+ words · 5 paragraphs · Underline thesis, topic sentences, supporting details, restatement</div>
+  <div class="q-section q1" id="q1">
+    <div class="q-header">
+      <div class="q-num">Q1</div>
+      <div>
+        <div class="q-title">📝 Argumentative Essay (Let’s rock it!)</div>
+        <div class="q-sub">Write 500+ words • 5 paragraphs • Highlight thesis, topic sentences, supporting details, and a strong restatement.</div>
+      </div>
     </div>
-  </div>
-
-  <div class="brain">Think of an essay like a <strong>burger</strong> 🍔 — top bun = intro, three fillings = body paragraphs, bottom bun = conclusion. Every layer matters or the whole thing falls apart.</div>
+    <div class="brain">🤔 Think of an essay like a 🍔 burger — top bun = intro, three tasty fillings = body paragraphs, bottom bun = conclusion. Keep each layer tasty or the whole thing falls apart!</div>
 
   <h3>The Formula — Never Forget This</h3>
   <div class="diagram">
@@ -1137,25 +918,33 @@ em { color: var(--sky); font-style: normal; font-weight: 600; }
 
   <h3>Applied Example A — Clustering: "Excessive Social Media Use Leads to Depression and Anxiety"</h3>
 
-  <div class="cluster">
-<span class="leaf">  [Low self-esteem] ← comparing own life to curated highlights</span>
-           |
-  <span class="node">[Comparison Culture]</span>
-           |
-  <span class="node">[Cyberbullying]</span> ── harassment, threats, public shaming
-           |
-           └──────── <span class="center">SOCIAL MEDIA → Depression & Anxiety</span> ──────┐
-                                                                       |
-           <span class="node">[FOMO]</span> ── fear of missing out → constant checking               |
-           |                                                           |
-  <span class="leaf">Anxiety about being left out</span>                                    |
-                                                              <span class="node">[Sleep Disruption]</span>
-                                                                       |
-                                                     <span class="leaf">Late night scrolling → mood disorders</span>
-                                                                       |
-                                                          <span class="node">[Dopamine Addiction]</span>
-                                                                       |
-                                                   <span class="leaf">Withdrawal anxiety when offline</span>
+  <div class="flex-cluster">
+    <div class="fc-row">
+      <div class="fc-box center">SOCIAL MEDIA<br>Depression & Anxiety</div>
+    </div>
+    <div class="fc-arrow">↓</div>
+    <div class="fc-row">
+      <div class="flex-cluster" style="background:transparent; border:none; padding:0;">
+        <div class="fc-box node">Comparison Culture</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box leaf">Low self-esteem ← comparing own life</div>
+      </div>
+      <div class="flex-cluster" style="background:transparent; border:none; padding:0;">
+        <div class="fc-box node">Cyberbullying</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box leaf">Harassment & public shaming</div>
+      </div>
+      <div class="flex-cluster" style="background:transparent; border:none; padding:0;">
+        <div class="fc-box node">FOMO</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box leaf">Anxiety about being left out</div>
+      </div>
+      <div class="flex-cluster" style="background:transparent; border:none; padding:0;">
+        <div class="fc-box node">Sleep Disruption</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box leaf">Late night scrolling → mood disorders</div>
+      </div>
+    </div>
   </div>
 
   <div class="tip">Thesis from Clustering: Excessive social media use significantly contributes to depression and anxiety by fostering unhealthy comparison, enabling cyberbullying, and disrupting the sleep patterns essential for mental health.</div>
@@ -1224,20 +1013,48 @@ em { color: var(--sky); font-style: normal; font-weight: 600; }
   </div>
 </div>
 
+<!-- ===================== Q10 ===================== -->
+<div class="q-section q10" id="q10">
+  <div class="q-header">
+    <div class="q-num">Q10</div>
+    <div>
+      <div class="q-title">Vocabulary Builder 📚</div>
+      <div class="q-sub">Better words for better grades! Ditch the basic words.</div>
+    </div>
+  </div>
+
+  <div class="brain">Replacing simple words with precise academic vocabulary is the easiest way to instantly elevate your essay's tone.</div>
+
+  <table>
+    <tr><th>Instead of saying...</th><th>Try using...</th><th>Example in a sentence</th></tr>
+    <tr><td><strong>Bad / Terrible</strong></td><td><span class="badge b-coral">Detrimental</span></td><td>Corruption has a <em>detrimental</em> effect on society.</td></tr>
+    <tr><td><strong>Good / Important</strong></td><td><span class="badge b-mint">Crucial</span> / <span class="badge b-mint">Vital</span></td><td>Education is <em>crucial</em> for national development.</td></tr>
+    <tr><td><strong>Big / Huge</strong></td><td><span class="badge b-sky">Substantial</span> / <span class="badge b-sky">Profound</span></td><td>AI has caused a <em>profound</em> shift in the industry.</td></tr>
+    <tr><td><strong>Show / Prove</strong></td><td><span class="badge b-purple">Demonstrate</span></td><td>Studies <em>demonstrate</em> that exercise reduces stress.</td></tr>
+    <tr><td><strong>Make / Create</strong></td><td><span class="badge b-orange">Generate</span> / <span class="badge b-orange">Produce</span></td><td>This policy will <em>generate</em> new opportunities.</td></tr>
+    <tr><td><strong>Fix / Solve</strong></td><td><span class="badge b-yellow">Resolve</span> / <span class="badge b-yellow">Remedy</span></td><td>We must <em>resolve</em> the systemic issues immediately.</td></tr>
+  </table>
+
+  <div class="tip">Don't overcomplicate. Use these words naturally when they fit. If you use a big word incorrectly, it hurts your grade more than using a simple word correctly.</div>
+</div>
+
 <div style="text-align:center;color:var(--muted);font-size:13px;padding:30px 0 0;border-top:1px solid var(--border);margin-top:20px;">
   Good luck Honey✍️
 </div>
 
 </div><!-- wrap -->
 
-<script>
-const sections = document.querySelectorAll('.q-section');
-const links = document.querySelectorAll('nav a');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) current = s.id; });
-  links.forEach(l => { l.style.color = l.getAttribute('href') === '#' + current ? 'var(--yellow)' : ''; l.style.borderColor = l.getAttribute('href') === '#' + current ? 'var(--yellow)' : ''; });
-}, { passive: true });
-</script>
+<!-- NOTEPAD WIDGET -->
+<div class="notepad-widget" id="notepad-widget">
+  <div class="notepad-header" id="notepad-header">
+    <span>📝 Quick Notes</span>
+    <span class="notepad-toggle-icon">▲</span>
+  </div>
+  <div class="notepad-body">
+    <textarea id="notepad-textarea" placeholder="Jot down important points here..."></textarea>
+  </div>
+</div>
+
+<script src="assets/js/notes.js"></script>
 </body>
 </html>
