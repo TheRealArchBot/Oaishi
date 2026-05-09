@@ -136,15 +136,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
-  // Time-based greetings (late night / early bird / afternoon nap)
+  // Time-based greetings (late night / early bird)
   const hour = new Date().getHours();
   if (hour >= 23 || hour < 4) {
     setTimeout(() => showLoveMessage(window.innerWidth / 2, 100, "It's late, honey. Don't forget to get some sleep soon! 🌙💤"), 5000);
   } else if (hour >= 5 && hour <= 8) {
     setTimeout(() => showLoveMessage(window.innerWidth / 2, 100, "Wow, up so early! Good morning, my hardworking beautiful wife! 🌅☕"), 5000);
-  } else if (hour >= 14 && hour <= 16) {
-    setTimeout(() => showLoveMessage(window.innerWidth / 2, 100, "It's prime nap time and you're STUDYING?! Who kidnapped my wife?! 😱"), 5000);
   }
+
+  // Konami Code (↑↑↓↓←→←→BA)
+  const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let konamiIndex = 0;
+  window.addEventListener('keydown', e => {
+    if (e.key === KONAMI[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === KONAMI.length) {
+        konamiIndex = 0;
+        showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "🎉 CHEAT CODE ACTIVATED! Extra brain power +100! You're already cheating by being this smart! 🧠✨");
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
 
   // Offline detection
   window.addEventListener('offline', () => {

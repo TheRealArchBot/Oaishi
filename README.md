@@ -34,7 +34,8 @@ The platform is heavily gamified with **45 hidden interactions**, specifically c
 * **Triple-click logo**: Clicking the logo 3 times triggers a floating love message at the cursor.
 * **Study milestones**: Motivational pop-ups at 15, 30, 45, 60, and 90 minutes of continuous study.
 * **Scroll to bottom**: A reward message appears when she finishes reading to the very end.
-* **Time-based greetings**: Special messages for late night (11PM–4AM), early morning (5–8AM), or afternoon nap time (2–4PM).
+* **Time-based greetings**: Special messages for late night (11PM–4AM) or early morning (5–8AM).
+* **Konami code**: Press ↑↑↓↓←→←→BA anywhere on the page for a secret cheat-code message. 🎉
 * **Offline detection**: A sweet message appears if the internet drops.
 * **Secret code**: Typing `ahsan` anywhere on the page triggers a surprise message.
 * **Deep reading tracker**: 2 minutes of no mouse/scroll/keypress triggers a gentle reminder to blink.
