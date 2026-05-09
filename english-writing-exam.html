@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developing Writing Skill — Exam Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #12121a;
+  --card: #1c1c28;
+  --card2: #22223a;
+  --border: #2e2e48;
+  --yellow: #ffe566;
+  --coral: #ff6b6b;
+  --mint: #4ecca3;
+  --sky: #6eb5ff;
+  --purple: #c77dff;
+  --orange: #ff9f43;
+  --text: #eeeef5;
+  --muted: #8888aa;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px; }
+::selection { background: var(--yellow); color: #000; }
+
+/* SCROLL */
+::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(18,18,26,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.nav-logo { font-family: 'Syne', sans-serif; font-size: 1.1rem; color: var(--yellow); margin-right: 8px; }
+nav a {
+  font-size: 12px; font-weight: 700; text-decoration: none;
+  padding: 4px 12px; border-radius: 20px; border: 1.5px solid var(--border);
+  color: var(--muted); transition: all 0.2s;
+}
+nav a:hover { color: var(--yellow); border-color: var(--yellow); background: rgba(255,229,102,0.08); }
+
+/* HERO */
+.hero {
+  text-align: center; padding: 60px 20px 40px;
+  background: radial-gradient(ellipse at center top, rgba(255,229,102,0.08) 0%, transparent 60%);
+}
+.hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem,7vw,4.5rem); color: var(--yellow); line-height: 1.1; margin-bottom: 12px; }
+.hero p { color: var(--muted); font-size: 1rem; max-width: 480px; margin: 0 auto 24px; }
+.hero-pills { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.hero-pill { background: var(--card); border: 1.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 700; color: var(--muted); }
+
+/* WRAP */
+.wrap { max-width: 860px; margin: 0 auto; padding: 20px 20px 80px; }
+
+/* SECTION */
+.q-section { margin-bottom: 50px; scroll-margin-top: 70px; }
+
+.q-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 20px; padding: 16px 20px;
+  background: var(--card); border-radius: 12px;
+  border: 1.5px solid var(--border);
+}
+.q-num {
+  font-family: 'Syne', sans-serif; font-size: 2rem; line-height: 1;
+  min-width: 48px; text-align: center;
+}
+.q-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; }
+.q-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+/* COLOR ACCENTS PER Q */
+.q1 .q-num { color: var(--yellow); } .q1 .q-header { border-color: rgba(255,229,102,0.25); }
+.q2 .q-num { color: var(--mint); } .q2 .q-header { border-color: rgba(78,204,163,0.25); }
+.q3 .q-num { color: var(--sky); } .q3 .q-header { border-color: rgba(110,181,255,0.25); }
+.q4 .q-num { color: var(--coral); } .q4 .q-header { border-color: rgba(255,107,107,0.25); }
+.q5 .q-num { color: var(--orange); } .q5 .q-header { border-color: rgba(255,159,67,0.25); }
+.q6 .q-num { color: var(--purple); } .q6 .q-header { border-color: rgba(199,125,255,0.25); }
+.q7 .q-num { color: var(--coral); } .q7 .q-header { border-color: rgba(255,107,107,0.25); }
+.q8 .q-num { color: var(--mint); } .q8 .q-header { border-color: rgba(78,204,163,0.25); }
+.q9 .q-num { color: var(--yellow); } .q9 .q-header { border-color: rgba(255,229,102,0.25); }
+
+/* CARDS */
+.card { background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: 18px 22px; margin-bottom: 14px; }
+.card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; margin-bottom: 10px; }
+.card p { margin-bottom: 8px; font-size: 14.5px; }
+.card p:last-child { margin-bottom: 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media(max-width:620px) { .grid2 { grid-template-columns: 1fr; } }
+
+/* CALLOUTS */
+.brain {
+  background: linear-gradient(135deg, rgba(255,229,102,0.08), rgba(78,204,163,0.06));
+  border: 1.5px solid rgba(255,229,102,0.4); border-radius: 10px;
+  padding: 14px 18px; margin: 12px 0; font-size: 14px;
+}
+.brain::before { content: '🧠 BRAIN BOMB · '; font-weight: 800; color: var(--yellow); font-size: 12px; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+
+.tip {
+  background: rgba(78,204,163,0.06); border: 1.5px solid rgba(78,204,163,0.3);
+  border-radius: 10px; padding: 14px 18px; margin: 12px 0; font-size: 14px;
+}
+.tip::before { content: '✅ PRO TIP · '; font-weight: 800; color: var(--mint); font-size: 12px; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+
+.warn {
+  background: rgba(255,107,107,0.06); border: 1.5px solid rgba(255,107,107,0.3);
+  border-radius: 10px; padding: 14px 18px; margin: 12px 0; font-size: 14px;
+}
+.warn::before { content: '🚫 DON\'T MESS THIS UP · '; font-weight: 800; color: var(--coral); font-size: 12px; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+
+/* ESSAY BOX */
+.essay {
+  background: var(--card2); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 20px 24px; font-size: 14.5px; line-height: 2;
+  margin: 12px 0;
+}
+.essay p { margin-bottom: 14px; }
+.essay p:last-child { margin-bottom: 0; }
+.essay-label {
+  font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+
+/* UNDERLINES */
+.th { border-bottom: 2.5px solid var(--coral); padding-bottom: 1px; }
+.ts { border-bottom: 2.5px solid var(--mint); padding-bottom: 1px; }
+.sd { border-bottom: 2px dashed var(--sky); padding-bottom: 1px; }
+.re { border-bottom: 2.5px solid var(--purple); padding-bottom: 1px; }
+
+.legend {
+  display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 0 18px;
+  padding: 12px 16px; background: var(--card); border-radius: 8px;
+  font-size: 13px;
+}
+.leg { display: flex; align-items: center; gap: 7px; }
+.leg span { width: 22px; height: 3px; border-radius: 2px; display: inline-block; }
+
+/* DIAGRAM */
+.diagram { margin: 16px 0; }
+.dbox {
+  border: 2px solid; border-radius: 8px; padding: 10px 18px;
+  margin: 5px auto; max-width: 500px; text-align: center;
+  font-weight: 700; font-size: 14px;
+}
+.db-intro { border-color: var(--yellow); color: var(--yellow); background: rgba(255,229,102,0.06); }
+.db-body { border-color: var(--sky); color: var(--sky); background: rgba(110,181,255,0.06); }
+.db-conc { border-color: var(--mint); color: var(--mint); background: rgba(78,204,163,0.06); }
+.db-sub { border: 1.5px dashed var(--border); color: var(--muted); font-weight: 400; font-size: 12px; max-width: 430px; background: transparent; }
+.darrow { text-align: center; color: var(--muted); font-size: 1.3rem; margin: 2px 0; }
+
+/* TABLE */
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0; }
+th { background: var(--card2); color: var(--yellow); padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 14px; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* PARA DIAGRAM */
+.para-d { border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; margin: 12px 0; }
+.para-row { display: flex; align-items: flex-start; gap: 14px; padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+.para-row:last-child { border-bottom: none; }
+.plabel { min-width: 100px; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; padding: 4px 8px; border-radius: 5px; text-align: center; flex-shrink: 0; margin-top: 2px; text-transform: uppercase; }
+
+/* GRAMMAR */
+.g-item { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 16px 20px; margin: 12px 0; }
+.g-type { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+.g-wrong { color: var(--coral); font-size: 14px; font-style: italic; margin-bottom: 6px; }
+.g-wrong::before { content: '✗ '; font-weight: 900; }
+.g-right { color: var(--mint); font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+.g-right::before { content: '✓ '; }
+.g-why { font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 8px; line-height: 1.6; }
+
+/* FLOW */
+.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin: 14px 0; }
+.fstep { background: var(--yellow); color: #1a1a00; font-weight: 800; font-size: 12px; padding: 7px 14px; border-radius: 6px; }
+.farrow { color: var(--muted); font-size: 1.2rem; padding: 0 2px; }
+
+/* COLLAPSIBLE */
+details { background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; margin: 10px 0; overflow: hidden; }
+summary { padding: 14px 18px; font-weight: 700; cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; justify-content: space-between; font-size: 14.5px; }
+summary::after { content: '▼'; font-size: 11px; color: var(--muted); transition: transform 0.2s; }
+details[open] summary::after { transform: rotate(180deg); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+.details-body { padding: 16px 20px; }
+
+/* BADGE */
+.badge { display: inline-block; font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; margin: 2px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px; }
+.b-yellow { background: rgba(255,229,102,0.15); color: var(--yellow); }
+.b-mint { background: rgba(78,204,163,0.15); color: var(--mint); }
+.b-sky { background: rgba(110,181,255,0.15); color: var(--sky); }
+.b-coral { background: rgba(255,107,107,0.15); color: var(--coral); }
+.b-orange { background: rgba(255,159,67,0.15); color: var(--orange); }
+.b-purple { background: rgba(199,125,255,0.15); color: var(--purple); }
+
+ul, ol { padding-left: 22px; margin: 8px 0; }
+li { margin-bottom: 6px; font-size: 14.5px; }
+h3 { font-family: 'Syne', sans-serif; font-size: 1rem; margin: 18px 0 8px; color: var(--text); }
+h4 { font-size: 0.95rem; font-weight: 700; color: var(--muted); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12px; }
+p { font-size: 14.5px; margin-bottom: 8px; }
+hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+strong { color: var(--text); }
+em { color: var(--sky); font-style: normal; font-weight: 600; }
+
+/* TOPIC CARD */
+.topic-card {
+  background: var(--card2); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 14px 18px; margin: 10px 0;
+}
+.topic-card .tc-head { font-family: 'Syne', sans-serif; font-size: 0.95rem; margin-bottom: 8px; }
+.topic-card .thesis-line { border-left: 3px solid var(--coral); padding-left: 12px; font-size: 14px; font-style: italic; color: #ddd; line-height: 1.7; }
+.topic-card .points { margin-top: 10px; font-size: 13.5px; }
+.topic-card .points li { margin-bottom: 4px; }
+
+/* PREWRITING CLUSTER */
+.cluster { font-family: monospace; font-size: 13px; background: var(--card2); border: 1.5px solid var(--border); border-radius: 10px; padding: 20px; line-height: 2; white-space: pre-wrap; color: var(--muted); overflow-x: auto; }
+.cluster .center { color: var(--yellow); font-weight: 900; }
+.cluster .node { color: var(--mint); font-weight: 700; }
+.cluster .leaf { color: var(--sky); }
+
+/* TRANSITION TABLE */
+.trans-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin: 10px 0; }
+.trans-chip { background: var(--card2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 12.5px; text-align: center; font-weight: 600; }
+
+/* FUN ANALOGY BOX */
+.analogy { background: rgba(199,125,255,0.06); border: 1.5px solid rgba(199,125,255,0.3); border-radius: 10px; padding: 14px 18px; margin: 12px 0; font-size: 14px; }
+.analogy::before { content: '💡 ANALOGY · '; font-weight: 800; color: var(--purple); font-size: 12px; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo"><a href="index.html" style="color:var(--yellow);text-decoration:none;">← Oaishi's Notes</a></span>
+  <a href="#q1">Q1 Essays</a>
+  <a href="#q2">Q2 Paragraphs</a>
+  <a href="#q3">Q3 Process</a>
+  <a href="#q4">Q4 Essay</a>
+  <a href="#q5">Q5 Notes</a>
+  <a href="#q6">Q6 Analysis</a>
+  <a href="#q7">Q7 Grammar</a>
+  <a href="#q8">Q8 Prewriting</a>
+  <a href="#q9">Q9 Assertion</a>
+</nav>
+
+<div class="hero">
+  <h1>Developing Writing Skill</h1>
+  <p>Exam notes — all 9 question types covered.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">9 Question Types</span>
+    <span class="hero-pill">4 Full Essays</span>
+    <span class="hero-pill">6 Paragraph Types</span>
+    <span class="hero-pill">10 Grammar Fixes</span>
+    <span class="hero-pill">Brain Bombs Included 🧠</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ===================== Q1 ===================== -->
+<div class="q-section q1" id="q1">
+  <div class="q-header">
+    <div class="q-num">Q1</div>
+    <div>
+      <div class="q-title">Argumentative Essay ✍️</div>
+      <div class="q-sub">Write 500+ words · 5 paragraphs · Underline thesis, topic sentences, supporting details, restatement</div>
+    </div>
+  </div>
+
+  <div class="brain">Think of an essay like a <strong>burger</strong> 🍔 — top bun = intro, three fillings = body paragraphs, bottom bun = conclusion. Every layer matters or the whole thing falls apart.</div>
+
+  <h3>The Formula — Never Forget This</h3>
+  <div class="diagram">
+    <div class="dbox db-intro">🔓 INTRODUCTION<br><span style="font-size:11px;font-weight:400;">Hook → Background → <u style="text-decoration-color:var(--coral)">Thesis + Plan of Development</u></span></div>
+    <div class="darrow">↓</div>
+    <div class="dbox db-body">BODY PARA 1 — Supporting Point 1<br><span style="font-size:11px;font-weight:400;"><u style="text-decoration-color:var(--mint)">Topic Sentence</u> → <u style="text-decoration-color:var(--sky);text-decoration-style:dashed">Evidence + Details</u> → Analysis → Transition</span></div>
+    <div class="darrow">↓</div>
+    <div class="dbox db-body">BODY PARA 2 — Supporting Point 2<br><span style="font-size:11px;font-weight:400;"><u style="text-decoration-color:var(--mint)">Topic Sentence</u> → <u style="text-decoration-color:var(--sky);text-decoration-style:dashed">Evidence + Details</u> → Analysis → Transition</span></div>
+    <div class="darrow">↓</div>
+    <div class="dbox db-body" style="border-color:var(--orange);color:var(--orange);background:rgba(255,159,67,0.06)">BODY PARA 3 — Counterargument + Refutation<br><span style="font-size:11px;font-weight:400;"><u style="text-decoration-color:var(--mint)">Topic Sentence</u> → <u style="text-decoration-color:var(--sky);text-decoration-style:dashed">Their argument → YOUR comeback</u></span></div>
+    <div class="darrow">↓</div>
+    <div class="dbox db-conc">🔒 CONCLUSION<br><span style="font-size:11px;font-weight:400;"><u style="text-decoration-color:var(--purple)">Restatement of thesis</u> → Summary → Final punch</span></div>
+  </div>
+
+  <div class="legend">
+    <div class="leg"><span style="background:var(--coral)"></span> Thesis (underline)</div>
+    <div class="leg"><span style="background:var(--mint)"></span> Topic Sentence (underline)</div>
+    <div class="leg"><span style="background:var(--sky);"></span> Supporting Detail (dotted underline)</div>
+    <div class="leg"><span style="background:var(--purple)"></span> Restatement (underline)</div>
+  </div>
+
+  <div class="warn">Counterargument para is NOT you agreeing with the other side. It's you saying "Yes, people think X, BUT here's why they're wrong." Always end the paragraph with YOUR refutation winning.</div>
+
+  <h3>All 4 Essay Topics — Outlines + Full Essays</h3>
+
+  <!-- TOPIC OVERVIEWS -->
+  <div class="grid2">
+    <div class="topic-card">
+      <div class="tc-head">🤖 Artificial Intelligence</div>
+      <div class="thesis-line">AI enhances productivity, revolutionizes healthcare, and reshapes education — despite concerns about job loss.</div>
+      <div class="points">Body points: <br>1️⃣ Boosts productivity <br>2️⃣ Transforms healthcare <br>3️⃣ Counter: job loss → Refute: creates new jobs</div>
+    </div>
+    <div class="topic-card">
+      <div class="tc-head">⚖️ Men-Women Equality</div>
+      <div class="thesis-line">Gender equality requires eliminating workplace discrimination, reforming social norms, and guaranteeing equal education.</div>
+      <div class="points">Body points:<br>1️⃣ Workplace discrimination<br>2️⃣ Harmful social norms<br>3️⃣ Counter: biology → Refute: roles are social, not biological</div>
+    </div>
+    <div class="topic-card">
+      <div class="tc-head">🗳️ Student Union Election</div>
+      <div class="thesis-line">Student unions give students democratic voice, drive academic reform, and improve campus welfare.</div>
+      <div class="points">Body points:<br>1️⃣ Democratic representation<br>2️⃣ Academic + admin reform<br>3️⃣ Counter: political corruption → Refute: structural safeguards</div>
+    </div>
+    <div class="topic-card">
+      <div class="tc-head">📝 Traditional Exams Are Discriminatory</div>
+      <div class="thesis-line">Traditional exams are discriminatory because they reward memorization, disadvantage diverse learners, and ignore diverse intelligence.</div>
+      <div class="points">Body points:<br>1️⃣ Rewards memorization, not understanding<br>2️⃣ Disadvantages poor + neurodiverse students<br>3️⃣ Counter: exams are fair → Refute: uniform ≠ fair</div>
+    </div>
+  </div>
+
+  <!-- FULL ESSAYS AS COLLAPSIBLES -->
+  <details>
+    <summary>📖 Full Essay — Artificial Intelligence</summary>
+    <div class="details-body">
+      <div class="essay">
+        <div class="essay-label">INTRO</div>
+        <p>Imagine a world where machines diagnose diseases faster than doctors, write software, and drive cars without human error. This world is no longer science fiction — it is unfolding right now through the rapid rise of artificial intelligence. AI, the simulation of human intelligence by machines, is reshaping industries, transforming daily life, and redefining what it means to work. <span class="th">Despite widespread concerns about job displacement and ethical risks, artificial intelligence is a transformative force that enhances productivity across industries, revolutionizes healthcare, and unlocks new possibilities in education.</span></p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 1 — Productivity</div>
+        <p><span class="ts">First and foremost, artificial intelligence dramatically enhances productivity and efficiency across industries.</span> <span class="sd">Repetitive, time-consuming tasks such as data entry, customer service responses, and logistics planning are now automated by intelligent systems, freeing human workers to focus on creative and strategic functions.</span> <span class="sd">According to a McKinsey Global Institute report, AI technologies could add up to $13 trillion to global economic output by 2030.</span> Rather than replacing the workforce entirely, AI acts as a powerful amplifier of human capability. Consequently, industries from manufacturing to finance are experiencing unprecedented levels of innovation and output.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 2 — Healthcare</div>
+        <p><span class="ts">Furthermore, artificial intelligence is revolutionizing healthcare in ways that save millions of lives.</span> <span class="sd">AI-powered diagnostic tools can analyze medical images — X-rays, MRIs, CT scans — with greater accuracy and speed than human radiologists, enabling earlier detection of deadly diseases like cancer.</span> <span class="sd">IBM's Watson Health system has demonstrated the ability to identify cancer treatment options in minutes, a task that previously required weeks of specialist review.</span> Drug discovery, once a decade-long process, is being accelerated by AI algorithms screening millions of molecular combinations. The integration of AI in medicine represents one of the most profound humanitarian achievements of our era.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 3 — Counterargument + Refutation</div>
+        <p><span class="ts">Critics argue that artificial intelligence poses a serious threat to employment, and this concern deserves genuine consideration.</span> <span class="sd">As automation displaces manual and clerical jobs, millions of workers in transportation, retail, and manufacturing face an uncertain future.</span> <span class="sd">The World Economic Forum has warned that AI could eliminate 85 million jobs by 2025.</span> However, history offers reassurance: every major technological revolution, from the Industrial Revolution to the rise of computing, ultimately created more jobs than it destroyed. <span class="sd">The same WEF report projects AI will simultaneously create 97 million new roles in data science, AI maintenance, and digital strategy.</span> The solution lies not in rejecting AI, but in investing in workforce reskilling. Dismissing AI out of fear would be as shortsighted as rejecting electricity.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">CONCLUSION</div>
+        <p>In conclusion, <span class="re">artificial intelligence, though not without challenges, is one of the most transformative technologies humanity has ever developed, accelerating productivity, advancing healthcare, and reshaping education.</span> The key lies in guiding it with ethical frameworks and inclusive policies. The future belongs not to machines alone, but to those wise enough to work alongside them.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>📖 Full Essay — Men-Women Equality</summary>
+    <div class="details-body">
+      <div class="essay">
+        <div class="essay-label">INTRO</div>
+        <p>In 2023, a Bangladeshi woman was denied a promotion not because of her qualifications, but because her manager believed a male colleague was a more "suitable" leader. This scenario, repeated millions of times daily across the globe, reflects a deeply embedded problem: gender inequality. Despite remarkable progress, women continue to face systematic disadvantages in workplaces, homes, and institutions. <span class="th">Gender equality is not merely a feminist cause but a fundamental human right that demands the elimination of workplace discrimination, the reformation of restrictive social norms, and the guarantee of equal educational opportunities for all.</span></p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 1 — Workplace Discrimination</div>
+        <p><span class="ts">To begin with, workplace discrimination remains one of the most persistent barriers to gender equality in our society.</span> <span class="sd">In Bangladesh, women are concentrated in low-wage sectors like garment manufacturing, while senior corporate leadership remains dominated by men.</span> <span class="sd">Globally, the gender pay gap persists, with women earning approximately 82 cents for every dollar earned by men for comparable work, according to UN Women.</span> The so-called "glass ceiling" — an invisible barrier preventing women from rising to top positions — continues to limit millions. Enforcing equal pay laws and encouraging women's leadership are essential steps toward an equitable workforce.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 2 — Social Norms</div>
+        <p><span class="ts">Moreover, restrictive social and cultural norms continue to limit women's freedoms and reinforce inequality in everyday life.</span> <span class="sd">In many parts of Bangladesh, deeply rooted traditions dictate that women are primarily responsible for household duties and childcare, regardless of their professional ambitions.</span> <span class="sd">Early marriage, affecting 59% of Bangladeshi girls according to UNICEF, cuts short girls' education and traps them in economic dependency.</span> Notably, rigid gender roles harm men too, pressuring them to suppress emotions and bear sole financial responsibility. Reforming these norms through education and legal protections benefits everyone.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 3 — Counter + Refutation</div>
+        <p><span class="ts">Some traditionalists contend that biological differences between men and women naturally justify distinct social roles.</span> <span class="sd">They argue that women's roles as mothers and caregivers are universal, rooted in biology rather than culture.</span> This argument, however, confuses biology with destiny. <span class="sd">Research consistently shows that differences in career outcomes between genders are shaped primarily by social conditioning, not innate ability.</span> Countries like Norway and Iceland, which actively promote gender equality, demonstrate that when barriers are removed, women lead companies and governments as effectively as men. Equality does not erase biological difference; it simply ensures those differences do not determine one's rights.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">CONCLUSION</div>
+        <p>In summary, <span class="re">gender equality remains an urgent and achievable goal requiring the dismantling of workplace discrimination, the challenging of harmful social norms, and the guarantee of equal opportunity for every individual regardless of gender.</span> Societies that invest in gender equality are more stable, more prosperous, and more innovative. Equality is not a privilege for some — it is a right for all.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>📖 Full Essay — Student Union Elections (Bangladesh)</summary>
+    <div class="details-body">
+      <div class="essay">
+        <div class="essay-label">INTRO</div>
+        <p>University life in Bangladesh is frequently marked by challenges students feel powerless to address: rising tuition fees, inadequate hostels, outdated curricula, and campus harassment. For decades, students have had no formal democratic channel to raise their voices. The revival of student union elections could change this fundamentally. <span class="th">Student union elections in Bangladeshi universities can effectively address the major problems students face by establishing democratic representation, advocating for meaningful academic reforms, and improving campus welfare and safety.</span></p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 1 — Democratic Voice</div>
+        <p><span class="ts">First, student unions provide students with a legitimate democratic voice within university governance structures.</span> <span class="sd">Without elected representatives, Bangladeshi universities are governed entirely by administrations and political appointees who may be disconnected from the realities of student life.</span> <span class="sd">When students elect their own representatives through transparent elections, those representatives can formally negotiate with administrations and advocate for policies that directly impact students.</span> Democratic representation means decisions about fee increases, academic calendars, and campus infrastructure are made with student input rather than imposed upon them.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 2 — Academic Reform</div>
+        <p><span class="ts">Furthermore, active student unions can drive vital academic and administrative reforms that improve educational quality.</span> <span class="sd">Outdated syllabi, examination irregularities, favoritism in grading, and the absence of counseling services are issues students regularly identify but cannot formally address without a union.</span> <span class="sd">At Dhaka University, periods of active student union leadership historically coincided with greater administrative transparency and more responsive student services.</span> Unions can also campaign for merit-based scholarship distribution and petition against session jams — issues that directly affect thousands of students every year.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 3 — Counter + Refutation</div>
+        <p><span class="ts">Opponents of student union elections argue that such elections inevitably become politically corrupted, hijacked by party agendas rather than serving student interests.</span> <span class="sd">This concern is well-founded: historically, party-affiliated student wings have used campuses for political violence, extortion, and coercion, turning union elections into tools of control.</span> However, this problem calls for structural reform, not abolition. <span class="sd">Implementing independent electoral commissions, strict code-of-conduct regulations, transparent campaign finance rules, and prohibition on party-aligned candidacies can insulate student unions from political corruption.</span> Countries like the UK and Australia maintain vibrant, independent student unions — Bangladesh can achieve the same with proper institutional safeguards.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">CONCLUSION</div>
+        <p>In conclusion, <span class="re">student union elections, when conducted transparently and independently, are a powerful mechanism through which students gain democratic representation, push for academic reform, and build safer campus environments.</span> The problems facing Bangladeshi university students are not inevitable — they are the product of a system that lacks accountability to those it serves. The student voice must not be silenced; it must be organized, empowered, and heard.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>📖 Full Essay — Traditional Examinations Are Discriminatory</summary>
+    <div class="details-body">
+      <div class="essay">
+        <div class="essay-label">INTRO</div>
+        <p>Every year, thousands of Bangladeshi students spend weeks memorizing pages of notes, only to forget everything the day after their exam. The system they are trapped in rewards recall over reasoning, punishes anxiety over ability, and defines intelligence through a single standardized test. Traditional examinations have been the dominant form of academic assessment for centuries — yet their dominance is increasingly questioned. <span class="th">Traditional examination systems are fundamentally discriminatory rather than encouraging because they privilege rote memorization over critical thinking, systematically disadvantage students with diverse learning needs, and fail to assess the full range of human intelligence.</span></p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 1 — Memorization Not Understanding</div>
+        <p><span class="ts">To begin with, traditional examinations primarily reward memorization rather than genuine understanding or intellectual development.</span> <span class="sd">Students who can reproduce textbook content verbatim within a fixed time frame are rewarded with high grades, while those who think critically or approach problems creatively often struggle to perform within such rigid formats.</span> <span class="sd">Renowned education theorist Sir Ken Robinson argued that conventional schooling and its examination culture systematically suppress creativity — one of the most valuable human capacities.</span> In Bangladesh, "note-guessing" — predicting which topics will appear on exams — encourages selective study rather than comprehensive learning. Education should ignite curiosity, not extinguish it.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 2 — Disadvantages Diverse Students</div>
+        <p><span class="ts">Moreover, traditional examinations systematically disadvantage students from less privileged backgrounds and those with diverse learning needs.</span> <span class="sd">In Bangladesh, students with access to expensive coaching centers and private tutors consistently outperform their rural counterparts, not because they are more intelligent, but because they have greater access to exam preparation resources.</span> <span class="sd">Students with dyslexia, anxiety disorders, or attention difficulties are further penalized by formats demanding rapid, silent, individual writing — a format that suits only one type of learner.</span> When a single format determines academic success, the system measures privilege, not potential. That is discrimination dressed as objectivity.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">BODY 3 — Counter + Refutation</div>
+        <p><span class="ts">Defenders of traditional examinations argue that standardized testing provides an objective, fair method of evaluation that prevents favoritism.</span> <span class="sd">They contend that uniform exams allow performance to be compared across institutions and regions, creating a meritocratic system where students are judged on knowledge alone.</span> This argument conflates uniformity with fairness. <span class="sd">A system is only fair if all participants begin with equal opportunities — in Bangladesh, where educational quality varies enormously between urban and rural schools, the examination format measures starting advantage as much as academic merit.</span> Alternative models — portfolios, project-based evaluations, oral presentations, continuous assessment — can maintain rigor while offering more inclusive, multidimensional measures of achievement.</p>
+      </div>
+      <div class="essay">
+        <div class="essay-label">CONCLUSION</div>
+        <p>Ultimately, <span class="re">traditional examinations, by privileging memorization, disadvantaging diverse learners, and ignoring the multidimensional nature of intelligence, function as instruments of discrimination disguised as tools of assessment.</span> This is not an argument against evaluation itself, but against the narrow high-stakes format through which it is conducted. Bangladesh's universities must move toward a more equitable, holistic model — one that encourages every student rather than filtering out all but the best memorizers.</p>
+      </div>
+    </div>
+  </details>
+</div>
+
+<!-- ===================== Q2 ===================== -->
+<div class="q-section q2" id="q2">
+  <div class="q-header">
+    <div class="q-num">Q2</div>
+    <div>
+      <div class="q-title">Paragraph Types 📦</div>
+      <div class="q-sub">Answer any 4 of 6 · Each paragraph = Topic Sentence + Supporting Details + Concluding Sentence</div>
+    </div>
+  </div>
+
+  <div class="brain">All 6 paragraph types use the SAME skeleton — what changes is just the TYPE of support you use. Cause-Effect uses causes & results. Process uses steps. Narrative uses story. Same skeleton, different filling.</div>
+
+  <h3>The 6 Types at a Glance</h3>
+  <table>
+    <tr><th>Type</th><th>What you're doing</th><th>Key transitions</th></tr>
+    <tr><td><span class="badge b-coral">Cause-Effect</span></td><td>Why something happens → what results from it</td><td>because, as a result, consequently, therefore, leads to</td></tr>
+    <tr><td><span class="badge b-sky">Comparison-Contrast</span></td><td>Show similarities AND/OR differences between two things</td><td>similarly, in contrast, whereas, however, on the other hand, both</td></tr>
+    <tr><td><span class="badge b-mint">Process</span></td><td>Step-by-step instructions in order</td><td>first, next, then, after that, finally</td></tr>
+    <tr><td><span class="badge b-orange">Division-Classification</span></td><td>Divide the topic into clear categories</td><td>can be classified as, the first type, another category, the final type</td></tr>
+    <tr><td><span class="badge b-purple">Descriptive</span></td><td>Use sensory details (sight, sound, smell, touch) to paint a picture</td><td>no fixed sequence — just vivid description</td></tr>
+    <tr><td><span class="badge b-yellow">Narrative</span></td><td>Tell a story in sequence, first person</td><td>that morning, then, after, by noon, eventually, finally</td></tr>
+  </table>
+
+  <details>
+    <summary>📝 1 · Cause-Effect — Corruption</summary>
+    <div class="details-body">
+      <div class="tip">Structure: causes (why it happens) → effects (what it causes). Use transitions like <em>because, as a result, consequently</em>.</div>
+      <div class="essay">
+        <p>Corruption is a deeply rooted crisis whose causes and devastating effects form a destructive cycle that undermines national progress. Political corruption arises primarily from weak governance, an absence of accountability, and a culture of impunity where powerful individuals face no consequences for unethical actions. Low wages for public officials further drive corrupt practices, as underpaid bureaucrats resort to bribery to supplement their incomes. As a result of rampant corruption, public funds meant for schools, hospitals, and infrastructure are siphoned away, leading to deteriorating services and widening inequality. Consequently, investors lose confidence in the country's institutions, causing reduced foreign investment and slower economic growth. Furthermore, corruption erodes public trust in government and the judiciary, weakening the very foundations of democracy. Until root causes are systematically addressed through stronger institutions and a culture of transparency, corruption's effects will continue to devastate society.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>📝 2 · Comparison-Contrast — University Life vs Professional Life</summary>
+    <div class="details-body">
+      <div class="tip">Use point-by-point: compare them on each aspect one at a time. Don't describe university entirely first then professional — mix them per point.</div>
+      <div class="essay">
+        <p>University life and professional life represent two distinct phases of adulthood, each with its own rhythms, responsibilities, and rewards. In university, students enjoy a relatively flexible schedule, choosing lectures and organizing time around assignments and social activities; in contrast, professional life demands strict punctuality, fixed working hours, and consistent performance with little room for casualness. While university fosters intellectual exploration — encouraging students to question ideas and pursue knowledge for its own sake — the professional world is primarily results-oriented, valuing efficiency and output above curiosity. Similarly, both environments require teamwork and communication skills, yet the stakes differ significantly: a failed group project may cost a grade, while a failed workplace effort may cost clients and reputations. Furthermore, university provides a financial safety net in the form of family support, whereas professional life demands full financial self-sufficiency. Despite these differences, both university and professional life serve as essential training grounds, preparing individuals to navigate challenges, build relationships, and grow as capable members of society.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>📝 3 · Process — Writing an Essay</summary>
+    <div class="details-body">
+      <div class="tip">Steps must be in ORDER. Every step needs a transition (first, next, then, finally). Don't skip steps.</div>
+      <div class="essay">
+        <p>Writing a successful essay requires following a systematic process that transforms rough ideas into a polished, coherent piece of writing. The first step is prewriting, during which the writer generates ideas through techniques such as brainstorming, freewriting, or clustering, ultimately arriving at a focused thesis and rough outline. Next, the writer moves to drafting — composing a first version without worrying about perfection, the goal being simply to get ideas on paper. After completing the first draft, the writer engages in revising, the most critical step, which involves reconsidering the essay's argument, structure, and clarity: reorganizing paragraphs, strengthening the thesis, ensuring each topic sentence clearly supports the central argument. Then comes editing, a more focused process addressing sentence-level issues including grammar, vocabulary, and word choice. Finally, the writer proofreads carefully, catching any remaining errors before submitting the final draft. Following this process consistently results in essays that are not only grammatically correct but logically compelling and clearly articulated.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>📝 4 · Division-Classification — Examinations</summary>
+    <div class="details-body">
+      <div class="tip">Divide your topic into CLEAR, distinct categories. Each category should not overlap with others. Use "can be classified as," "the first type," etc.</div>
+      <div class="essay">
+        <p>Examinations can be classified into several distinct categories based on their format and purpose, each designed to assess student knowledge in a different way. The first and most common category is the written examination, which itself divides into essay-type tests requiring students to construct extended written arguments; short-answer tests demanding brief but precise responses; and multiple-choice tests presenting options from which students select correct answers. A second category is the practical examination, used primarily in science, engineering, and medical programs, where students demonstrate technical skills in a laboratory or clinical setting rather than through written responses. The third type is the oral examination, in which students respond verbally to questions posed by examiners — a format testing communication skills and the ability to think under pressure. Finally, standardized or public examinations, such as the SSC and HSC in Bangladesh, represent a fourth category: large-scale, nationally administered tests designed to compare performance across institutions. Understanding these categories helps students and educators choose the most appropriate assessment form for any given learning objective.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>📝 5 · Descriptive — A Casual Day at University</summary>
+    <div class="details-body">
+      <div class="tip">Use your 5 senses: what you SEE, HEAR, SMELL, FEEL. Don't narrate a story — just describe the scene like you're painting it.</div>
+      <div class="essay">
+        <p>On any given afternoon, the campus of a Bangladeshi public university is a vivid, unhurried canvas of student life. The wide, tree-lined pathways are dotted with students moving in small clusters — some clutching notebooks, others scrolling through phones, all unhurried in the golden afternoon light. The air smells faintly of earth and fried snacks drifting from nearby tea stalls, where vendors ladle out hot cha into thick-walled glasses. Around the central field, groups of students sprawl on the grass, some deep in conversation, others simply staring at the sky. The corridors of the faculty buildings hum with a low murmur of voices — the occasional burst of laughter, the squeak of chalk on a classroom board, the distant echo of footsteps on concrete stairs. Near the library steps, a lone student reads with unusual concentration, oblivious to the scattered pigeons pecking at crumbs beside him. It is neither dramatic nor extraordinary, but there is a particular, irreplaceable warmth to this scene — the unhurried ease of a place where people come not only to study, but simply to be young.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>📝 6 · Narrative — A Casual Day at University</summary>
+    <div class="details-body">
+      <div class="tip">Tell a STORY in sequence. First person (I). Include action, reflection. The difference from descriptive: here you're DOING things, not just describing a static scene.</div>
+      <div class="essay">
+        <p>That Tuesday started the way most of my university days do — with a missed alarm and a rushed breakfast. I arrived at the faculty building just as the 9 AM class was beginning, slipping into a seat at the back and hoping my professor would not notice my disheveled state. The lecture on macroeconomics drifted over my head at first, but then something clicked — a real-world example about inflation that suddenly made the textbook make sense. By noon, my friend Karim and I had claimed our usual corner at the campus canteen, arguing passionately over whether the tea here was better than the one at the roadside shop near the gate. After lunch, we wandered to the library — mostly to sit and talk rather than study — and spent an hour debating nothing in particular. The afternoon slipped away in a haze of easy conversation, one short nap under a shady tree, and a shared plate of jhalmuri from the stall by the main gate. By evening, as the campus quieted and the sky turned pink, I realized that no extraordinary thing had happened that day — and yet, walking home, I felt oddly full, as though the day itself had been enough.</p>
+      </div>
+    </div>
+  </details>
+</div>
+
+<!-- ===================== Q3 ===================== -->
+<div class="q-section q3" id="q3">
+  <div class="q-header">
+    <div class="q-num">Q3</div>
+    <div>
+      <div class="q-title">Product vs Process Writing ⚙️</div>
+      <div class="q-sub">Differences · Steps of Process Writing · Multiple Submission</div>
+    </div>
+  </div>
+
+  <div class="analogy">Product writing is like ordering a cake from a bakery — you only see the final result. Process writing is like BAKING the cake yourself — mixing, tasting, adjusting, baking again. The journey is the point.</div>
+
+  <table>
+    <tr><th>Point</th><th>Product Writing</th><th>Process Writing</th></tr>
+    <tr><td><strong>Focus</strong></td><td>The final written product</td><td>The stages of writing</td></tr>
+    <tr><td><strong>Goal</strong></td><td>Produce a correct, polished text</td><td>Develop the writer's thinking</td></tr>
+    <tr><td><strong>Orientation</strong></td><td>Reader-oriented</td><td>Writer-oriented</td></tr>
+    <tr><td><strong>Teacher's role</strong></td><td>Evaluates final output</td><td>Guides throughout drafts</td></tr>
+    <tr><td><strong>Drafts</strong></td><td>Usually one final draft</td><td>Multiple drafts expected</td></tr>
+    <tr><td><strong>Mistakes</strong></td><td>Penalized in final product</td><td>Part of learning, corrected iteratively</td></tr>
+    <tr><td><strong>Nature</strong></td><td>Linear: write → submit</td><td>Recursive: write → revise → revise again</td></tr>
+  </table>
+
+  <h3>Steps of Process Writing</h3>
+  <div class="flow">
+    <div class="fstep">1 Prewriting</div><div class="farrow">→</div>
+    <div class="fstep">2 Drafting</div><div class="farrow">→</div>
+    <div class="fstep">3 Revising</div><div class="farrow">→</div>
+    <div class="fstep">4 Editing</div><div class="farrow">→</div>
+    <div class="fstep">5 Proofreading</div><div class="farrow">→</div>
+    <div class="fstep">6 Publishing</div>
+  </div>
+  <ul style="margin-top:10px;">
+    <li><strong>Prewriting:</strong> Generate ideas (brainstorm, cluster, freewrite). Pick your thesis and outline.</li>
+    <li><strong>Drafting:</strong> Write the first version. Don't aim for perfection — just get it out.</li>
+    <li><strong>Revising:</strong> Big-picture: reorganize, strengthen argument, add/cut sections. Think CONTENT.</li>
+    <li><strong>Editing:</strong> Sentence-level: fix grammar, vocabulary, word choice. Think LANGUAGE.</li>
+    <li><strong>Proofreading:</strong> Final scan for typos and punctuation errors.</li>
+    <li><strong>Publishing:</strong> Submit or share the polished final piece.</li>
+  </ul>
+
+  <div class="warn">Revising ≠ Editing. Revising = changing IDEAS and STRUCTURE (the big stuff). Editing = fixing grammar errors (the small stuff). Most students skip revising and go straight to editing — huge mistake.</div>
+
+  <h3>Multiple Submission Process</h3>
+  <p>Multiple submission is a method within process writing where you submit the essay in STAGES, not all at once:</p>
+  <div class="flow" style="flex-wrap:wrap;gap:6px;">
+    <div class="fstep" style="background:var(--card2);color:var(--muted);border:1.5px solid var(--border);">Draft 1</div>
+    <div class="farrow">→</div>
+    <div class="fstep" style="background:var(--card2);color:var(--sky);border:1.5px solid var(--sky);">Feedback</div>
+    <div class="farrow">→</div>
+    <div class="fstep" style="background:var(--card2);color:var(--muted);border:1.5px solid var(--border);">Draft 2</div>
+    <div class="farrow">→</div>
+    <div class="fstep" style="background:var(--card2);color:var(--sky);border:1.5px solid var(--sky);">Feedback</div>
+    <div class="farrow">→</div>
+    <div class="fstep">Final Draft ✓</div>
+  </div>
+  <ul style="margin-top:10px;">
+    <li>Teacher reads each draft and provides written/oral feedback.</li>
+    <li>Student revises based on feedback before submitting the next draft.</li>
+    <li>May include peer review (students giving each other feedback).</li>
+    <li>Grade may be based on the final draft only, or on progress across all drafts.</li>
+    <li><strong>Purpose:</strong> gradual improvement, not one-time judgment. Writing is treated as a skill to develop.</li>
+  </ul>
+</div>
+
+<!-- ===================== Q4 ===================== -->
+<div class="q-section q4" id="q4">
+  <div class="q-header">
+    <div class="q-num">Q4</div>
+    <div>
+      <div class="q-title">What is an Essay? 🗂️</div>
+      <div class="q-sub">Definition · Components · Diagram</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Definition</h3>
+    <p>An <strong>essay</strong> is a formal piece of academic writing that presents, develops, and supports a single central argument (called the <em>thesis</em>) through organized paragraphs. It always has three parts: an introduction, body paragraphs, and a conclusion.</p>
+  </div>
+
+  <h3>Essay Diagram</h3>
+  <div class="diagram">
+    <div class="dbox db-intro">🔓 INTRODUCTION</div>
+    <div class="dbox db-sub">Hook — grabs attention (question, stat, story, bold claim)</div>
+    <div class="dbox db-sub">Background — context the reader needs</div>
+    <div class="dbox db-sub" style="border-color:var(--coral);color:var(--coral);font-weight:700;">Thesis Statement + Plan of Development ← THE MOST IMPORTANT SENTENCE</div>
+    <div class="darrow">↓</div>
+    <div class="dbox db-body">BODY PARAGRAPH 1</div>
+    <div class="dbox db-sub">Topic Sentence (mini-thesis of this paragraph)</div>
+    <div class="dbox db-sub">Supporting Detail / Evidence / Example</div>
+    <div class="dbox db-sub">Analysis — explain HOW the evidence proves your point</div>
+    <div class="dbox db-sub">Concluding Sentence + Transition</div>
+    <div class="darrow">↓</div>
+    <div class="dbox db-body">BODY PARAGRAPH 2 (same structure)</div>
+    <div class="darrow">↓</div>
+    <div class="dbox db-body" style="border-color:var(--orange);color:var(--orange);background:rgba(255,159,67,0.05);">BODY PARAGRAPH 3 — Counterargument + Refutation</div>
+    <div class="darrow">↓</div>
+    <div class="dbox db-conc">🔒 CONCLUSION</div>
+    <div class="dbox db-sub" style="border-color:var(--purple);color:var(--purple);">Restatement of Thesis (same idea, DIFFERENT words)</div>
+    <div class="dbox db-sub">Summary of main points</div>
+    <div class="dbox db-sub">Final thought — call to action, prediction, or memorable close</div>
+  </div>
+
+  <div class="warn">
+    Never introduce NEW arguments in the conclusion. Never copy the thesis word-for-word as the restatement. Never start a body paragraph without a topic sentence.
+  </div>
+
+  <h3>Each Component in Plain English</h3>
+  <table>
+    <tr><th>Part</th><th>What it does</th><th>Think of it as...</th></tr>
+    <tr><td><strong>Hook</strong></td><td>Opens the essay, grabs attention</td><td>The trailer of a movie 🎬</td></tr>
+    <tr><td><strong>Thesis</strong></td><td>States your central argument + roadmap</td><td>The GPS destination 📍</td></tr>
+    <tr><td><strong>Topic Sentence</strong></td><td>One supporting point per paragraph</td><td>Mini-thesis for that paragraph</td></tr>
+    <tr><td><strong>Supporting Details</strong></td><td>Evidence proving the topic sentence</td><td>Your receipts 🧾</td></tr>
+    <tr><td><strong>Analysis</strong></td><td>Explain WHY the evidence matters</td><td>The "so what?" answer</td></tr>
+    <tr><td><strong>Transition</strong></td><td>Links paragraphs smoothly</td><td>The bridge between islands 🌉</td></tr>
+    <tr><td><strong>Restatement</strong></td><td>Thesis in new words</td><td>Same song, different remix 🎵</td></tr>
+    <tr><td><strong>Final Thought</strong></td><td>Memorable close</td><td>The movie's last scene 🎬</td></tr>
+  </table>
+</div>
+
+<!-- ===================== Q5 ===================== -->
+<div class="q-section q5" id="q5">
+  <div class="q-header">
+    <div class="q-num">Q5</div>
+    <div>
+      <div class="q-title">Short Notes 📒</div>
+      <div class="q-sub">Answer any 3 of 5 — all 5 covered here</div>
+    </div>
+  </div>
+
+  <details open>
+    <summary>a) Common Method of Writing an Introduction — The Funnel Method</summary>
+    <div class="details-body">
+      <div class="analogy">Think of a funnel: wide at the top (broad topic), narrow at the bottom (specific thesis). You start general, get more specific with every sentence, and end with the sharpest, most specific thing: your thesis.</div>
+      <div class="diagram">
+        <div class="dbox db-intro" style="max-width:520px;font-size:13px;font-weight:400;">BROAD → General statement about the world or topic</div>
+        <div class="darrow">↓ narrowing</div>
+        <div class="dbox db-intro" style="max-width:420px;font-size:13px;font-weight:400;">Background / context sentences</div>
+        <div class="darrow">↓ narrowing</div>
+        <div class="dbox db-intro" style="max-width:310px;font-weight:700;font-size:13px;border-color:var(--coral);color:var(--coral);">SPECIFIC → Thesis Statement</div>
+      </div>
+      <p><strong>Other hook methods:</strong> Anecdote (short story), Rhetorical question ("What if...?"), Shocking statistic, Direct quotation.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>b) Principles of Writing a Strong Thesis Statement</summary>
+    <div class="details-body">
+      <div class="brain">ASPPP: <strong>A</strong>rguable · <strong>S</strong>pecific · <strong>P</strong>ositional · <strong>P</strong>lan of development · <strong>P</strong>laced at the end of intro</div>
+      <ol>
+        <li><strong>Must be arguable:</strong> It's a position someone can disagree with. Not a fact. ✗ "AI exists." ✓ "AI transforms healthcare, education, and industry."</li>
+        <li><strong>Must be specific:</strong> No vague language. ✗ "AI is important." ✓ "AI enhances productivity, revolutionizes healthcare, and reshapes education."</li>
+        <li><strong>Single unified idea:</strong> Don't cram unrelated claims together.</li>
+        <li><strong>Includes plan of development:</strong> Signals what the 3 body paragraphs will argue.</li>
+        <li><strong>States writer's position:</strong> The reader knows exactly where you stand.</li>
+        <li><strong>Placed at the end of the intro:</strong> Last sentence (or last two) of the intro paragraph.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary>c) Three Purposes of the Introduction</summary>
+    <div class="details-body">
+      <ol>
+        <li><strong>Engage the reader / grab attention:</strong> The intro must hook the reader immediately, giving them a reason to keep reading.</li>
+        <li><strong>Provide background and context:</strong> It supplies what the reader needs to know about the topic before the argument begins.</li>
+        <li><strong>State the thesis and plan of development:</strong> It tells the reader what the essay argues and how it will be structured — a roadmap for what follows.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary>d) Three Purposes of the Conclusion</summary>
+    <div class="details-body">
+      <ol>
+        <li><strong>Restate the thesis:</strong> Revisit the central argument in fresh language — remind the reader what has been proven, without copying the original thesis.</li>
+        <li><strong>Summarize the main supporting points:</strong> Briefly recap the key arguments from the body paragraphs, giving a sense of completeness.</li>
+        <li><strong>Leave a lasting impression:</strong> End with a final thought — a call to action, a broader implication, a prediction, or a memorable observation. This is what the reader carries away.</li>
+      </ol>
+      <div class="warn">Never introduce a NEW argument in the conclusion. Never end abruptly. Always close the loop.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>e) Basic Structure in the Diagram of a Paragraph</summary>
+    <div class="details-body">
+      <div class="para-d">
+        <div class="para-row">
+          <span class="plabel" style="background:rgba(255,229,102,0.15);color:var(--yellow);">Topic Sentence</span>
+          <span>The main idea of the paragraph. A mini-thesis — one clear claim that directly supports the essay's thesis. Every reader should know what this paragraph is about just from this sentence.</span>
+        </div>
+        <div class="para-row">
+          <span class="plabel" style="background:rgba(110,181,255,0.15);color:var(--sky);">Supporting Detail 1</span>
+          <span>Evidence, example, fact, statistic, or expert opinion that proves the topic sentence.</span>
+        </div>
+        <div class="para-row">
+          <span class="plabel" style="background:rgba(110,181,255,0.15);color:var(--sky);">Supporting Detail 2</span>
+          <span>Further evidence, often from a different angle, to reinforce the point.</span>
+        </div>
+        <div class="para-row">
+          <span class="plabel" style="background:rgba(78,204,163,0.15);color:var(--mint);">Analysis</span>
+          <span>Your explanation of HOW and WHY the evidence proves the topic sentence. This is YOUR voice. Never drop evidence without explaining it.</span>
+        </div>
+        <div class="para-row">
+          <span class="plabel" style="background:rgba(255,107,107,0.15);color:var(--coral);">Concluding Sentence</span>
+          <span>Wraps up the paragraph and may transition to the next paragraph's idea.</span>
+        </div>
+      </div>
+      <div class="brain">TS → SD → A → CS = Tell me → Show me → Analyze it → Close it. If you can say all four things, you have a complete paragraph.</div>
+    </div>
+  </details>
+</div>
+
+<!-- ===================== Q6 ===================== -->
+<div class="q-section q6" id="q6">
+  <div class="q-header">
+    <div class="q-num">Q6</div>
+    <div>
+      <div class="q-title">Essay Analysis 🔍</div>
+      <div class="q-sub">They give you an essay — you identify parts, name devices, write more sections</div>
+    </div>
+  </div>
+
+  <div class="brain">Q6 is just a scavenger hunt. They give you the essay — you find specific things in it. Know what each thing LOOKS LIKE and WHERE to find it.</div>
+
+  <h3>What Each Sub-Question Wants</h3>
+  <table>
+    <tr><th>Sub-Q</th><th>What to do</th><th>Where to look</th></tr>
+    <tr><td><strong>1. Thesis + Keywords</strong></td><td>Find the arguable claim. Keywords = the most important nouns that echo throughout the essay.</td><td>Last 1–2 sentences of the intro</td></tr>
+    <tr><td><strong>2. Plan of Development</strong></td><td>The sentence listing what 3 body paragraphs will cover</td><td>Usually embedded in or after the thesis</td></tr>
+    <tr><td><strong>3. Topic Sentence (Para 1)</strong></td><td>First sentence of body paragraph 1</td><td>Body paragraph 1, first line</td></tr>
+    <tr><td><strong>4. Four Transitions</strong></td><td>List transition words used (First, Furthermore, However, etc.)</td><td>Beginning of paragraphs, between sentences</td></tr>
+    <tr><td><strong>5. Four Cohesive Devices</strong></td><td>Different from transitions — these are pronoun references, synonym use, repeated keywords</td><td>Throughout the essay</td></tr>
+    <tr><td><strong>6. Concluding Paragraph</strong></td><td>Write restatement + summary + final thought</td><td>You write this yourself</td></tr>
+    <tr><td><strong>7. Alternative Intro</strong></td><td>Different hook, same thesis — use a different method (anecdote vs statistic etc.)</td><td>You write this yourself</td></tr>
+    <tr><td><strong>8. Two More Body Paras</strong></td><td>New topic sentences + supporting details — must relate to the thesis</td><td>You write these yourself</td></tr>
+  </table>
+
+  <h3>Transitions — Full Cheat Sheet</h3>
+  <div class="trans-grid">
+    <div class="trans-chip">First</div><div class="trans-chip">Furthermore</div>
+    <div class="trans-chip">Moreover</div><div class="trans-chip">In addition</div>
+    <div class="trans-chip">However</div><div class="trans-chip">Nevertheless</div>
+    <div class="trans-chip">In contrast</div><div class="trans-chip">On the other hand</div>
+    <div class="trans-chip">As a result</div><div class="trans-chip">Consequently</div>
+    <div class="trans-chip">Therefore</div><div class="trans-chip">Thus</div>
+    <div class="trans-chip">Finally</div><div class="trans-chip">In conclusion</div>
+    <div class="trans-chip">To summarize</div><div class="trans-chip">Although</div>
+  </div>
+
+  <h3>Cohesive Devices (Different from Transitions!)</h3>
+  <table>
+    <tr><th>Device</th><th>Example</th></tr>
+    <tr><td><strong>Pronoun reference</strong></td><td>"AI is transformative. <em>It</em> has changed healthcare." — "It" refers back to AI</td></tr>
+    <tr><td><strong>Repetition of keywords</strong></td><td>"AI" repeating in every paragraph keeps the essay unified</td></tr>
+    <tr><td><strong>Synonyms</strong></td><td>"artificial intelligence" → "AI" → "technology" → "intelligent systems"</td></tr>
+    <tr><td><strong>Reference words</strong></td><td>"the former," "the latter," "such," "the above-mentioned"</td></tr>
+    <tr><td><strong>Demonstrative pronouns</strong></td><td>"this problem," "these issues," "that argument"</td></tr>
+  </table>
+
+  <div class="tip">Cohesive devices make a reader feel the essay FLOWS — they create invisible connections between sentences and paragraphs. Transitions are one type of cohesive device, but there are others too.</div>
+</div>
+
+<!-- ===================== Q7 ===================== -->
+<div class="q-section q7" id="q7">
+  <div class="q-header">
+    <div class="q-num">Q7</div>
+    <div>
+      <div class="q-title">Grammar Corrections 🔧</div>
+      <div class="q-sub">Fragments · Run-ons · Agreement · Modifiers · Punctuation</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Error Types — Know What Each One Is</h3>
+    <table style="margin:0;">
+      <tr><td><span class="badge b-coral">Fragment</span></td><td>Incomplete sentence. Missing subject, verb, or both. A dependent clause standing alone.</td></tr>
+      <tr><td><span class="badge b-orange">Run-on</span></td><td>Two complete sentences smashed together without proper punctuation or conjunction.</td></tr>
+      <tr><td><span class="badge b-yellow">S-V Agreement</span></td><td>Subject and verb don't match (singular/plural).</td></tr>
+      <tr><td><span class="badge b-mint">Pronoun Agreement</span></td><td>Pronoun doesn't match the noun it refers to.</td></tr>
+      <tr><td><span class="badge b-sky">Dangling Modifier</span></td><td>A describing phrase that doesn't attach to the right noun (the one doing the action).</td></tr>
+      <tr><td><span class="badge b-purple">Misplaced Modifier</span></td><td>A describing phrase placed too far from the noun it describes, causing confusion.</td></tr>
+    </table>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-coral" style="margin-bottom:8px;display:inline-block;">a · Fragment / Illogical Clause Order</span>
+    <div class="g-wrong">Michelle tried each of the appetizers on the table and then found that when she arrived, her appetite was gone.</div>
+    <div class="g-right">When Michelle arrived, she tried each of the appetizers on the table but found that her appetite was gone.</div>
+    <div class="g-why">She must ARRIVE before she can TRY the appetizers. The original sentence has her trying food before arriving, which makes no sense. Reorder: arrival → trying → finding appetite gone.</div>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-coral" style="margin-bottom:8px;display:inline-block;">b · Fragment (Detached Phrase)</span>
+    <div class="g-wrong">I love to cook and eat Italian food, especially, sterity and labhagna. I make everything from scratch.</div>
+    <div class="g-right">I love to cook and eat Italian food, especially spaghetti and lasagna, which I make entirely from scratch.</div>
+    <div class="g-why">"Especially, sterity and labhagna" is a fragment — it can't stand alone. Attach it to the main clause. Also "sterity and labhagna" = spaghetti and lasagna (misspelled in original). The two sentences should be combined.</div>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-orange" style="margin-bottom:8px;display:inline-block;">c · Run-on Sentence</span>
+    <div class="g-wrong">My grades are very good in this semester. My social life grades only a C.</div>
+    <div class="g-right">My grades are very good this semester; however, my social life only gets a C.</div>
+    <div class="g-why">Two contrasting thoughts must be properly connected. Use a semicolon + conjunctive adverb (however). Also: "grades only a C" needs the verb "gets" — "grades" cannot function as a verb meaning "receives a grade of."</div>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-orange" style="margin-bottom:8px;display:inline-block;">d · Run-on Sentence</span>
+    <div class="g-wrong">Self-cleaning public toilets are available in few American cities have installed them.</div>
+    <div class="g-right">Self-cleaning public toilets are available, but few American cities have installed them.</div>
+    <div class="g-why">Two complete sentences fused without any punctuation or conjunction. Fix: add a comma + coordinating conjunction (but), or make one a subordinate clause.</div>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-yellow" style="margin-bottom:8px;display:inline-block;">e · Subject-Verb Agreement</span>
+    <div class="g-wrong">The serious look in that girl's eye worrying me.</div>
+    <div class="g-right">The serious look in that girl's eye worries me.</div>
+    <div class="g-why">Subject = "look" (singular). Verb must be "worries" (singular present tense). "Worrying" is a participle — it cannot be the main verb by itself. The phrase "in that girl's eye" is a prepositional phrase and does NOT affect the verb.</div>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-mint" style="margin-bottom:8px;display:inline-block;">f · Pronoun Agreement</span>
+    <div class="g-wrong">I lifted the pot of my hot potatoes, but the slipped out of my hand.</div>
+    <div class="g-right">I lifted the pot of hot potatoes, but it slipped out of my hand.</div>
+    <div class="g-why">"The" is a determiner — it CANNOT replace a noun. The pronoun needed here is "it" (referring to "the pot" — singular). You can't use "the" as a pronoun. Ever.</div>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-sky" style="margin-bottom:8px;display:inline-block;">g · Dangling Modifier</span>
+    <div class="g-wrong">Frustrated by piles of homework, Rafiq's temptation was to watch television.</div>
+    <div class="g-right">Frustrated by piles of homework, Rafiq was tempted to watch television.</div>
+    <div class="g-why">The phrase "Frustrated by piles of homework" must describe the subject immediately after the comma. The subject must be the PERSON who is frustrated — Rafiq. Instead, the original makes "Rafiq's temptation" the frustrated thing, which is illogical. Fix: make Rafiq the subject.</div>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-purple" style="margin-bottom:8px;display:inline-block;">h · Misplaced Modifier</span>
+    <div class="g-wrong">Rafiq returned the burger to the supermarket that was spoiled.</div>
+    <div class="g-right">Rafiq returned the spoiled burger to the supermarket.</div>
+    <div class="g-why">"That was spoiled" is placed next to "supermarket," making it sound like the supermarket is spoiled. The modifier must sit next to the noun it describes — "burger." Move "spoiled" directly before "burger."</div>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-yellow" style="margin-bottom:8px;display:inline-block;">i · Punctuation + Fragment</span>
+    <div class="g-wrong">Printed out an article title too much homework? From the magazine Reader's Digest.</div>
+    <div class="g-right">He printed out an article titled "Too Much Homework?" from the magazine <em>Reader's Digest</em>.</div>
+    <div class="g-why">The original has no subject — it's a fragment. Add a subject (He/She). The article title needs quotation marks. The magazine name needs italics (or underline). "From the magazine..." is a dangling fragment — attach it to the main sentence.</div>
+  </div>
+
+  <div class="g-item">
+    <span class="badge b-yellow" style="margin-bottom:8px;display:inline-block;">j · Punctuation + Wrong Sentence Break</span>
+    <div class="g-wrong">The top of the hill offered an awesome view of the military cemetery. Sounds of headstone were arranged in perfect rows.</div>
+    <div class="g-right">The top of the hill offered an awesome view of the military cemetery, where the headstones were arranged in perfect rows.</div>
+    <div class="g-why">"Sounds of headstone" = nonsensical. It should be "headstones" (plural). The second sentence describes the cemetery view — it belongs attached to the first sentence via a relative clause ("where..."), not as a separate sentence.</div>
+  </div>
+</div>
+
+<!-- ===================== Q8 ===================== -->
+<div class="q-section q8" id="q8">
+  <div class="q-header">
+    <div class="q-num">Q8</div>
+    <div>
+      <div class="q-title">Prewriting Techniques 💡</div>
+      <div class="q-sub">5 techniques + applied examples for both topics</div>
+    </div>
+  </div>
+
+  <div class="analogy">Prewriting is like warming up before a race. You don't go from the couch to sprinting. You stretch first — get the ideas loose — THEN you write the essay.</div>
+
+  <table>
+    <tr><th>Technique</th><th>What you do</th><th>Best for</th></tr>
+    <tr><td><strong>Brainstorming / Listing</strong></td><td>Write every idea fast, as a list. No judgment, no editing.</td><td>Getting unstuck fast. Any topic.</td></tr>
+    <tr><td><strong>Freewriting</strong></td><td>Write non-stop for 5–10 min. Don't stop to fix anything.</td><td>Discovering unexpected angles on a topic.</td></tr>
+    <tr><td><strong>Clustering / Mind Map</strong></td><td>Topic in center circle → branch out related ideas → connect with lines.</td><td>Visual thinkers. Seeing how ideas connect.</td></tr>
+    <tr><td><strong>Questioning (5W+1H)</strong></td><td>Ask Who? What? Where? When? Why? How? Answer each.</td><td>Narrative or research topics. Comprehensive coverage.</td></tr>
+    <tr><td><strong>Outlining</strong></td><td>Create thesis → body point 1 → details → body point 2 → details → conclusion skeleton.</td><td>Structured writers. Works best after brainstorming.</td></tr>
+  </table>
+
+  <h3>Applied Example A — Clustering: "Excessive Social Media Use Leads to Depression and Anxiety"</h3>
+
+  <div class="cluster">
+<span class="leaf">  [Low self-esteem] ← comparing own life to curated highlights</span>
+           |
+  <span class="node">[Comparison Culture]</span>
+           |
+  <span class="node">[Cyberbullying]</span> ── harassment, threats, public shaming
+           |
+           └──────── <span class="center">SOCIAL MEDIA → Depression & Anxiety</span> ──────┐
+                                                                       |
+           <span class="node">[FOMO]</span> ── fear of missing out → constant checking               |
+           |                                                           |
+  <span class="leaf">Anxiety about being left out</span>                                    |
+                                                              <span class="node">[Sleep Disruption]</span>
+                                                                       |
+                                                     <span class="leaf">Late night scrolling → mood disorders</span>
+                                                                       |
+                                                          <span class="node">[Dopamine Addiction]</span>
+                                                                       |
+                                                   <span class="leaf">Withdrawal anxiety when offline</span>
+  </div>
+
+  <div class="tip">Thesis from Clustering: Excessive social media use significantly contributes to depression and anxiety by fostering unhealthy comparison, enabling cyberbullying, and disrupting the sleep patterns essential for mental health.</div>
+
+  <h3>Applied Example B — Questioning (5W+1H): "Emotional State Affects Our Memory"</h3>
+
+  <table>
+    <tr><th>Question</th><th>Exploration</th></tr>
+    <tr><td><strong>WHO</strong> is affected?</td><td>Everyone — students during exams, trauma survivors, grieving people, people in love.</td></tr>
+    <tr><td><strong>WHAT</strong> happens?</td><td>Strong emotions enhance memory encoding (flashbulb memories); chronic stress hormones (cortisol) damage the hippocampus, impairing recall.</td></tr>
+    <tr><td><strong>WHERE</strong> in the brain?</td><td>Amygdala (emotion) and hippocampus (memory) are physically connected — they directly influence each other.</td></tr>
+    <tr><td><strong>WHEN</strong> does emotion affect memory?</td><td>At encoding (when experience happens) AND at recall (we remember mood-matching information more easily — "mood congruence").</td></tr>
+    <tr><td><strong>WHY</strong> does this happen?</td><td>Evolution: emotionally significant events are critical for survival, so the brain prioritizes storing them.</td></tr>
+    <tr><td><strong>HOW</strong> strong is the effect?</td><td>Extreme emotion → vivid but sometimes inaccurate memories. Mild positive mood → better learning. Severe anxiety → impaired recall.</td></tr>
+  </table>
+
+  <div class="tip">Thesis from Questioning: Our emotional state profoundly shapes both the formation and retrieval of memories, as the brain's emotional and memory systems are deeply intertwined — causing strong emotions to enhance recall while chronic stress impairs it.</div>
+</div>
+
+<!-- ===================== Q9 ===================== -->
+<div class="q-section q9" id="q9">
+  <div class="q-header">
+    <div class="q-num">Q9</div>
+    <div>
+      <div class="q-title">Assertion vs Opinion 🎯</div>
+      <div class="q-sub">What's the difference? How do you tell them apart?</div>
+    </div>
+  </div>
+
+  <div class="analogy">Opinion = "I think chocolate is the best ice cream." Nobody can argue with you — it's just your feeling. Assertion = "Chocolate ice cream outsells all other flavors in Bangladesh." Now THAT can be proven, debated, supported. That's what academic writing needs.</div>
+
+  <table>
+    <tr><th>Point</th><th>Opinion ❌</th><th>Assertion ✅</th></tr>
+    <tr><td><strong>Nature</strong></td><td>Personal belief or preference</td><td>Confident claim supported by evidence</td></tr>
+    <tr><td><strong>Based on</strong></td><td>Feelings, preferences, emotions</td><td>Logic, facts, evidence, reasoning</td></tr>
+    <tr><td><strong>Objectivity</strong></td><td>Subjective — varies person to person</td><td>Can be argued and defended</td></tr>
+    <tr><td><strong>Language</strong></td><td>"I think," "I feel," "I believe," "In my opinion"</td><td>No hedging — states directly</td></tr>
+    <tr><td><strong>In academic writing</strong></td><td>Weak. Avoid it.</td><td>Required. Use it everywhere.</td></tr>
+  </table>
+
+  <h3>Side by Side Examples</h3>
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(255,107,107,0.4);">
+      <h3 style="color:var(--coral);">Opinion ❌ — Weak</h3>
+      <p>"I think corruption is really bad for our country."</p>
+      <p>"I believe AI will take everyone's jobs."</p>
+      <p>"In my opinion, exams are unfair."</p>
+      <p>"I feel like gender equality is important."</p>
+    </div>
+    <div class="card" style="border-color:rgba(78,204,163,0.4);">
+      <h3 style="color:var(--mint);">Assertion ✅ — Strong</h3>
+      <p>"Corruption systematically diverts public funds, undermining infrastructure and public trust."</p>
+      <p>"While AI displaces certain jobs, it simultaneously creates new categories of employment."</p>
+      <p>"Traditional examinations disadvantage students from lower socioeconomic backgrounds."</p>
+      <p>"Gender equality produces more stable, prosperous, and innovative societies."</p>
+    </div>
+  </div>
+
+  <div class="brain">The Quick Test: Can you ask "How do you know? Can you prove that?" about the claim? If YES → assertion. If the only answer is "Because I feel that way" → opinion. In your essay, EVERY thesis and EVERY topic sentence must be an assertion.</div>
+
+  <div class="card" style="margin-top:14px;">
+    <h3>Key Distinction for the Exam</h3>
+    <p>An <strong>opinion</strong> is what the person <em>feels</em>. An <strong>assertion</strong> is what the writer <em>claims to be true</em> and is willing to defend with evidence.</p>
+    <p>The content can be the same — the difference is whether it is grounded in logic and evidence or purely personal feeling.</p>
+    <p style="margin-top:8px;"><strong>Important:</strong> An assertion doesn't have to be correct — it just has to be arguable. That's what makes it academic.</p>
+  </div>
+</div>
+
+<div style="text-align:center;color:var(--muted);font-size:13px;padding:30px 0 0;border-top:1px solid var(--border);margin-top:20px;">
+  All 9 Questions Covered · Good luck ✍️
+</div>
+
+</div><!-- wrap -->
+
+<script>
+const sections = document.querySelectorAll('.q-section');
+const links = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) current = s.id; });
+  links.forEach(l => { l.style.color = l.getAttribute('href') === '#' + current ? 'var(--yellow)' : ''; l.style.borderColor = l.getAttribute('href') === '#' + current ? 'var(--yellow)' : ''; });
+}, { passive: true });
+</script>
+</body>
+</html>
