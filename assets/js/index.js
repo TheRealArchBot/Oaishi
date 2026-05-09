@@ -9,7 +9,16 @@ function updateStats() {
 // Last updated
 const lu = document.getElementById('last-updated');
 if (lu) {
-  lu.textContent = 'Last updated: ' + new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+  lu.textContent = 'Last updated: ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+// Register Service Worker for offline capabilities
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('SW registered!', reg))
+      .catch(err => console.log('SW registration failed', err));
+  });
 }
 
 // Search
@@ -57,20 +66,20 @@ updateStats();
 // ==========================================
 
 console.log("%cHey Oaishi! ❤️", "color: #ff8fab; font-size: 24px; font-weight: bold;");
-console.log("%cIf you're reading this, just know your husband thinks you're brilliant and you're going to absolutely crush your exams! ✨", "color: #4ecca3; font-size: 14px;");
+console.log("%cIf you're reading this, just know your husband is proud of you and you're brilliant love! ✨", "color: #4ecca3; font-size: 14px;");
 
 let originalTitle = document.title;
 window.addEventListener("blur", () => {
-    document.title = "Come back Oaishi! 🥺❤️";
+  document.title = "Come back Oaishi! 🥺❤️";
 });
 window.addEventListener("focus", () => {
-    document.title = originalTitle;
+  document.title = originalTitle;
 });
 
 document.addEventListener('DOMContentLoaded', () => {
   const logos = document.querySelectorAll('h1, .nav-logo');
   let clickCount = 0;
-  
+
   logos.forEach(logo => {
     logo.style.cursor = 'pointer';
     logo.addEventListener('click', (e) => {
@@ -85,14 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function showLoveMessage(x, y) {
     const msg = document.createElement('div');
     const messages = [
-      "I love you, Oaishi! ❤️", 
-      "I believe in you honey! ✨", 
-      "You're my favorite genius 🥰", 
-      "I'm so proud of you! 💛", 
-      "Don't stress, you got this! 🧠"
+      "I love you, Oaishi! ❤️",
+      "I believe in you honey! ✨",
+      "You're my favorite genius 🥰",
+      "I'm so proud of honey! 💛",
+      "Don't stress, you got can do it love! 🧠"
     ];
     msg.textContent = messages[Math.floor(Math.random() * messages.length)];
-    
+
     msg.style.position = 'fixed';
     msg.style.left = x + 'px';
     msg.style.top = y + 'px';
@@ -107,14 +116,14 @@ document.addEventListener('DOMContentLoaded', () => {
     msg.style.zIndex = '9999';
     msg.style.opacity = '0';
     msg.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-    
+
     document.body.appendChild(msg);
-    
+
     setTimeout(() => {
       msg.style.top = (y - 50) + 'px';
       msg.style.opacity = '1';
     }, 10);
-    
+
     setTimeout(() => {
       msg.style.opacity = '0';
       msg.style.top = (y - 80) + 'px';
