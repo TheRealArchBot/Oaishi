@@ -6,7 +6,7 @@ A beautifully designed, centralized hub for all university courses and exam note
 
 - **Centralized Dashboard**: Search, filter, and track all available notes across different semesters.
 - **Rich Formatting**: Notes are formatted beautifully with diagrams, callouts, alerts, color-coded sections, and interactive elements.
-- **Vocabulary Builder**: A built-in section featuring academic vocabulary words to instantly elevate essay tone and grades.
+- **Vocabulary Builder**: A dedicated page featuring academic vocabulary words to instantly elevate essay tone and grades.
 - **Persistent Notepad**: A built-in sticky note widget on every notes page that automatically saves your thoughts to the browser using `localStorage`.
 
 ## 📁 File Structure
@@ -17,6 +17,7 @@ The project has been refactored for maintainability by separating concerns:
 /
 ├── index.html                   ← Main hub (start here)
 ├── english-writing-exam.html    ← Developing Writing Skill — exam notes
+├── vocab-builder.html           ← Vocabulary Builder — essential words
 ├── assets/
 │   ├── css/
 │   │   ├── shared.css           ← Fonts, colors, and global variables
@@ -73,12 +74,5 @@ Every notes page now has a built-in notepad widget floating in the bottom right 
 - Click the header to open/close it.
 - Type any quick thoughts, reminders, or questions.
 - Your notes are saved locally in the browser — they stay even after you close the tab. Each course page maintains its own separate notepad.
-
-## 🌐 Hosting
-
-1. Put all files in one folder (keep the `assets/` subfolder inside).
-2. Go to [netlify.com/drop](https://netlify.com/drop).
-3. Drag the entire folder onto the page.
-4. Share the link!
 
 Happy studying! 🎓

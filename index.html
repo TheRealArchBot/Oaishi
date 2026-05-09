@@ -1,78 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oaishi's Notes</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oaishi's Notes</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="assets/css/shared.css">
   <link rel="stylesheet" href="assets/css/index.css">
 </head>
+
 <body>
 
-<header>
-  <div class="header-left">
-    <h1>Oaishi's Notes</h1>
-    <p>All courses. All notes. One place.</p>
-  </div>
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num" id="course-count">1</div>
-      <div class="stat-label">Courses</div>
+  <header>
+    <div class="header-left">
+      <h1>Oaishi's Notes</h1>
+      <p>All courses. All notes. One place.</p>
     </div>
-    <div class="stat">
-      <div class="stat-num" id="note-count">1</div>
-      <div class="stat-label">Note Files</div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num" id="course-count">2</div>
+        <div class="stat-label">Courses</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="note-count">2</div>
+        <div class="stat-label">Note Files</div>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<div class="toolbar">
-  <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search" placeholder="Search courses..." oninput="filterCards()" />
-  </div>
-  <button class="filter-btn active" onclick="filterSem(this, 'all')">All</button>
-  <button class="filter-btn" onclick="filterSem(this, 'sem2')">Semester 2</button>
-  <button class="filter-btn" onclick="filterSem(this, 'sem3')">Semester 3</button>
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search" placeholder="Search courses..." oninput="filterCards()" />
+    </div>
+    <button class="filter-btn active" onclick="filterSem(this, 'all')">All</button>
+    <button class="filter-btn" onclick="filterSem(this, 'sem2')">Semester 2</button>
+    <button class="filter-btn" onclick="filterSem(this, 'sem3')">Semester 3</button>
     <button class="filter-btn" onclick="filterSem(this, 'sem4')">Semester 4</button>
 
-</div>
+  </div>
 
-<div class="last-updated" id="last-updated"></div>
+  <div class="last-updated" id="last-updated"></div>
 
-<!-- ACTIVE NOTES -->
-<div class="section-label">📂 Available Notes</div>
-<div class="grid" id="card-grid">
+  <!-- ACTIVE NOTES -->
+  <div class="section-label">📂 Available Notes</div>
+  <div class="grid" id="card-grid">
 
-  <!-- ─── ADD COURSE CARDS BELOW THIS LINE ─── -->
-  <!-- TO ADD A NEW COURSE: copy a .course-card block, change the href, name, code, etc. -->
+    <!-- ─── ADD COURSE CARDS BELOW THIS LINE ─── -->
+    <!-- TO ADD A NEW COURSE: copy a .course-card block, change the href, name, code, etc. -->
 
-  <a href="english-writing-exam.html" class="course-card c-yellow" data-sem="sem2" data-name="developing writing skill">
-    <div class="card-top">
-      <div class="card-icon">✍️</div>
-      <div class="card-meta">
-        <div class="card-code">Developing Writing Skill</div>
-        <div class="card-name">Exam Notes</div>
-        <div class="card-semester">Semester 2 (Mid)</div>
+    <a href="english-writing-exam.html" class="course-card c-yellow" data-sem="sem2"
+      data-name="developing writing skill">
+      <div class="card-top">
+        <div class="card-icon">✍️</div>
+        <div class="card-meta">
+          <div class="card-code">Developing Writing Skill</div>
+          <div class="card-name">Exam Notes</div>
+          <div class="card-semester">Semester 2 (Mid)</div>
+        </div>
       </div>
-    </div>
-    <div class="card-body">
-      <div class="card-desc">Argumentative essays, paragraph types, grammar, prewriting, essay structure &amp; analysis.</div>
-    </div>
-    <div class="card-footer">
-      <div class="card-tags">
-        <span class="tag" style="background:rgba(255,229,102,0.15);color:var(--yellow);">Exam Ready</span>
-        <span class="tag" style="background:rgba(78,204,163,0.15);color:var(--mint);">9 Q-Types</span>
+      <div class="card-body">
+        <div class="card-desc">Argumentative essays, paragraph types, grammar, prewriting, essay structure &amp;
+          analysis.</div>
       </div>
-      <span class="card-arrow">→</span>
-    </div>
-  </a>
+      <div class="card-footer">
+        <div class="card-tags">
+          <span class="tag" style="background:rgba(255,229,102,0.15);color:var(--yellow);">Exam Ready</span>
+          <span class="tag" style="background:rgba(78,204,163,0.15);color:var(--mint);">9 Q-Types</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
 
-  <!-- ADD CARD (always last) -->
- 
+    <a href="vocab-builder.html" class="course-card c-pink" data-sem="all" data-name="vocabulary builder">
+      <div class="card-top">
+        <div class="card-icon">🧠</div>
+        <div class="card-meta">
+          <div class="card-code">Vocabulary Builder</div>
+          <div class="card-name">Essential Words</div>
+          <div class="card-semester">All Semesters</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">A growing collection of high-scoring academic words to elevate your essays.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-tags">
+          <span class="tag" style="background:rgba(255,143,171,0.15);color:var(--pink);">Vocab Boost</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <!-- ADD CARD (always last) -->
 
 
-<script src="assets/js/index.js"></script>
+
+    <script src="assets/js/index.js"></script>
 </body>
+
 </html>
