@@ -1,6 +1,6 @@
 # 📚 Oaishi's Study Hub
 
-A beautifully designed, highly interactive, and deeply personalized study platform created to make exam preparation engaging, fun, and emotionally supportive. 
+A beautifully designed, highly interactive, and deeply personalized study platform created to make exam preparation engaging, fun, and emotionally supportive.
 
 ## ✨ Key Features
 
@@ -24,18 +24,57 @@ A beautifully designed, highly interactive, and deeply personalized study platfo
 * **Service Worker (`sw.js`)**: Automatically intercepts and caches all HTML, CSS, JS, and Font assets on the very first load.
 * **Zero Connectivity Required**: Once opened, the entire application—including the dynamic quizzes, notepad, and easter eggs—functions flawlessly on a train, plane, or during an internet outage.
 
-### 5. 🤫 30 Hidden Easter Eggs & Playful Roasts
-The platform is heavily gamified with exactly **30 hidden interactions**, specifically customized for Oaishi, to keep her motivated:
-* **Time & Schedule**: Rewards for studying 15, 30, 60, and 90 minutes. Special messages for studying late at night (11PM-4AM) or early morning (5AM-8AM).
-* **Behavioral Roasts**:
-  * *Speed Reader*: Roasts the user for scrolling >1500px in under 200ms.
-  * *Rage Clicker*: Roasts the user for clicking 7 times in 2 seconds.
-  * *Distracted*: Tracks tab-switching (`blur` events) to call out YouTube/Netflix distractions.
-  * *Copy-Paster*: Warns the user about academic integrity if they hit Ctrl+C multiple times.
-  * *Window Resizer*: Tells the user to stop dragging the browser window and focus.
-* **Notepad Triggers**: Reacts to typing specific emotional or personal keywords (`stress`, `tired`, `ahsan`, `love`).
-* **Deep Focus**: Detects 2 minutes of zero mouse movement and gently reminds the user to blink.
-* **Secret Codes**: Typing the Konami code "ahsan" anywhere on the page triggers a shower of love.
+### 5. 🤫 45 Hidden Easter Eggs & Playful Roasts
+
+The platform is heavily gamified with **45 hidden interactions**, specifically customized for Oaishi:
+
+#### 💌 Love & Motivation
+* **Console messages**: Love notes printed in the browser DevTools on every page load.
+* **Tab title**: Changes to *"Come back Oaishi! 🥺❤️"* whenever she switches away.
+* **Triple-click logo**: Clicking the logo 3 times triggers a floating love message at the cursor.
+* **Study milestones**: Motivational pop-ups at 15, 30, 45, 60, and 90 minutes of continuous study.
+* **Scroll to bottom**: A reward message appears when she finishes reading to the very end.
+* **Time-based greetings**: Special messages for late night (11PM–4AM), early morning (5–8AM), or afternoon nap time (2–4PM).
+* **Offline detection**: A sweet message appears if the internet drops.
+* **Secret code**: Typing `ahsan` anywhere on the page triggers a surprise message.
+* **Deep reading tracker**: 2 minutes of no mouse/scroll/keypress triggers a gentle reminder to blink.
+* **Text highlighting**: Selecting more than 20 characters triggers a study encouragement message.
+
+#### 🔥 Behavioral Roasts
+* **Speed-skimmer**: Roasts her for scrolling down >1500px in under 200ms.
+* **Scroll-up skimmer**: Roasts her for fast-scrolling back UP (forgot what she just read).
+* **Copy-paster**: Warns her on the 1st copy; escalates the roast on the 3rd.
+* **Rage-clicker**: Roasts her for clicking 7+ times in 2 seconds.
+* **DevTools opener**: Triggered by F12 or Ctrl+Shift+I.
+* **Tab-switcher**: Calls out YouTube/Netflix after 4+ tab switches.
+* **Window resizer**: Tells her to stop dragging the window after 40+ resize events.
+* **Right-click**: Reminds her right-clicking won't put notes in her brain.
+* **Ctrl+P (print)**: Blocks the print dialog and roasts the idea of printing instead of reading.
+* **Ctrl+A (select-all)**: Points out that selecting everything still means reading it.
+* **Escape key**: Reminds her there's no escaping the exam; escalates on the 3rd press.
+* **5 min on same section**: Asks if she's asleep with her eyes open.
+
+#### 📝 Notepad Keyword Triggers
+Typing any of these words into the Quick Notes widget triggers a personalized response:
+
+| Keyword | Response type |
+|---|---|
+| `stress` | Calming encouragement |
+| `tired` | Sweet motivational message |
+| `love` | Love you more |
+| `ahsan` | He loves you very much |
+| `help` | Roast — she's already being helped |
+| `bored` | Alarmed roast — exam is coming! |
+| `hate` | Tough-love pep talk |
+| 50+ words written | Achievement pop-up |
+| 15 backspaces in a row | Roasts the deleted content |
+
+#### 🧠 Quiz Roasts
+* Correct answer → love message + score increase.
+* Wrong answer → gentle encouragement.
+* 3 wrong answers in a row → Internet Explorer roast.
+
+---
 
 ## 🗂️ File Structure
 
@@ -53,7 +92,7 @@ The platform is heavily gamified with exactly **30 hidden interactions**, specif
     │   └── notes.css           # Note pages, tables, essays, and widget styles
     └── js/
         ├── index.js            # Dashboard filtering and SW registration
-        ├── notes.js            # Core engine: Quizzes, Notepad, and 30 Easter Eggs
+        ├── notes.js            # Core engine: Quizzes, Notepad, and 45 Easter Eggs
         └── quiz-bank.js        # Global array containing all 72 quiz questions
 ```
 
@@ -68,5 +107,5 @@ To add a new subject:
 1. Copy `english-writing-exam.html` as a template.
 2. Add the new `.q-section` IDs to your HTML.
 3. Add new corresponding questions to `assets/js/quiz-bank.js`.
-4. Link the new page in `index.html`. 
+4. Link the new page in `index.html`.
 The `notes.js` engine will automatically handle everything else (Notepad isolation, Quiz injection, Easter eggs).
