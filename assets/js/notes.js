@@ -181,14 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
   }
 
-  // 6.2 Weekend Warrior
-  const day = new Date().getDay();
-  if (day === 0 || day === 6) { // 0 = Sunday, 6 = Saturday
-    setTimeout(() => {
-      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Studying on the weekend? You're so dedicated, Oaishi! Let's go on a date when you're done. 🍷❤️");
-    }, 10000); // Shows after 10 seconds on a weekend
-  }
-
+  // 6.2 The Offline Hero
+  window.addEventListener('offline', () => {
+    showLoveMessage(window.innerWidth / 2, 100, "Internet went down? Don't worry, I made sure your notes work completely offline! 📡❤️");
+  });
   // 6.3 Secret Keyboard Code ("ahsan")
   let typedKeys = '';
   window.addEventListener('keydown', (e) => {
