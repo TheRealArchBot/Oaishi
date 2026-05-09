@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 30 minutes
   setTimeout(() => {
-    showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Half an hour of pure focus! You are unstoppable, Oaishi! 🚀");
+    showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Half an hour of pure focus! You are unstoppable, My Love! 🚀");
   }, 30 * 60 * 1000);
 
   // 45 minutes
