@@ -1,0 +1,23 @@
+:root {
+  --bg: #12121a;
+  --card: #1c1c28;
+  --card2: #22223a;
+  --border: #2e2e48;
+  --yellow: #ffe566;
+  --coral: #ff6b6b;
+  --mint: #4ecca3;
+  --sky: #6eb5ff;
+  --purple: #c77dff;
+  --orange: #ff9f43;
+  --pink: #ff8fab;
+  --text: #eeeef5;
+  --muted: #8888aa;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); }
+::selection { background: var(--yellow); color: #000; }
+
+/* SCROLL */
+::-webkit-scrollbar { width: 6px; } 
+::-webkit-scrollbar-track { background: var(--bg); } 
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
