@@ -26,7 +26,7 @@ A beautifully designed, highly interactive, and deeply personalized study platfo
 
 ### 5. 🤫 30 Hidden Easter Eggs & Playful Roasts
 The platform is heavily gamified with exactly **30 hidden interactions**, specifically customized for Oaishi, to keep her motivated:
-* **Time & Schedule**: Rewards for studying 15, 30, 60, and 90 minutes. Special messages for studying late at night (11PM-4AM), early morning (5AM-8AM), or on weekends.
+* **Time & Schedule**: Rewards for studying 15, 30, 60, and 90 minutes. Special messages for studying late at night (11PM-4AM) or early morning (5AM-8AM).
 * **Behavioral Roasts**:
   * *Speed Reader*: Roasts the user for scrolling >1500px in under 200ms.
   * *Rage Clicker*: Roasts the user for clicking 7 times in 2 seconds.

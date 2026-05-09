@@ -1,9 +1,8 @@
 // Update stats
 function updateStats() {
-  const active = document.querySelectorAll('.course-card:not(.locked)').length;
   const total = document.querySelectorAll('.course-card').length;
   document.getElementById('course-count').textContent = total;
-  document.getElementById('note-count').textContent = active;
+  document.getElementById('note-count').textContent = total;
 }
 
 // Last updated

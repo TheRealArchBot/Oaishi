@@ -106,9 +106,6 @@ header {
   color: var(--muted);
 }
 
-/* DIVIDER */
-.divider { max-width: 1000px; margin: 28px auto 24px; padding: 0 24px; }
-.divider hr { border: none; border-top: 1px solid var(--border); }
 
 /* COLOR ACCENTS */
 .c-yellow { border-color: rgba(255,229,102,0.3) !important; }
