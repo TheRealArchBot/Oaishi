@@ -3,6 +3,35 @@ function updateStats() {
   const total = document.querySelectorAll('.course-card').length;
   document.getElementById('course-count').textContent = total;
   document.getElementById('note-count').textContent = total;
+  
+  const testsDone = localStorage.getItem('oaishi_tests_done') || '0';
+  const totalMarks = localStorage.getItem('oaishi_total_marks') || '0';
+  
+  const testsEl = document.getElementById('tests-taken-count');
+  const marksEl = document.getElementById('total-marks-count');
+  
+  if(testsEl) testsEl.textContent = testsDone;
+  if(marksEl) marksEl.textContent = totalMarks;
+
+  // Calculate Analytics
+  const tCount = parseInt(testsDone);
+  const mCount = parseInt(totalMarks);
+  
+  if (tCount > 0) {
+    const maxPossible = tCount * 150; // 15 questions * 10 points
+    const accuracy = Math.round((mCount / maxPossible) * 100);
+    const level = Math.floor(mCount / 500) + 1;
+    
+    let rank = "Beginner Scholar 📚";
+    if (accuracy >= 95) rank = "Writing Goddess 🔥";
+    else if (accuracy >= 85) rank = "Elite Academic 🎓";
+    else if (accuracy >= 70) rank = "Advanced Writer ✍️";
+    else if (accuracy >= 50) rank = "Steady Learner 🌱";
+
+    if (document.getElementById('avg-accuracy')) document.getElementById('avg-accuracy').textContent = accuracy + '%';
+    if (document.getElementById('knowledge-level')) document.getElementById('knowledge-level').textContent = 'Level ' + level;
+    if (document.getElementById('performance-rank')) document.getElementById('performance-rank').textContent = rank;
+  }
 }
 
 // Last updated
@@ -24,24 +53,30 @@ if ('serviceWorker' in navigator) {
 function filterCards() {
   const q = document.getElementById('search').value.toLowerCase();
   let any = false;
-  document.querySelectorAll('.course-card').forEach(c => {
+  
+  // Search both regular courses and essentials (Vocab/Test)
+  const allCards = document.querySelectorAll('.course-card, .essential-card');
+  
+  allCards.forEach(c => {
     const name = c.dataset.name || '';
     const code = c.querySelector('.card-code')?.textContent.toLowerCase() || '';
-    const matches = name.includes(q) || code.includes(q);
+    const desc = c.querySelector('.card-desc')?.textContent.toLowerCase() || '';
+    const semester = c.querySelector('.card-semester')?.textContent.toLowerCase() || '';
+    
+    const matches = name.includes(q) || code.includes(q) || desc.includes(q) || semester.includes(q);
     c.classList.toggle('hidden', !matches);
     if (matches) any = true;
   });
+
   let empty = document.getElementById('empty');
   if (!any) {
     if (!empty) {
       empty = document.createElement('div');
       empty.id = 'empty'; empty.className = 'empty-state';
-      empty.innerHTML = '<div style="font-size:2rem">🔍</div><p>No courses match "<strong>' + q + '</strong>"</p>';
+      empty.innerHTML = '<div style="font-size:2rem">🔍</div><p>No matches for "<strong>' + q + '</strong>"</p>';
       document.getElementById('card-grid').appendChild(empty);
     }
   } else if (empty) empty.remove();
-  const addCardBtn = document.getElementById('add-card');
-  if (addCardBtn) addCardBtn.classList.toggle('hidden', !!q);
 }
 
 // Semester filter
@@ -73,6 +108,27 @@ window.addEventListener("blur", () => {
 });
 window.addEventListener("focus", () => {
   document.title = originalTitle;
+});
+
+// Mobile Nav Scroll Logic (Hide on scroll down, show on up)
+let lastScroll = 0;
+const mNav = document.querySelector('.mobile-nav');
+
+window.addEventListener('scroll', () => {
+  if (window.innerWidth > 950) return;
+  const currentScroll = window.pageYOffset;
+  if (currentScroll <= 0) {
+    mNav.style.transform = 'translateY(0)';
+    return;
+  }
+  if (currentScroll > lastScroll) {
+    // Scrolling down
+    mNav.style.transform = 'translateY(100%)';
+  } else {
+    // Scrolling up
+    mNav.style.transform = 'translateY(0)';
+  }
+  lastScroll = currentScroll;
 });
 
 document.addEventListener('DOMContentLoaded', () => {

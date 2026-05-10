@@ -2803,9 +2803,321 @@ const vocabDatabase = [
   },
   {
     "cat": "Descriptive",
+    "simple": "Side by side",
+    "adv": "Juxtapose",
+    "ex": "The author chose to juxtapose the two characters to show their differences."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Wise",
+    "adv": "Judicious",
+    "ex": "The committee made a judicious decision based on the evidence."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Clear",
+    "adv": "Lucid",
+    "ex": "The professor provided a lucid explanation of the complex theory."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Talkative",
+    "adv": "Loquacious",
+    "ex": "The loquacious host kept the guests entertained all evening."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Brief",
+    "adv": "Laconic",
+    "ex": "His laconic reply suggested he wasn't interested in the conversation."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Generous",
+    "adv": "Magnanimous",
+    "ex": "He was magnanimous in victory, praising his opponent's efforts."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Flexible",
+    "adv": "Malleable",
+    "ex": "Young minds are often more malleable and open to new ideas."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Independent",
+    "adv": "Maverick",
+    "ex": "The scientist was known as a maverick for his unconventional methods."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Careful",
+    "adv": "Meticulous",
+    "ex": "The artist was meticulous about every detail of the painting."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Lessen",
+    "adv": "Mitigate",
+    "ex": "New laws were passed to mitigate the effects of climate change."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Ordinary",
+    "adv": "Mundane",
+    "ex": "He was tired of the mundane tasks of his daily office job."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Hazy",
+    "adv": "Nebulous",
+    "ex": "The concepts were still nebulous and needed further clarification."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Famous",
+    "adv": "Notorious",
+    "ex": "The city is notorious for its heavy traffic during rush hour."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Stubborn",
+    "adv": "Obdurate",
+    "ex": "Despite the evidence, he remained obdurate in his beliefs."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Unclear",
+    "adv": "Obscure",
+    "ex": "The meaning of the poem remained obscure even after multiple readings."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Threatening",
+    "adv": "Ominous",
+    "ex": "The dark clouds were an ominous sign of the coming storm."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Burdensome",
+    "adv": "Onerous",
+    "ex": "The task of cleaning the entire house proved to be quite onerous."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Showy",
+    "adv": "Ostentatious",
+    "ex": "Her ostentatious display of wealth made many people uncomfortable."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Obvious",
+    "adv": "Palpable",
+    "ex": "The tension in the room was palpable as they waited for the results."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Model",
+    "adv": "Paradigm",
+    "ex": "This discovery represents a new paradigm in scientific research."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Limited",
+    "adv": "Parochial",
+    "ex": "His parochial worldview prevented him from understanding other cultures."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Scarcity",
+    "adv": "Paucity",
+    "ex": "There is a paucity of evidence to support the claims being made."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Boring",
+    "adv": "Pedantic",
+    "ex": "The lecture was overly pedantic, focusing on minor details."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Spreading",
+    "adv": "Pervasive",
+    "ex": "The influence of technology is pervasive in modern life."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Possible",
+    "adv": "Plausible",
+    "ex": "Her explanation for the delay seemed plausible to the manager."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Many",
+    "adv": "Plethora",
+    "ex": "There is a plethora of information available on the internet."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Practical",
+    "adv": "Pragmatic",
+    "ex": "He took a pragmatic approach to solving the problem."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Dangerous",
+    "adv": "Precarious",
+    "ex": "The climbers found themselves in a precarious position on the cliff."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Prevailing",
+    "adv": "Predominant",
+    "ex": "The predominant color in the room was a soft shade of blue."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "High-flown",
+    "adv": "Pretentious",
+    "ex": "The movie was criticized for being overly pretentious and artsy."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Deep",
+    "adv": "Profound",
+    "ex": "Her words had a profound impact on my perspective."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Careful",
+    "adv": "Prudent",
+    "ex": "It would be prudent to save some money for emergencies."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Quiet",
+    "adv": "Quiescent",
+    "ex": "The volcano has been quiescent for hundreds of years."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Idealistic",
+    "adv": "Quixotic",
+    "ex": "His quixotic quest for world peace was admired but seen as unrealistic."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Daily",
+    "adv": "Quotidian",
+    "ex": "She was tired of the quotidian chores of keeping a house."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Stubborn",
+    "adv": "Recalcitrant",
+    "ex": "The recalcitrant student refused to follow the teacher's instructions."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Correct",
+    "adv": "Rectify",
+    "ex": "Measures were taken to rectify the errors in the report."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Repeat",
+    "adv": "Reiterate",
+    "ex": "I would like to reiterate the importance of following the rules."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Cancel",
+    "adv": "Rescind",
+    "ex": "The government decided to rescind the controversial law."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Quiet",
+    "adv": "Reticent",
+    "ex": "He was reticent about sharing his personal experiences."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Healthy",
+    "adv": "Salubrious",
+    "ex": "The mountain air was salubrious and refreshing."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Optimistic",
+    "adv": "Sanguine",
+    "ex": "She remains sanguine about the future of the company."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Careful",
+    "adv": "Scrupulous",
+    "ex": "He was scrupulous about keeping his promises."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Examine",
+    "adv": "Scrutinize",
+    "ex": "The manager had to scrutinize every detail of the project."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Brief",
+    "adv": "Succinct",
+    "ex": "The report was succinct and easy to understand."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Silent",
+    "adv": "Tacit",
+    "ex": "There was a tacit agreement between the two parties."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Quiet",
+    "adv": "Taciturn",
+    "ex": "He was a taciturn man, rarely speaking more than necessary."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Determined",
+    "adv": "Tenacious",
+    "ex": "She is a tenacious researcher, never giving up on a difficult problem."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Brief",
+    "adv": "Terse",
+    "ex": "His reply was terse and to the point."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Everywhere",
+    "adv": "Ubiquitous",
+    "ex": "Smartphones have become ubiquitous in today's society."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Clear",
+    "adv": "Unequivocal",
+    "ex": "The evidence was unequivocal and left no room for doubt."
+  },
+  {
+    "cat": "Descriptive",
     "simple": "Sacred",
     "adv": "Inviolable",
     "ex": "The situation was described as highly inviolable."
+  },
+  {
+    "cat": "Descriptive",
+    "simple": "Peak",
+    "adv": "Zenith",
+    "ex": "The company reached its zenith in the early 2000s."
   }
 ];
 

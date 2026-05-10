@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oaishi's Test Center 🎯 | Exam Prep</title>
+  <meta name="description" content="Customizable practice tests for Oaishi. Pick your topics and crush your exams!">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="assets/css/notes.css">
+  <style>
+    /* ── Test Center Specific Styles ──────────────── */
+    :root {
+      --test-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      --accent: var(--mint);
+    }
+
+    body {
+      background: #0f0f1a;
+    }
+
+    .test-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .test-container::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(78,204,163,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── Topic Selection ──────────────────────────── */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 30px 0;
+    }
+
+    .topic-card {
+      background: rgba(255,255,255,0.05);
+      border: 2px solid transparent;
+      border-radius: 16px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .topic-card:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-5px);
+    }
+
+    .topic-card.selected {
+      border-color: var(--accent);
+      background: rgba(78,204,163,0.1);
+      box-shadow: 0 0 20px rgba(78,204,163,0.2);
+    }
+
+    .topic-card .icon {
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+    }
+
+    .topic-card.selected .icon {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .topic-info h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .topic-info p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── Progress Bar ─────────────────────────────── */
+    .test-progress-wrap {
+      margin-bottom: 30px;
+    }
+    .test-progress-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .test-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--mint), var(--sky));
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    .test-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--muted);
+    }
+
+    /* ── Question Area ────────────────────────────── */
+    .question-card {
+      animation: slideIn 0.5s forwards;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .q-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 24px;
+      line-height: 1.4;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+
+    .option-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid var(--border);
+      padding: 18px 24px;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--muted);
+      transform: translateX(10px);
+    }
+
+    .option-btn.correct {
+      background: rgba(78,204,163,0.2) !important;
+      border-color: var(--mint) !important;
+      color: var(--mint);
+    }
+
+    .option-btn.wrong {
+      background: rgba(255,107,107,0.2) !important;
+      border-color: var(--coral) !important;
+      color: var(--coral);
+    }
+
+    /* ── Results ─────────────────────────────────── */
+    .results-screen {
+      text-align: center;
+      padding: 40px 0;
+    }
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 8px solid var(--accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-family: 'Syne', sans-serif;
+    }
+    .score-val { font-size: 48px; font-weight: 800; line-height: 1; }
+    .score-label { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
+
+    .result-msg {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: var(--muted);
+    }
+
+    /* ── General Buttons ────────────────────────── */
+    .start-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 800;
+      font-family: 'Syne', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .start-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(78,204,163,0.4);
+    }
+    .start-btn:disabled {
+      background: #333;
+      color: #777;
+      cursor: not-allowed;
+    }
+
+    .v-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .v-btn:hover {
+      border-color: var(--muted);
+      color: #fff;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .topic-card.special {
+      border: 2px solid rgba(255,143,171,0.2);
+    }
+    .topic-card.special:hover {
+      border-color: var(--pink);
+    }
+
+    .hidden { display: none !important; }
+
+    /* ── Responsiveness ────────────────────────── */
+    @media (max-width: 600px) {
+      .test-container { padding: 20px; margin: 10px; border-radius: 12px; }
+      .q-text { font-size: 18px; }
+      .topic-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Oaishi's Hub</div>
+  <a href="index.html">← Back to Hub</a>
+  <a href="vocab-builder.html">Vocab Builder</a>
+</nav>
+
+<div class="wrap">
+  <div class="test-container" id="test-container">
+    
+    <!-- 1. START SCREEN (FLOW) -->
+    <div id="setup-screen">
+      <h1 style="font-family:'Syne',sans-serif;font-size:36px;margin-bottom:10px;">Test Center 🎯</h1>
+      
+      <!-- Flow Breadcrumbs -->
+      <div id="test-flow-steps" style="display:flex;gap:10px;margin-bottom:24px;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:800;">
+        <span id="step-1-label" class="step-active" style="color:var(--mint);">1. Semester</span>
+        <span style="opacity:0.3;">→</span>
+        <span id="step-2-label" style="opacity:0.3;">2. Course</span>
+        <span style="opacity:0.3;">→</span>
+        <span id="step-3-label" style="opacity:0.3;">3. Topics</span>
+      </div>
+
+      <!-- STEP 1: SEMESTER -->
+      <div id="step-1-wrap">
+        <p style="color:var(--muted);margin-bottom:20px;">Step 1: Which semester are we practicing today?</p>
+        <div class="topic-grid">
+          <div class="topic-card sem-card" data-sem="sem2">
+            <div class="icon">🌸</div>
+            <div class="topic-info">
+              <h3>Semester 2</h3>
+              <p>Developing Writing, Literature...</p>
+            </div>
+          </div>
+          <div class="topic-card sem-card" data-sem="sem3">
+            <div class="icon">🌊</div>
+            <div class="topic-info">
+              <h3>Semester 3</h3>
+              <p>Advanced Composition, History...</p>
+            </div>
+          </div>
+          <div class="topic-card sem-card" data-sem="sem4">
+            <div class="icon">🍁</div>
+            <div class="topic-info">
+              <h3>Semester 4</h3>
+              <p>Final Research, Professional Dev...</p>
+            </div>
+          </div>
+          <!-- SPECIAL VOCAB OPTION -->
+          <div class="topic-card sem-card special" data-sem="vocab-only">
+            <div class="icon">💎</div>
+            <div class="topic-info">
+              <h3 style="color:var(--pink);">Special: Vocab</h3>
+              <p>Test all 520+ Academic Words</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: COURSE (Hidden by default) -->
+      <div id="step-2-wrap" class="hidden">
+        <p style="color:var(--muted);margin-bottom:20px;">Step 2: Choose your course</p>
+        <div class="topic-grid" id="course-grid">
+          <!-- Course cards injected here -->
+        </div>
+        <button class="v-btn" onclick="goBack(1)">← Change Semester</button>
+      </div>
+
+      <!-- STEP 3: TOPICS (Hidden by default) -->
+      <div id="step-3-wrap" class="hidden">
+        <p style="color:var(--muted);margin-bottom:20px;">Step 3: Select topics to include</p>
+        <div class="topic-grid" id="topic-grid">
+          <!-- Topic cards injected here -->
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;">
+          <button class="v-btn" onclick="goBack(2)">← Change Course</button>
+          <button id="start-test-btn" class="start-btn" disabled>Generate Test 🚀</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. QUIZ SCREEN -->
+    <div id="quiz-screen" class="hidden">
+      <div class="test-progress-wrap">
+        <div class="test-stats">
+          <span id="current-q-num">Question 1 of 10</span>
+          <span id="current-accuracy">Accuracy: 100%</span>
+        </div>
+        <div class="test-progress-bar">
+          <div class="test-progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="question-card" id="question-card">
+        <div class="q-text" id="q-text">Loading question...</div>
+        <div class="option-list" id="option-list">
+          <!-- Buttons injected here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. RESULTS SCREEN -->
+    <div id="results-screen" class="hidden">
+      <div class="results-screen">
+        <div class="score-circle">
+          <div class="score-val" id="final-score">0</div>
+          <div class="score-label">Points</div>
+        </div>
+        <h2 id="final-status" style="font-family:'Syne',sans-serif;margin-bottom:10px;">Great Job, Oaishi!</h2>
+        <p class="result-msg" id="final-msg">You're becoming an absolute pro at this.</p>
+        <button onclick="location.reload()" class="start-btn">Take Another Test 🔄</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="assets/js/vocab-data.js"></script>
+<script src="assets/js/quiz-bank.js"></script>
+<script src="assets/js/notes.js"></script>
+
+<script>
+  (function() {
+    'use strict';
+
+    // ── Data Config ────────────────────────────────
+    const courses = {
+      sem2: [
+        { id: 'writing', name: 'Developing Writing Skill', icon: '✍️', desc: 'Essays, Paragraphs, & Grammar mastery.', sections: [
+          { id: 'q1', name: 'Essay Basics', icon: '📝', p: 'Hooks, Thesis, Structure' },
+          { id: 'q2', name: 'Paragraph Types', icon: '📖', p: 'Narrative, Cause, Compare' },
+          { id: 'q3', name: 'Writing Process', icon: '✍️', p: 'ARMS, CUPS, Drafting' },
+          { id: 'q7', name: 'Grammar & Logic', icon: '⚖️', p: 'Transitions, Run-ons' },
+          { id: 'q8', name: 'Prewriting', icon: '📊', p: 'Outlines, Diagrams' }
+        ]}
+      ],
+      sem3: [],
+      sem4: []
+    };
+
+    // ── State ─────────────────────────────────────
+    let currentStep = 1;
+    let selectedSem = '';
+    let selectedCourse = null;
+    let selectedTopics = [];
+    let testPool = [];
+    let currentIdx = 0;
+    let score = 0;
+    let totalQuestions = 15;
+    let answeredCorrectly = 0;
+
+    // ── DOM Elements ──────────────────────────────
+    const setupScreen = document.getElementById('setup-screen');
+    const quizScreen  = document.getElementById('quiz-screen');
+    const resultsScreen = document.getElementById('results-screen');
+    const startBtn    = document.getElementById('start-test-btn');
+    const qText       = document.getElementById('q-text');
+    const optionList  = document.getElementById('option-list');
+    const progressFill = document.getElementById('progress-fill');
+    const qNumText    = document.getElementById('current-q-num');
+    const accuracyText = document.getElementById('current-accuracy');
+
+    // Steps wraps
+    const wraps = [
+      document.getElementById('step-1-wrap'),
+      document.getElementById('step-2-wrap'),
+      document.getElementById('step-3-wrap')
+    ];
+    const labels = [
+      document.getElementById('step-1-label'),
+      document.getElementById('step-2-label'),
+      document.getElementById('step-3-label')
+    ];
+
+    // ── Flow Control ──────────────────────────────
+    window.goBack = function(step) {
+      if (selectedSem === 'vocab-only' && step === 2) {
+        currentStep = 1; // Vocab mode skips step 2, so back goes to 1
+      } else {
+        currentStep = step;
+      }
+      updateFlowUI();
+    };
+
+    function updateFlowUI() {
+      wraps.forEach((w, i) => {
+        w.classList.toggle('hidden', (i + 1) !== currentStep);
+      });
+      labels.forEach((l, i) => {
+        l.style.opacity = (i + 1) <= currentStep ? '1' : '0.3';
+        l.style.color = (i + 1) === currentStep ? 'var(--mint)' : (i + 1) < currentStep ? 'var(--sky)' : 'inherit';
+      });
+    }
+
+    // ── Flow Control ──────────────────────────────
+    function initSemesterSelection() {
+      document.querySelectorAll('.sem-card').forEach(card => {
+        const sem = card.dataset.sem;
+        if (sem !== 'vocab-only' && (!courses[sem] || courses[sem].length === 0)) {
+          card.classList.add('hidden');
+          return;
+        }
+
+        card.addEventListener('click', () => {
+          selectedSem = sem;
+          
+          if (selectedSem === 'vocab-only') {
+            selectedCourse = { id: 'special-vocab', name: 'Special Vocabulary', icon: '💎', sections: [
+              { id: 'vocab', name: 'Power Vocab', icon: '💎', p: '520+ Academic Words' }
+            ]};
+            currentStep = 3;
+            renderTopicGrid();
+            setTimeout(() => {
+              const vocabCard = document.querySelector('#topic-grid .topic-card');
+              if (vocabCard) vocabCard.click();
+            }, 50);
+          } else {
+            currentStep = 2;
+            renderCourseGrid();
+          }
+          updateFlowUI();
+        });
+      });
+    }
+
+    initSemesterSelection();
+
+    // Step 2: Render Course Grid
+    function renderCourseGrid() {
+      const grid = document.getElementById('course-grid');
+      grid.innerHTML = '';
+      const list = courses[selectedSem] || [];
+      
+      list.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'topic-card';
+        div.innerHTML = `
+          <div class="icon">${c.icon}</div>
+          <div class="topic-info">
+            <h3>${c.name}</h3>
+            <p>${c.desc}</p>
+          </div>
+        `;
+        div.onclick = () => {
+          if (c.id === 'placeholder') return;
+          selectedCourse = c;
+          currentStep = 3;
+          renderTopicGrid();
+          updateFlowUI();
+        };
+        grid.appendChild(div);
+      });
+    }
+
+    // Step 3: Render Topic Grid
+    function renderTopicGrid() {
+      const grid = document.getElementById('topic-grid');
+      grid.innerHTML = '';
+      selectedTopics = [];
+      startBtn.disabled = true;
+
+      selectedCourse.sections.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'topic-card';
+        div.innerHTML = `
+          <div class="icon">${s.icon}</div>
+          <div class="topic-info">
+            <h3>${s.name}</h3>
+            <p>${s.p}</p>
+          </div>
+        `;
+        div.onclick = () => {
+          div.classList.toggle('selected');
+          if (div.classList.contains('selected')) {
+            selectedTopics.push(s.id);
+          } else {
+            selectedTopics = selectedTopics.filter(id => id !== s.id);
+          }
+          startBtn.disabled = selectedTopics.length === 0;
+        };
+        grid.appendChild(div);
+      });
+    }
+
+    // ── Start Test ────────────────────────────────
+    startBtn.addEventListener('click', () => {
+      generatePool();
+      if (testPool.length === 0) {
+        alert("Oops! No questions found for these topics.");
+        return;
+      }
+      
+      setupScreen.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      renderQuestion();
+    });
+
+    function generatePool() {
+      testPool = [];
+      
+      // 1. Static questions from quiz-bank
+      const staticTopics = selectedTopics.filter(t => t !== 'vocab');
+      if (staticTopics.length > 0) {
+        let filteredStatic = window.quizBank.filter(q => {
+          if (q.section === 'q7' || q.section === 'q9') {
+             return staticTopics.includes('q7') || staticTopics.includes('q9');
+          }
+          return staticTopics.includes(q.section);
+        });
+        // Shuffle individual options for static questions if they exist
+        filteredStatic = filteredStatic.map(q => {
+           const opts = [...q.options];
+           const correctTxt = opts[q.correct];
+           opts.sort(() => 0.5 - Math.random());
+           return { ...q, options: opts, correct: opts.indexOf(correctTxt) };
+        });
+        testPool = [...filteredStatic];
+      }
+
+      // 2. Dynamic Vocab
+      if (selectedTopics.includes('vocab') && window.vocabDatabase) {
+        const count = selectedTopics.length === 1 ? 20 : 10;
+        for (let i = 0; i < count; i++) {
+          const word = window.vocabDatabase[Math.floor(Math.random() * window.vocabDatabase.length)];
+          const distractors = window.vocabDatabase
+            .filter(w => w.cat === word.cat && w.adv !== word.adv)
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 2);
+          
+          const options = [word.adv, ...distractors.map(d => d.adv)].sort(() => 0.5 - Math.random());
+          testPool.push({
+            q: `Which academic word is a stronger replacement for <strong>"${word.simple}"</strong>?`,
+            options: options,
+            correct: options.indexOf(word.adv)
+          });
+        }
+      }
+
+      // Shuffle final pool and limit
+      testPool.sort(() => 0.5 - Math.random());
+      testPool = testPool.slice(0, 15);
+      totalQuestions = testPool.length;
+    }
+
+    // ── Render Question ───────────────────────────
+    function renderQuestion() {
+      const q = testPool[currentIdx];
+      qText.innerHTML = q.q;
+      optionList.innerHTML = '';
+      
+      qNumText.textContent = `Question ${currentIdx + 1} of ${totalQuestions}`;
+      const progress = (currentIdx / totalQuestions) * 100;
+      progressFill.style.width = progress + '%';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt;
+        btn.onclick = () => handleAnswer(idx, btn);
+        optionList.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(pickedIdx, btn) {
+      const q = testPool[currentIdx];
+      const btns = optionList.querySelectorAll('.option-btn');
+      btns.forEach(b => b.disabled = true);
+
+      if (pickedIdx === q.correct) {
+        btn.classList.add('correct');
+        score += 10;
+        answeredCorrectly++;
+        if (window.showLoveMessage) {
+           window.showLoveMessage(window.innerWidth/2, window.innerHeight/2, "You're so smart! Correct! 🥰");
+        }
+      } else {
+        btn.classList.add('wrong');
+        btns[q.correct].classList.add('correct');
+      }
+
+      const accuracy = Math.round((answeredCorrectly / (currentIdx + 1)) * 100);
+      accuracyText.textContent = `Accuracy: ${accuracy}%`;
+
+      setTimeout(() => {
+        currentIdx++;
+        if (currentIdx < totalQuestions) {
+          renderQuestion();
+        } else {
+          showResults();
+        }
+      }, 1500);
+    }
+
+    // ── Show Results ──────────────────────────────
+    function showResults() {
+      quizScreen.classList.add('hidden');
+      resultsScreen.classList.remove('hidden');
+      
+      document.getElementById('final-score').textContent = score;
+      
+      // Update global stats
+      let testsDone = parseInt(localStorage.getItem('oaishi_tests_done') || '0');
+      let totalMarks = parseInt(localStorage.getItem('oaishi_total_marks') || '0');
+      
+      testsDone++;
+      totalMarks += score;
+      
+      localStorage.setItem('oaishi_tests_done', testsDone);
+      localStorage.setItem('oaishi_total_marks', totalMarks);
+
+      const statusEl = document.getElementById('final-status');
+      const msgEl = document.getElementById('final-msg');
+      const percentage = (answeredCorrectly / totalQuestions) * 100;
+
+      if (percentage === 100) {
+        statusEl.textContent = "PERFECT SCORE! 🔥";
+        msgEl.textContent = "Oaishi, you are officially a writing genius. I am so proud of you! ❤️";
+      } else if (percentage >= 80) {
+        statusEl.textContent = "Excellent Work! 🌟";
+        msgEl.textContent = "You really know your stuff. Just a tiny bit more and you'll be perfect!";
+      } else if (percentage >= 50) {
+        statusEl.textContent = "Good Progress! 👍";
+        msgEl.textContent = "You're getting there! Keep practicing and those grades will soar.";
+      } else {
+        statusEl.textContent = "Keep Studying! 📚";
+        msgEl.textContent = "Don't give up! Every mistake is just a step towards getting it right. You got this!";
+      }
+    }
+
+  })();
+</script>
+
+</body>
+</html>

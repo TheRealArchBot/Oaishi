@@ -28,69 +28,125 @@
         <div class="stat-num" id="note-count">2</div>
         <div class="stat-label">Note Files</div>
       </div>
+      <div class="stat">
+        <div class="stat-num" id="tests-taken-count">0</div>
+        <div class="stat-label">Tests Done</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="total-marks-count">0</div>
+        <div class="stat-label">Total Marks</div>
+      </div>
     </div>
   </header>
 
-  <div class="toolbar">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="search" placeholder="Search courses..." oninput="filterCards()" />
+  <div class="last-updated" id="last-updated"></div>
+
+  <div class="hub-container">
+    
+    <!-- LEFT: COURSES -->
+    <div class="left-col">
+      <div class="toolbar-inline">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search" placeholder="Search courses..." oninput="filterCards()" />
+        </div>
+        <div class="filter-wrap">
+          <button class="filter-btn active" onclick="filterSem(this, 'all')">All</button>
+          <button class="filter-btn" onclick="filterSem(this, 'sem2')">Sem 2</button>
+          <button class="filter-btn" onclick="filterSem(this, 'sem3')">Sem 3</button>
+        </div>
+      </div>
+
+      <div class="section-label">📂 Course Notes</div>
+      <div class="grid" id="card-grid">
+        <a href="english-writing-exam.html" class="course-card c-yellow" data-sem="sem2"
+          data-name="developing writing skill">
+          <div class="card-top">
+            <div class="card-icon">✍️</div>
+            <div class="card-meta">
+              <div class="card-code">Developing Writing Skill</div>
+              <div class="card-name">Exam Notes</div>
+              <div class="card-semester">Semester 2 (Mid)</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-desc">Argumentative essays, paragraph types, grammar, prewriting, essay structure &amp; analysis.</div>
+          </div>
+          <div class="card-footer">
+            <div class="card-tags">
+              <span class="tag" style="background:rgba(255,229,102,0.15);color:var(--yellow);">Exam Ready</span>
+              <span class="tag" style="background:rgba(78,204,163,0.15);color:var(--mint);">9 Q-Types</span>
+            </div>
+            <span class="card-arrow">→</span>
+          </div>
+        </a>
+      </div>
     </div>
-    <button class="filter-btn active" onclick="filterSem(this, 'all')">All</button>
-    <button class="filter-btn" onclick="filterSem(this, 'sem2')">Semester 2</button>
-    <button class="filter-btn" onclick="filterSem(this, 'sem3')">Semester 3</button>
-    <button class="filter-btn" onclick="filterSem(this, 'sem4')">Semester 4</button>
+
+    <!-- RIGHT: TOOLS & STATS -->
+    <div class="right-col">
+      <div class="section-label">✨ Study Essentials</div>
+      <div class="essentials-grid sidebar-grid">
+        <a href="vocab-builder.html" class="essential-card c-pink" data-name="vocabulary builder">
+          <div class="card-top">
+            <div class="card-icon">🧠</div>
+            <div class="card-meta">
+              <div class="card-code" style="font-size:11px;">Vocab Builder</div>
+              <div class="card-name" style="font-size:14px;">Essential Words</div>
+            </div>
+          </div>
+        </a>
+
+        <a href="test-center.html" class="essential-card c-purple" data-name="test center">
+          <div class="card-top">
+            <div class="card-icon">🎯</div>
+            <div class="card-meta">
+              <div class="card-code" style="font-size:11px;">Test Center</div>
+              <div class="card-name" style="font-size:14px;">Practice Tests</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="section-label">📊 Study Analytics</div>
+      <div class="essentials-grid sidebar-grid">
+        <div class="essential-card c-mint" style="cursor:default;">
+          <div class="card-top">
+            <div class="card-icon">📈</div>
+            <div class="card-meta">
+              <div class="card-code" style="font-size:11px;">Performance Overview</div>
+              <div class="card-name" id="performance-rank" style="font-size:14px;">Analyzing...</div>
+            </div>
+          </div>
+          <div class="card-body" style="padding:0 20px 20px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:12px;">
+              <span style="color:var(--muted);">Accuracy:</span>
+              <span id="avg-accuracy" style="font-weight:800;color:var(--mint);">0%</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:12px;">
+              <span style="color:var(--muted);">Knowledge:</span>
+              <span id="knowledge-level" style="font-weight:800;color:var(--sky);">Level 1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 
-  <div class="last-updated" id="last-updated"></div>
-
-  <div class="section-label">📂 Available Notes</div>
-  <div class="grid" id="card-grid">
-
-    <a href="english-writing-exam.html" class="course-card c-yellow" data-sem="sem2"
-      data-name="developing writing skill">
-      <div class="card-top">
-        <div class="card-icon">✍️</div>
-        <div class="card-meta">
-          <div class="card-code">Developing Writing Skill</div>
-          <div class="card-name">Exam Notes</div>
-          <div class="card-semester">Semester 2 (Mid)</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card-desc">Argumentative essays, paragraph types, grammar, prewriting, essay structure &amp;
-          analysis.</div>
-      </div>
-      <div class="card-footer">
-        <div class="card-tags">
-          <span class="tag" style="background:rgba(255,229,102,0.15);color:var(--yellow);">Exam Ready</span>
-          <span class="tag" style="background:rgba(78,204,163,0.15);color:var(--mint);">9 Q-Types</span>
-        </div>
-        <span class="card-arrow">→</span>
-      </div>
+  <div class="mobile-nav">
+    <a href="index.html" class="m-nav-item active">
+      <span class="m-icon">🏠</span>
+      <span>Hub</span>
     </a>
-
-    <a href="vocab-builder.html" class="course-card c-pink" data-sem="all" data-name="vocabulary builder">
-      <div class="card-top">
-        <div class="card-icon">🧠</div>
-        <div class="card-meta">
-          <div class="card-code">Vocabulary Builder</div>
-          <div class="card-name">Essential Words</div>
-          <div class="card-semester">All Semesters</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card-desc">A growing collection of high-scoring academic words to elevate your essays.</div>
-      </div>
-      <div class="card-footer">
-        <div class="card-tags">
-          <span class="tag" style="background:rgba(255,143,171,0.15);color:var(--pink);">Vocab Boost</span>
-        </div>
-        <span class="card-arrow">→</span>
-      </div>
+    <a href="vocab-builder.html" class="m-nav-item">
+      <span class="m-icon">🧠</span>
+      <span>Vocab</span>
     </a>
-
+    <a href="test-center.html" class="m-nav-item">
+      <span class="m-icon">🎯</span>
+      <span>Practice</span>
+    </a>
   </div>
 
   <script src="assets/js/index.js"></script>

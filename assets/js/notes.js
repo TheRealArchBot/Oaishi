@@ -687,6 +687,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrongVault = JSON.parse(localStorage.getItem('oaishi_wrong_quizzes') || '[]');
 
     let pool = window.quizBank.map((q, i) => ({ ...q, id: i }));
+
+    // ── DYNAMIC VOCAB GENERATOR ──────────────────
+    if (window.vocabDatabase && window.vocabDatabase.length > 0) {
+      const dynamicCount = 50; 
+      for (let i = 0; i < dynamicCount; i++) {
+        const word = window.vocabDatabase[Math.floor(Math.random() * window.vocabDatabase.length)];
+        // Get 2 distractors from same category if possible
+        let distractors = window.vocabDatabase
+          .filter(w => w.cat === word.cat && w.adv !== word.adv)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 2);
+        
+        if (distractors.length < 2) {
+          distractors = window.vocabDatabase
+            .filter(w => w.adv !== word.adv)
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 2);
+        }
+
+        const options = [word.adv, ...distractors.map(d => d.adv)].sort(() => 0.5 - Math.random());
+        pool.push({
+          id: `v_${i}`,
+          section: 'any', // Can appear in any section
+          q: `Which academic word is a stronger replacement for <strong>"${word.simple}"</strong>?`,
+          options: options,
+          correct: options.indexOf(word.adv)
+        });
+      }
+    }
     
     // First priority: Quizzes in the wrong vault
     let toReview = pool.filter(q => wrongVault.includes(q.id));
@@ -701,14 +730,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageSections = Array.from(document.querySelectorAll('.q-section'));
 
     let validSections = pageSections
-      .filter(sec => toReview.some(q => q.section === sec.id) || unanswered.some(q => q.section === sec.id))
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
+      .filter(sec => toReview.some(q => q.section === sec.id || q.section === 'any') || unanswered.some(q => q.section === sec.id || q.section === 'any'))
+      .sort(() => 0.5 - Math.random());
 
-    validSections.forEach(section => {
-      let sectionPool = toReview.filter(q => q.section === section.id);
+    // Only show quizzes "every now and then" (70% chance to show, and max 1-2 per page)
+    if (Math.random() < 0.7) {
+      validSections.slice(0, Math.floor(Math.random() * 2) + 1).forEach(section => {
+      let sectionPool = toReview.filter(q => q.section === section.id || q.section === 'any');
       if(sectionPool.length === 0) {
-        sectionPool = unanswered.filter(q => q.section === section.id);
+        sectionPool = unanswered.filter(q => q.section === section.id || q.section === 'any');
       }
       const quiz = sectionPool[Math.floor(Math.random() * sectionPool.length)];
       if(!quiz) return;
@@ -819,6 +849,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     });
+    }
   }
-
 });
