@@ -3,17 +3,187 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vocabulary Builder 📚</title>
+  <title>Vocabulary Builder 📚 | Oaishi's Notes</title>
+  <meta name="description" content="Upgrade your essay vocabulary with academic power words. Flashcard mode, favorites vault, and instant search included.">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/shared.css">
   <link rel="stylesheet" href="assets/css/notes.css">
+  <style>
+    /* ── Vocab Grid ─────────────────────────── */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    /* ── Vocab Card ─────────────────────────── */
+    .v-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      padding: 18px 18px 14px;
+      border-radius: 12px;
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .v-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.07);
+      border-color: var(--mint);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    /* ── Card Top Row (badge + fav) ─────────── */
+    .v-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .cat-badge {
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .c-Action     { background: rgba(78,204,163,0.15);  color: var(--mint);   }
+    .c-Descriptive{ background: rgba(110,181,255,0.15); color: var(--sky);    }
+    .c-Connecting  { background: rgba(255,229,102,0.15); color: var(--yellow); }
+    .c-Bonus      { background: rgba(255,143,171,0.2);  color: var(--pink);  border: 1px solid var(--pink); animation: pulseBadge 2s infinite; }
+
+    @keyframes pulseBadge {
+      0%,100% { box-shadow: 0 0 0 0 rgba(255,143,171,0.4); }
+      50%     { box-shadow: 0 0 0 5px rgba(255,143,171,0); }
+    }
+
+    /* ── Fav Button ─────────────────────────── */
+    .fav-btn {
+      background: none; border: none;
+      font-size: 16px; cursor: pointer;
+      opacity: 0.3; transition: opacity 0.2s, transform 0.2s;
+      padding: 0; line-height: 1; flex-shrink: 0;
+    }
+    .fav-btn:hover  { opacity: 0.8; transform: scale(1.25); }
+    .fav-btn.favorited { opacity: 1; filter: drop-shadow(0 0 6px rgba(255,107,107,0.8)); }
+
+    /* ── Card Text ──────────────────────────── */
+    .v-simple {
+      color: var(--coral); font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+    }
+    .v-simple span { text-decoration: line-through; opacity: 0.65; }
+
+    .v-adv {
+      font-size: 21px; font-weight: 800;
+      color: #fff; line-height: 1.2;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .v-ex {
+      font-size: 13px; font-style: italic;
+      color: var(--muted);
+      border-left: 3px solid var(--yellow);
+      padding-left: 10px; line-height: 1.5;
+      margin-top: 2px;
+    }
+
+    /* ── Flashcard Mode ─────────────────────── */
+    .reveal-hint {
+      display: none;
+      font-size: 12px; color: var(--pink);
+      border: 1px dashed var(--pink);
+      border-radius: 6px; padding: 5px 10px;
+      font-weight: 700; background: rgba(255,143,171,0.08);
+      width: fit-content;
+    }
+    .flashcard-mode .v-adv { display: none; }
+    .flashcard-mode .reveal-hint { display: inline-block; }
+    .flashcard-mode .v-adv.revealed {
+      display: block;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .flashcard-mode .v-adv.revealed ~ .reveal-hint { display: none !important; }
+
+    @keyframes popIn {
+      0%   { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    /* ── Controls Bar ───────────────────────── */
+    .vocab-controls {
+      display: flex; gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .v-btn {
+      background: var(--card2); border: 1.5px solid var(--border);
+      color: var(--text); padding: 9px 16px;
+      border-radius: 8px; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; font-size: 13px;
+      font-family: 'Nunito', sans-serif;
+    }
+    .v-btn:hover { border-color: var(--pink); color: var(--pink); background: rgba(255,143,171,0.1); }
+    .v-btn.active { background: rgba(255,143,171,0.2); color: var(--pink); border-color: var(--pink); }
+
+    /* ── Search ─────────────────────────────── */
+    .vocab-search-wrap {
+      position: relative; margin-bottom: 24px;
+    }
+    .vocab-search-wrap .search-icon-inner {
+      position: absolute; left: 14px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px; pointer-events: none; color: var(--muted);
+    }
+    .vocab-search-wrap input {
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .vocab-search-wrap input:focus { border-color: var(--yellow); }
+    .vocab-search-wrap input::placeholder { color: var(--muted); }
+
+    /* ── Results count ──────────────────────── */
+    .vocab-count {
+      font-size: 12px; color: var(--muted); margin-bottom: 16px;
+      text-align: center; letter-spacing: 0.5px;
+    }
+
+    /* ── Empty / Error state ────────────────── */
+    .v-empty {
+      grid-column: 1/-1; text-align: center;
+      padding: 50px 20px; color: var(--muted);
+      font-size: 15px; line-height: 1.8;
+    }
+    .v-empty span { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+
+    /* ── Mobile tweaks ──────────────────────── */
+    @media (max-width: 600px) {
+      .vocab-grid { grid-template-columns: 1fr; gap: 10px; }
+      .v-btn { font-size: 12px; padding: 8px 12px; }
+    }
+  </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-logo">Oaishi's Notes</div>
   <a href="index.html">← Back to Hub</a>
-  <a href="#q10" style="color:var(--yellow);border-color:var(--yellow);">Vocabulary Builder</a>
+  <a href="#vocab-section" style="color:var(--yellow);border-color:var(--yellow);">Vocabulary Builder</a>
 </nav>
 
 <div class="hero">
@@ -21,97 +191,50 @@
   <div class="hero-pills">
     <span class="hero-pill">Academic Words</span>
     <span class="hero-pill">Essay Enhancers</span>
-    <span class="hero-pill">Searchable! 🔍</span>
+    <span class="hero-pill">Flashcard Mode ⏰</span>
+    <span class="hero-pill">Favorites ❤️</span>
   </div>
-  <p class="hero-tagline">Better words for better grades! ✨</p>
+  <p style="color:var(--muted);font-size:1rem;max-width:480px;margin:12px auto 0;">Better words = better grades. Click any card to lock it in your brain! ✨</p>
 </div>
 
 <div class="wrap">
+<div class="q-section q10" id="vocab-section">
 
-<div class="q-section q10" id="q10">
   <div class="q-header">
-    <div class="q-num">1</div>
+    <div class="q-num">📖</div>
     <div>
       <div class="q-title">Top Essay Words 🎯</div>
       <div class="q-sub">Ditch the basic words and score higher!</div>
     </div>
   </div>
 
-  <div class="brain">Replacing simple words with precise academic vocabulary is the easiest way to instantly elevate your essay's tone. 😎</div>
-
-  <div class="search-wrap" style="margin-bottom: 30px; position: relative;">
-    <span class="search-icon" style="position: absolute; left: 15px; top: 12px; font-size: 18px;">🔍</span>
-    <input type="text" id="vocab-search" placeholder="Search for a word (e.g. show, good, demonstrate)..." oninput="searchVocab()" style="width:100%; padding: 15px 15px 15px 45px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; outline: none;">
+  <div class="brain">
+    Replacing simple words with precise academic vocabulary is the easiest way to instantly elevate your essay's tone — and honestly, it's also just fun to sound smart. 😎
   </div>
 
-  <h3>🏃‍♀️ 1. Action Verbs (What is happening?)</h3>
-  <table>
-    <tr><th>Instead of saying...</th><th>Try using...</th><th>Example in a sentence</th></tr>
-    <tr><td><strong>Show / Prove</strong></td><td><span class="badge b-purple">Demonstrate</span> / <span class="badge b-purple">Illustrate</span></td><td>Studies <em>demonstrate</em> that exercise reduces stress.</td></tr>
-    <tr><td><strong>Make / Create</strong></td><td><span class="badge b-orange">Generate</span> / <span class="badge b-orange">Produce</span></td><td>This policy will <em>generate</em> new opportunities.</td></tr>
-    <tr><td><strong>Fix / Solve</strong></td><td><span class="badge b-yellow">Resolve</span> / <span class="badge b-yellow">Remedy</span></td><td>We must <em>resolve</em> the systemic issues immediately.</td></tr>
-    <tr><td><strong>Help / Support</strong></td><td><span class="badge b-mint">Facilitate</span> / <span class="badge b-mint">Bolster</span></td><td>Good lighting <em>facilitates</em> better concentration.</td></tr>
-    <tr><td><strong>Stop / Prevent</strong></td><td><span class="badge b-coral">Hinder</span> / <span class="badge b-coral">Inhibit</span></td><td>A lack of funding will <em>hinder</em> our progress.</td></tr>
-    <tr><td><strong>Change</strong></td><td><span class="badge b-sky">Transform</span> / <span class="badge b-sky">Alter</span></td><td>The internet has <em>transformed</em> global communication.</td></tr>
-    <tr><td><strong>Think about</strong></td><td><span class="badge b-purple">Consider</span> / <span class="badge b-purple">Analyze</span></td><td>We must <em>analyze</em> the long-term effects.</td></tr>
-    <tr><td><strong>Give / Hand out</strong></td><td><span class="badge b-orange">Allocate</span> / <span class="badge b-orange">Distribute</span></td><td>The government must <em>allocate</em> resources fairly.</td></tr>
-    <tr><td><strong>Find / Discover</strong></td><td><span class="badge b-mint">Identify</span> / <span class="badge b-mint">Ascertain</span></td><td>Researchers <em>identified</em> the root cause of the problem.</td></tr>
-    <tr><td><strong>Keep / Save</strong></td><td><span class="badge b-yellow">Preserve</span> / <span class="badge b-yellow">Retain</span></td><td>It is important to <em>preserve</em> historical monuments.</td></tr>
-    <tr><td><strong>Explain</strong></td><td><span class="badge b-sky">Clarify</span> / <span class="badge b-sky">Elucidate</span></td><td>The professor <em>elucidated</em> the complex theory.</td></tr>
-    <tr><td><strong>Look at</strong></td><td><span class="badge b-purple">Examine</span> / <span class="badge b-purple">Investigate</span></td><td>The committee will <em>investigate</em> the financial records.</td></tr>
-    <tr><td><strong>Put in</strong></td><td><span class="badge b-orange">Incorporate</span> / <span class="badge b-orange">Integrate</span></td><td>We should <em>incorporate</em> more technology into schools.</td></tr>
-    <tr><td><strong>Say / State</strong></td><td><span class="badge b-coral">Assert</span> / <span class="badge b-coral">Articulate</span></td><td>The author <em>asserts</em> that climate change is urgent.</td></tr>
-    <tr><td><strong>Start / Begin</strong></td><td><span class="badge b-mint">Initiate</span> / <span class="badge b-mint">Commence</span></td><td>The project will <em>commence</em> next week.</td></tr>
-    <tr><td><strong>Use</strong></td><td><span class="badge b-sky">Utilize</span> / <span class="badge b-sky">Employ</span></td><td>Companies <em>utilize</em> data to target ads.</td></tr>
-    <tr><td><strong>Need</strong></td><td><span class="badge b-coral">Require</span> / <span class="badge b-coral">Necessitate</span></td><td>Rapid growth <em>necessitates</em> new infrastructure.</td></tr>
-  </table>
+  <!-- Search -->
+  <div class="vocab-search-wrap">
+    <span class="search-icon-inner">🔍</span>
+    <input type="text" id="vocab-search" placeholder="Search words (e.g. show, good, demonstrate)..." autocomplete="off">
+  </div>
 
-  <h3>✨ 2. Descriptive Words (What does it look/feel like?)</h3>
-  <table>
-    <tr><th>Instead of saying...</th><th>Try using...</th><th>Example in a sentence</th></tr>
-    <tr><td><strong>Bad / Terrible</strong></td><td><span class="badge b-coral">Detrimental</span> / <span class="badge b-coral">Adverse</span></td><td>Corruption has a <em>detrimental</em> effect on society.</td></tr>
-    <tr><td><strong>Good / Important</strong></td><td><span class="badge b-mint">Crucial</span> / <span class="badge b-mint">Vital</span></td><td>Education is <em>crucial</em> for national development.</td></tr>
-    <tr><td><strong>Big / Huge</strong></td><td><span class="badge b-sky">Substantial</span> / <span class="badge b-sky">Profound</span></td><td>AI has caused a <em>profound</em> shift in the industry.</td></tr>
-    <tr><td><strong>Small / Tiny</strong></td><td><span class="badge b-yellow">Marginal</span> / <span class="badge b-yellow">Negligible</span></td><td>The new tax caused only a <em>marginal</em> increase in prices.</td></tr>
-    <tr><td><strong>Clear / Easy to see</strong></td><td><span class="badge b-purple">Evident</span> / <span class="badge b-purple">Apparent</span></td><td>It is <em>evident</em> that climate change is worsening.</td></tr>
-    <tr><td><strong>Complex / Hard</strong></td><td><span class="badge b-orange">Intricate</span> / <span class="badge b-orange">Challenging</span></td><td>The human brain is a highly <em>intricate</em> organ.</td></tr>
-    <tr><td><strong>Many / A lot</strong></td><td><span class="badge b-mint">Numerous</span> / <span class="badge b-mint">Abundant</span></td><td>There are <em>numerous</em> reasons to support this claim.</td></tr>
-    <tr><td><strong>Rich</strong></td><td><span class="badge b-sky">Affluent</span> / <span class="badge b-sky">Wealthy</span></td><td><em>Affluent</em> nations have a duty to help.</td></tr>
-    <tr><td><strong>Poor</strong></td><td><span class="badge b-coral">Impoverished</span> / <span class="badge b-coral">Disadvantaged</span></td><td><em>Impoverished</em> communities suffer the most.</td></tr>
-    <tr><td><strong>Fast / Quick</strong></td><td><span class="badge b-purple">Rapid</span> / <span class="badge b-purple">Accelerated</span></td><td>The <em>rapid</em> growth of the city caused traffic issues.</td></tr>
-    <tr><td><strong>Slow</strong></td><td><span class="badge b-orange">Gradual</span> / <span class="badge b-orange">Sluggish</span></td><td>The economy experienced a <em>sluggish</em> recovery.</td></tr>
-    <tr><td><strong>Same</strong></td><td><span class="badge b-yellow">Identical</span> / <span class="badge b-yellow">Uniform</span></td><td>We must ensure a <em>uniform</em> standard of quality.</td></tr>
-    <tr><td><strong>Different</strong></td><td><span class="badge b-mint">Distinct</span> / <span class="badge b-mint">Diverse</span></td><td>The country is known for its <em>diverse</em> culture.</td></tr>
-    <tr><td><strong>Enough</strong></td><td><span class="badge b-sky">Sufficient</span> / <span class="badge b-sky">Adequate</span></td><td>The hospital lacks <em>sufficient</em> medical supplies.</td></tr>
-    <tr><td><strong>New</strong></td><td><span class="badge b-purple">Innovative</span> / <span class="badge b-purple">Novel</span></td><td>This startup proposed an <em>innovative</em> solution.</td></tr>
-    <tr><td><strong>Empty</strong></td><td><span class="badge b-coral">Vacant</span> / <span class="badge b-coral">Void</span></td><td>The building remained <em>vacant</em> for years.</td></tr>
-  </table>
+  <!-- Controls -->
+  <div class="vocab-controls">
+    <button class="v-btn" id="btn-flashcard">⏰ Flashcard Mode: OFF</button>
+    <button class="v-btn" id="btn-favorites">❤️ Vault: OFF</button>
+    <button class="v-btn" id="btn-shuffle">🎲 Shuffle Deck</button>
+  </div>
 
-  <h3>🔗 3. Connecting Words (Glue your sentences together!)</h3>
-  <table>
-    <tr><th>Instead of saying...</th><th>Try using...</th><th>When to use it</th></tr>
-    <tr><td><strong>Also / And</strong></td><td><span class="badge" style="background:#eee;color:#333;">Furthermore</span> / <span class="badge" style="background:#eee;color:#333;">Moreover</span></td><td>When adding another point to support your argument.</td></tr>
-    <tr><td><strong>But / However</strong></td><td><span class="badge" style="background:#eee;color:#333;">Nevertheless</span> / <span class="badge" style="background:#eee;color:#333;">Conversely</span></td><td>When showing an opposite idea or a plot twist.</td></tr>
-    <tr><td><strong>Because / So</strong></td><td><span class="badge" style="background:#eee;color:#333;">Consequently</span> / <span class="badge" style="background:#eee;color:#333;">Therefore</span></td><td>When showing the result of something happening.</td></tr>
-    <tr><td><strong>For example</strong></td><td><span class="badge" style="background:#eee;color:#333;">For instance</span> / <span class="badge" style="background:#eee;color:#333;">Namely</span></td><td>When giving specific proof to back up your claim.</td></tr>
-    <tr><td><strong>In conclusion</strong></td><td><span class="badge" style="background:#eee;color:#333;">Ultimately</span> / <span class="badge" style="background:#eee;color:#333;">To summarize</span></td><td>When wrapping up your final paragraph.</td></tr>
-    <tr><td><strong>In short</strong></td><td><span class="badge" style="background:#eee;color:#333;">Briefly</span> / <span class="badge" style="background:#eee;color:#333;">Essentially</span></td><td>When giving the "TL;DR" version of a long thought.</td></tr>
-    <tr><td><strong>For sure</strong></td><td><span class="badge" style="background:#eee;color:#333;">Undoubtedly</span> / <span class="badge" style="background:#eee;color:#333;">Certainly</span></td><td>When you are 100% confident in a claim.</td></tr>
-    <tr><td><strong>Because of</strong></td><td><span class="badge" style="background:#eee;color:#333;">Due to</span> / <span class="badge" style="background:#eee;color:#333;">As a consequence of</span></td><td>When pointing at the direct cause of a problem.</td></tr>
-    <tr><td><strong>Basically</strong></td><td><span class="badge" style="background:#eee;color:#333;">Fundamentally</span> / <span class="badge" style="background:#eee;color:#333;">Primarily</span></td><td>When explaining the core root of an issue.</td></tr>
-  </table>
+  <!-- Word count -->
+  <div class="vocab-count" id="vocab-count"></div>
 
-  <h3>💌 4. Bonus Words (Just for you 😉)</h3>
-  <table>
-    <tr><th>Instead of saying...</th><th>Try using...</th><th>Example in a sentence</th></tr>
-    <tr><td><strong>Beautiful</strong></td><td><span class="badge" style="background:rgba(255,143,171,0.15);color:var(--pink);">Radiant</span> / <span class="badge" style="background:rgba(255,143,171,0.15);color:var(--pink);">Breathtaking</span></td><td>My wife looks absolutely <em>radiant</em> today.</td></tr>
-    <tr><td><strong>Smart</strong></td><td><span class="badge b-purple">Brilliant</span> / <span class="badge b-purple">Ingenious</span></td><td>Oaishi's ideas are nothing short of <em>brilliant</em>.</td></tr>
-    <tr><td><strong>Love</strong></td><td><span class="badge b-coral">Adore</span> / <span class="badge b-coral">Cherish</span></td><td>I <em>adore</em> everything about you.</td></tr>
-    <tr><td><strong>Cute</strong></td><td><span class="badge b-yellow">Captivating</span> / <span class="badge b-yellow">Enchanting</span></td><td>Her smile is simply <em>enchanting</em>.</td></tr>
-    <tr><td><strong>Lucky</strong></td><td><span class="badge b-mint">Fortunate</span> / <span class="badge b-mint">Blessed</span></td><td>I am incredibly <em>fortunate</em> to be your husband.</td></tr>
-  </table>
+  <!-- Cards container -->
+  <div id="dynamic-vocab-container" class="vocab-grid"></div>
 
-  <div class="tip">Don't overcomplicate. Use these words naturally when they fit. If you use a big word incorrectly, it hurts your grade more than using a simple word correctly! 💡</div>
+  <div class="tip">
+    Don't overcomplicate. Use these words naturally when they fit — using a big word incorrectly hurts your grade <em>more</em> than using a simple word correctly! 💡
+  </div>
+
 </div>
 
 <div style="text-align:center;color:var(--muted);font-size:13px;padding:30px 0 0;border-top:1px solid var(--border);margin-top:20px;">
@@ -130,47 +253,230 @@
   </div>
 </div>
 
+<script src="assets/js/vocab-data.js"></script>
 <script src="assets/js/quiz-bank.js"></script>
 <script src="assets/js/notes.js"></script>
 
-<!-- Search Logic for Vocab -->
 <script>
-function searchVocab() {
-  const input = document.getElementById('vocab-search').value.toLowerCase();
-  const tables = document.querySelectorAll('.q10 table');
-  
-  tables.forEach(table => {
-    const rows = table.querySelectorAll('tr');
-    let visibleRows = 0;
+(function () {
+  'use strict';
+
+  // ── State ────────────────────────────────────
+  let isFlashcardMode = false;
+  let showingFavorites = false;
+  let favoritesVault = [];
+  let fullDatabaseOrder = []; 
+  let searchQuery = '';
+
+  try {
+    favoritesVault = JSON.parse(localStorage.getItem('oaishi_favorites') || '[]');
+  } catch(e) { favoritesVault = []; }
+
+  // ── DOM refs ──────────────────────────────────
+  let container, countEl, btnFlashcard, btnFavorites, btnShuffle, searchInput;
+
+  // ── Shuffler ──────────────────────────────────
+  function regenerateShuffle(isInitial = false) {
+    const db = window.vocabDatabase;
+    if (!db || db.length === 0) return;
     
-    rows.forEach((row, index) => {
-      // Skip header row
-      if (index === 0) return;
-      
-      const text = row.textContent.toLowerCase();
-      if (text.includes(input)) {
-        row.style.display = '';
-        visibleRows++;
-      } else {
-        row.style.display = 'none';
-      }
-    });
+    // 1. Create a fresh copy and shuffle EVERYTHING
+    const freshPool = [...db];
+    for (let i = freshPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [freshPool[i], freshPool[j]] = [freshPool[j], freshPool[i]];
+    }
     
-    // Hide the whole table and its header if no rows match
-    const previousHeading = table.previousElementSibling;
-    if (visibleRows === 0 && input !== "") {
-      table.style.display = 'none';
-      if (previousHeading && previousHeading.tagName === 'H3') {
-        previousHeading.style.display = 'none';
+    // 2. Update the persistent order
+    fullDatabaseOrder = freshPool;
+    
+    // 3. UI Feedback
+    if (!isInitial) {
+      if (btnShuffle) {
+        btnShuffle.textContent = '🎲 Shuffled!';
+        setTimeout(() => btnShuffle.textContent = '🎲 Shuffle Deck', 1000);
       }
-    } else {
-      table.style.display = '';
-      if (previousHeading && previousHeading.tagName === 'H3') {
-        previousHeading.style.display = '';
+      if (window.showLoveMessage) {
+        window.showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Deck Shuffled! 🃏✨");
       }
     }
+
+    // 4. Force Render
+    if (container) {
+      container.style.opacity = '0';
+      setTimeout(() => {
+        renderVocab();
+        container.style.opacity = '1';
+      }, 50);
+    } else {
+      renderVocab();
+    }
+  }
+
+  // ── Render Logic ──────────────────────────────
+  function renderVocab() {
+    if (!container) return;
+    container.innerHTML = '';
+
+    if (!fullDatabaseOrder || fullDatabaseOrder.length === 0) {
+      container.innerHTML = '<div class="v-empty"><span>⚠️</span>Loading vocabulary...</div>';
+      return;
+    }
+
+    let source = [...fullDatabaseOrder];
+
+    // Filter by Favorites
+    if (showingFavorites) {
+      source = source.filter(w => favoritesVault.includes(w.adv));
+      if (source.length === 0) {
+        container.innerHTML = '<div class="v-empty"><span>❤️</span>Vault empty! Save some words first.</div>';
+        if (countEl) countEl.textContent = '0 words';
+        return;
+      }
+    }
+
+    // Filter by Search
+    let filtered = source;
+    if (searchQuery) {
+      filtered = source.filter(w => 
+        w.adv.toLowerCase().includes(searchQuery) || 
+        w.simple.toLowerCase().includes(searchQuery) || 
+        w.ex.toLowerCase().includes(searchQuery)
+      );
+    } else if (!showingFavorites) {
+      // Show 60 random cards from the shuffled deck
+      filtered = source.slice(0, 60);
+    }
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<div class="v-empty"><span>🔍</span>No matches for "${escapeHtml(searchQuery)}"</div>`;
+      if (countEl) countEl.textContent = '0 words';
+      return;
+    }
+
+    if (countEl) {
+      countEl.textContent = `Showing ${filtered.length} word${filtered.length !== 1 ? 's' : ''}`;
+    }
+
+    const fragment = document.createDocumentFragment();
+    filtered.forEach(word => buildCard(word, fragment));
+    container.appendChild(fragment);
+  }
+
+  // ── Build Card ────────────────────────────────
+  function buildCard(word, fragment) {
+    const isFav = favoritesVault.includes(word.adv);
+    const card  = document.createElement('div');
+    card.className = 'v-card';
+    card.setAttribute('data-word', word.adv);
+    
+    card.innerHTML = `
+      <div class="v-card-top">
+        <span class="cat-badge c-${word.cat}">${word.cat}</span>
+        <button class="fav-btn ${isFav ? 'favorited' : ''}">❤️</button>
+      </div>
+      <div class="v-simple">Instead of <span>${escapeHtml(word.simple)}</span></div>
+      <div class="v-adv">${escapeHtml(word.adv)}</div>
+      <div class="reveal-hint">Click to reveal word 👀</div>
+      <div class="v-ex">${escapeHtml(word.ex)}</div>
+    `;
+
+    card.querySelector('.fav-btn').addEventListener('click', e => {
+      e.stopPropagation();
+      toggleFavorite(word.adv, e.currentTarget);
+    });
+
+    card.addEventListener('click', () => {
+      const adv = card.querySelector('.v-adv');
+      const hint = card.querySelector('.reveal-hint');
+
+      if (isFlashcardMode && !adv.classList.contains('revealed')) {
+        adv.classList.add('revealed');
+        hint.style.display = 'none';
+        return;
+      }
+
+      card.style.transform = 'scale(1.05)';
+      setTimeout(() => card.style.transform = '', 150);
+
+      if (window.showLoveMessage) {
+        const funMsgs = [
+          w => `"${w}" is such a power word! ✨`,
+          w => `Adding "${w}" to your mental dictionary! 🧠`,
+          w => `Level up! You learned "${w}". 🎮`,
+          w => `That essay will look great with "${w}"! ✍️`,
+          w => `Boom! "${w}" memorized! 🔒`
+        ];
+        const pick = funMsgs[Math.floor(Math.random() * funMsgs.length)];
+        window.showLoveMessage(
+          Math.min(window.innerWidth - 100, Math.max(100, window.innerWidth / 2)),
+          window.innerHeight * 0.4,
+          pick(word.adv)
+        );
+      }
+    });
+
+    fragment.appendChild(card);
+  }
+
+  // ── Actions ───────────────────────────────────
+  function toggleFavorite(wordAdv, btnEl) {
+    const idx = favoritesVault.indexOf(wordAdv);
+    if (idx > -1) favoritesVault.splice(idx, 1);
+    else favoritesVault.push(wordAdv);
+    try { localStorage.setItem('oaishi_favorites', JSON.stringify(favoritesVault)); } catch(e) {}
+    if (showingFavorites) renderVocab();
+    else btnEl.classList.toggle('favorited');
+  }
+
+  function handleSearch() {
+    searchQuery = searchInput.value.trim().toLowerCase();
+    renderVocab();
+  }
+
+  function toggleFlashcardMode() {
+    isFlashcardMode = !isFlashcardMode;
+    container.classList.toggle('flashcard-mode', isFlashcardMode);
+    btnFlashcard.textContent = `⏰ Flashcard Mode: ${isFlashcardMode ? 'ON' : 'OFF'}`;
+    btnFlashcard.classList.toggle('active', isFlashcardMode);
+    container.querySelectorAll('.v-adv.revealed').forEach(el => el.classList.remove('revealed'));
+    container.querySelectorAll('.reveal-hint').forEach(el => el.style.display = '');
+  }
+
+  function toggleFavoritesFilter() {
+    showingFavorites = !showingFavorites;
+    btnFavorites.textContent = `❤️ Vault: ${showingFavorites ? 'ON' : 'OFF'}`;
+    btnFavorites.classList.toggle('active', showingFavorites);
+    renderVocab();
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  // ── Init ──────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    container = document.getElementById('dynamic-vocab-container');
+    countEl = document.getElementById('vocab-count');
+    btnFlashcard = document.getElementById('btn-flashcard');
+    btnFavorites = document.getElementById('btn-favorites');
+    btnShuffle = document.getElementById('btn-shuffle');
+    searchInput = document.getElementById('vocab-search');
+
+    btnFlashcard.addEventListener('click', toggleFlashcardMode);
+    btnFavorites.addEventListener('click', toggleFavoritesFilter);
+    btnShuffle.addEventListener('click', () => regenerateShuffle(false));
+    searchInput.addEventListener('input', handleSearch);
+
+    const checkData = setInterval(() => {
+      if (window.vocabDatabase && window.vocabDatabase.length > 0) {
+        clearInterval(checkData);
+        regenerateShuffle(true);
+      }
+    }, 100);
   });
-}
+
+})();
 </script>
 
 </body>

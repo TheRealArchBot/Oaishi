@@ -1,11 +1,26 @@
 // ──────────────────────────────────────────────
+// Reading Progress Bar
+// ──────────────────────────────────────────────
+(function() {
+  const bar = document.createElement('div');
+  bar.id = 'reading-progress';
+  document.body.prepend(bar);
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop || document.body.scrollTop;
+    const total    = doc.scrollHeight - doc.clientHeight;
+    bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+  }, { passive: true });
+})();
+
+// ──────────────────────────────────────────────
 // Service Worker Registration
 // ──────────────────────────────────────────────
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('SW registered!', reg))
-      .catch(err => console.log('SW registration failed', err));
+      .then(() => {}) // silent success
+      .catch(() => {});
   });
 }
 
@@ -15,20 +30,26 @@ if ('serviceWorker' in navigator) {
 const navSections = document.querySelectorAll('.q-section');
 const navLinks    = document.querySelectorAll('nav a');
 
-window.addEventListener('scroll', () => {
-  let current = '';
-  navSections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 90) current = s.id;
-  });
-  navLinks.forEach(l => {
-    const href = l.getAttribute('href');
-    if (href?.startsWith('#')) {
-      const active = href === '#' + current;
-      l.style.color       = active ? 'var(--yellow)' : '';
-      l.style.borderColor = active ? 'var(--yellow)' : '';
-    }
-  });
-}, { passive: true });
+if (navSections.length > 0 && navLinks.length > 0) {
+  const observerOptions = { root: null, rootMargin: '-20% 0px -70% 0px', threshold: 0 };
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const current = entry.target.id;
+        navLinks.forEach(l => {
+          const href = l.getAttribute('href');
+          if (href?.startsWith('#')) {
+            const active = href === '#' + current;
+            l.style.color       = active ? 'var(--yellow)' : '';
+            l.style.borderColor = active ? 'var(--yellow)' : '';
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  navSections.forEach(sec => navObserver.observe(sec));
+}
 
 // ──────────────────────────────────────────────
 // Floating Love Message Helper
@@ -42,40 +63,54 @@ const LOVE_MESSAGES = [
 ];
 
 function showLoveMessage(x, y, text = null) {
-  const msg = Object.assign(document.createElement('div'), {
-    textContent: text || LOVE_MESSAGES[Math.floor(Math.random() * LOVE_MESSAGES.length)]
-  });
+  // Guard: limit concurrent popups to 3
+  if (document.querySelectorAll('.love-popup').length >= 3) return;
+
+  // Clamp position so popup never goes off-screen
+  const safeX = Math.max(120, Math.min(x, window.innerWidth  - 120));
+  const safeY = Math.max(80,  Math.min(y, window.innerHeight - 80));
+
+  const msg = document.createElement('div');
+  msg.className = 'love-popup';
+  msg.textContent = text || LOVE_MESSAGES[Math.floor(Math.random() * LOVE_MESSAGES.length)];
 
   Object.assign(msg.style, {
     position:        'fixed',
-    left:            x + 'px',
-    top:             y + 'px',
-    transform:       'translate(-50%, -100%)',
+    left:            safeX + 'px',
+    top:             safeY + 'px',
+    transform:       'translate(-50%, -120%)',
     backgroundColor: 'var(--pink, #ff8fab)',
     color:           '#fff',
     padding:         '10px 20px',
     borderRadius:    '20px',
     fontWeight:      'bold',
-    boxShadow:       '0 4px 12px rgba(255,143,171,0.4)',
+    fontFamily:      "'Nunito', sans-serif",
+    fontSize:        '14px',
+    boxShadow:       '0 4px 16px rgba(255,143,171,0.4)',
     pointerEvents:   'none',
     zIndex:          '9999',
     opacity:         '0',
-    transition:      'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-    textAlign:       'center'
+    maxWidth:        '280px',
+    textAlign:       'center',
+    lineHeight:      '1.4',
+    transition:      'opacity 0.4s ease, top 0.4s ease',
+    willChange:      'opacity, top'
   });
 
   document.body.appendChild(msg);
 
   requestAnimationFrame(() => {
-    msg.style.top     = (y - 50) + 'px';
-    msg.style.opacity = '1';
+    requestAnimationFrame(() => { // double rAF for reliable transition
+      msg.style.top     = (safeY - 55) + 'px';
+      msg.style.opacity = '1';
+    });
   });
 
   setTimeout(() => {
     msg.style.opacity = '0';
-    msg.style.top     = (y - 80) + 'px';
-    setTimeout(() => msg.remove(), 500);
-  }, 4000);
+    msg.style.top     = (safeY - 85) + 'px';
+    setTimeout(() => msg.remove(), 450);
+  }, 3800);
 }
 
 // ──────────────────────────────────────────────
@@ -176,11 +211,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Idle / deep-reading tracker (2 min no movement)
+  // Idle / deep-reading tracker (5 min no movement)
   let idleTimer;
   const resetIdle = () => {
     clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => showLoveMessage(window.innerWidth - 150, 100, "I see you studying hard! Don't forget to blink! 😉✨"), 2 * 60 * 1000);
+    idleTimer = setTimeout(() => showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Hey! The essay isn't going to write itself! (And I'm getting lonely here) 🥺"), 5 * 60 * 1000);
   };
   ['mousemove', 'keydown'].forEach(ev => window.addEventListener(ev, resetIdle));
   window.addEventListener('scroll', resetIdle, { passive: true });
@@ -352,34 +387,331 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── MORE EASTER EGGS (To reach 50) ──────────
+  
+  // 1. Mouse leave window
+  document.addEventListener('mouseleave', () => {
+    if (Math.random() > 0.7) showLoveMessage(window.innerWidth / 2, 50, "Wait, where are you going? The notes are here! 👀");
+  });
+
+  // 2. Typing 'oaishi' anywhere
+  let typedOaishi = '';
+  window.addEventListener('keydown', e => {
+    if (e.key.length === 1) typedOaishi = (typedOaishi + e.key.toLowerCase()).slice(-6);
+    if (typedOaishi === 'oaishi') {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "That's my beautiful wife's name! 😍");
+      typedOaishi = '';
+    }
+  });
+
+  // 3. Typing 'wife'
+  let typedWife = '';
+  window.addEventListener('keydown', e => {
+    if (e.key.length === 1) typedWife = (typedWife + e.key.toLowerCase()).slice(-4);
+    if (typedWife === 'wife') {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Best wife in the universe! 💖");
+      typedWife = '';
+    }
+  });
+
+  // 4. Typing 'exam'
+  let typedExam = '';
+  window.addEventListener('keydown', e => {
+    if (e.key.length === 1) typedExam = (typedExam + e.key.toLowerCase()).slice(-4);
+    if (typedExam === 'exam') {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "You are going to ACE this exam! 💯");
+      typedExam = '';
+    }
+  });
+
+  // 5. Typing 'fail'
+  let typedFail = '';
+  window.addEventListener('keydown', e => {
+    if (e.key.length === 1) typedFail = (typedFail + e.key.toLowerCase()).slice(-4);
+    if (typedFail === 'fail') {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Don't even think about that! You're brilliant! 🚫🧠");
+      typedFail = '';
+    }
+  });
+
+  // 6. Fast mouse movement (dizzy)
+  let lastMouseTime = Date.now();
+  let mouseSpeedPoints = 0;
+  window.addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - lastMouseTime < 20) mouseSpeedPoints++;
+    else mouseSpeedPoints = 0;
+    lastMouseTime = now;
+    if (mouseSpeedPoints > 50) {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Stop shaking the mouse so fast, you're making me dizzy! 😵‍💫");
+      mouseSpeedPoints = -500; // Cooldown
+    }
+  });
+
+  // 7. Holding Shift
+  let shiftHeldTime = 0;
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Shift') {
+      if (!shiftHeldTime) shiftHeldTime = Date.now();
+      else if (Date.now() - shiftHeldTime > 5000) {
+        showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Are we YELLING?! Why are you holding Shift for so long? 🗣️");
+        shiftHeldTime = Date.now() + 100000;
+      }
+    }
+  });
+  window.addEventListener('keyup', e => { if (e.key === 'Shift') shiftHeldTime = 0; });
+
+  // 8. Double click background
+  window.addEventListener('dblclick', e => {
+    if (e.target === document.body || e.target.classList.contains('wrap')) {
+      showLoveMessage(e.clientX, e.clientY, "Double tap! Like! ❤️");
+    }
+  });
+
+  // 9. Highlighting too much
+  document.addEventListener('selectionchange', () => {
+    const text = window.getSelection().toString();
+    if (text.length > 500) {
+      showLoveMessage(window.innerWidth / 2, 100, "Are you just highlighting the whole page at this point? 😂🖍️");
+    }
+  });
+
+  // 10. Blur at 10 times
+  let megaDistractCount = 0;
+  window.addEventListener('blur', () => megaDistractCount++);
+  window.addEventListener('focus', () => {
+    if (megaDistractCount === 10) {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Okay seriously, are we watching Netflix? Focus on the notes! 🍿📺");
+    }
+  });
+
+  // 11. 10 minute mark
+  setTimeout(() => showLoveMessage(window.innerWidth / 2, 100, "10 minutes of solid work! A great start! 🌟"), 10 * 60 * 1000);
+
+  // 12. 20 minute mark
+  setTimeout(() => showLoveMessage(window.innerWidth / 2, 100, "20 minutes! Keep it up, you're doing amazing! ⚡"), 20 * 60 * 1000);
+
+  // 13. Back from long blur
+  let lastBlurTime = 0;
+  window.addEventListener('blur', () => lastBlurTime = Date.now());
+  window.addEventListener('focus', () => {
+    if (lastBlurTime > 0 && Date.now() - lastBlurTime > 5 * 60 * 1000) {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Welcome back! I missed you! Now back to studying! 🥰");
+    }
+  });
+
+  // 14. Press 'Q' 3 times
+  let qPresses = 0;
+  window.addEventListener('keydown', e => {
+    if (e.key.toLowerCase() === 'q') {
+      qPresses++;
+      if (qPresses === 3) {
+        showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Quitting is not an option! You can do this! 🚫🚪");
+        qPresses = 0;
+      }
+    } else { qPresses = 0; }
+  });
+
+  // 15. Right click 3 times
+  let rightClickCount = 0;
+  window.addEventListener('contextmenu', () => {
+    rightClickCount++;
+    if (rightClickCount === 3) {
+      setTimeout(() => showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Still right clicking? Still nothing here but my love for you! 💖"), 500);
+      rightClickCount = 0;
+    }
+  });
+
+  // 16. 11:11 Wish
+  setInterval(() => {
+    const d = new Date();
+    if (d.getHours() % 12 === 11 && d.getMinutes() === 11 && d.getSeconds() === 0) {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "It's 11:11! Make a wish! I wish for you to get an A+! ✨");
+    }
+  }, 1000);
+
+  // 17. Ctrl+C 5 times
+  let ctrlCCount = 0;
+  window.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key.toLowerCase() === 'c') {
+      ctrlCCount++;
+      if (ctrlCCount === 5) {
+        showLoveMessage(window.innerWidth / 2, 100, "Ctrl+C won't put it in your brain! You have to actually read it! 🧠📎");
+        ctrlCCount = 0;
+      }
+    }
+  });
+
+  // 18. Ctrl+V 3 times
+  let ctrlVCount = 0;
+  window.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key.toLowerCase() === 'v') {
+      ctrlVCount++;
+      if (ctrlVCount === 3) {
+        showLoveMessage(window.innerWidth / 2, 100, "Pasting? You better be pasting something smart into your notes! 📋🤔");
+        ctrlVCount = 0;
+      }
+    }
+  });
+
+  // 19. Marathon scroller
+  let scrollMarathon = 0;
+  window.addEventListener('scroll', () => {
+    scrollMarathon++;
+    if (scrollMarathon === 500) {
+      showLoveMessage(window.innerWidth / 2, 100, "You've scrolled a marathon! Good exercise for your fingers! 🏃‍♀️👆");
+    }
+  }, { passive: true });
+
+  // 20. Typing 'coffee'
+  let typedCoffee = '';
+  window.addEventListener('keydown', e => {
+    if (e.key.length === 1) typedCoffee = (typedCoffee + e.key.toLowerCase()).slice(-6);
+    if (typedCoffee === 'coffee') {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "I'll go make you a cup right now! ☕❤️");
+      typedCoffee = '';
+    }
+  });
+
+  // 21. Typing 'tea'
+  let typedTea = '';
+  window.addEventListener('keydown', e => {
+    if (e.key.length === 1) typedTea = (typedTea + e.key.toLowerCase()).slice(-3);
+    if (typedTea === 'tea') {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Time for a tea break? 🫖🌿");
+      typedTea = '';
+    }
+  });
+
+  // 22. Typing 'water'
+  let typedWater = '';
+  window.addEventListener('keydown', e => {
+    if (e.key.length === 1) typedWater = (typedWater + e.key.toLowerCase()).slice(-5);
+    if (typedWater === 'water') {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Stay hydrated my love! Drink some water! 💧");
+      typedWater = '';
+    }
+  });
+
+  // 23. Spacebar 10 times fast
+  let spaceTimes = [];
+  window.addEventListener('keydown', e => {
+    if (e.key === ' ') {
+      const now = Date.now();
+      spaceTimes = [...spaceTimes.filter(t => now - t < 2000), now];
+      if (spaceTimes.length >= 10) {
+        showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Take it easy on the spacebar! It didn't do anything wrong! 🚀");
+        spaceTimes = [];
+      }
+    }
+  });
+
+  // 24. Click spamming anywhere
+  let clickSpam = 0;
+  let clickSpamTimer;
+  window.addEventListener('click', () => {
+    clickSpam++;
+    clearTimeout(clickSpamTimer);
+    if (clickSpam === 15) {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Click click click! Are you playing a video game or studying? 🎮😂");
+      clickSpam = 0;
+    }
+    clickSpamTimer = setTimeout(() => clickSpam = 0, 3000);
+  });
+
+  // 25. Typing 'help' again but outside notepad
+  let typedHelp = '';
+  window.addEventListener('keydown', e => {
+    if (e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'INPUT' && e.key.length === 1) {
+      typedHelp = (typedHelp + e.key.toLowerCase()).slice(-4);
+      if (typedHelp === 'help') {
+        showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "I'm always here to help you honey! Just ask! 🦸‍♂️❤️");
+        typedHelp = '';
+      }
+    }
+  });
+  
+  // 26. Backspace spam anywhere
+  let globalBs = 0;
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Backspace') {
+      globalBs++;
+      if(globalBs === 10) {
+        showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "So many mistakes? It's okay, nobody is perfect! Except you! 🥰");
+        globalBs = 0;
+      }
+    } else { globalBs = 0; }
+  });
+
+  // 27. Refreshing (F5) warning
+  window.addEventListener('keydown', e => {
+    if (e.key === 'F5') {
+      showLoveMessage(window.innerWidth / 2, 100, "Refreshing the page won't refresh your brain! Keep studying! 🔄🧠");
+    }
+  });
+
+  // 28. Dev tools open check (width change drastically)
+  let lastWidth = window.innerWidth;
+  window.addEventListener('resize', () => {
+    if (Math.abs(window.innerWidth - lastWidth) > 300) {
+      showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "Did you just open DevTools? Hacking the exam? 🧑‍💻😂");
+    }
+    lastWidth = window.innerWidth;
+  });
+
+  // 29. Time spent on page 45 minutes
+  setTimeout(() => showLoveMessage(window.innerWidth / 2, 100, "45 minutes! You're really putting in the work! So proud! 🎖️"), 45 * 60 * 1000);
+  
+  // 30. Super long session (2 hours)
+  setTimeout(() => showLoveMessage(window.innerWidth / 2, window.innerHeight / 2, "TWO HOURS! Okay, you definitely need a break now! I'm officially demanding you take a 10 min break! 🛑💖"), 120 * 60 * 1000);
+
   // ── Quiz System ─────────────────────────────
   if (!localStorage.getItem('oaishi_score')) localStorage.setItem('oaishi_score', 0);
   let currentScore = parseInt(localStorage.getItem('oaishi_score'));
+  let currentStreak = parseInt(localStorage.getItem('oaishi_streak') || '0');
+  
+  // Score & streak tracked silently — no visible HUD
+  function updateHud() {
+    // intentionally empty — display removed per user request
+  }
 
-  const nav = document.querySelector('nav');
-  if (nav && document.querySelector('.q-section')) {
-    const tracker = document.createElement('span');
-    tracker.id = 'quiz-tracker';
-    tracker.style.cssText = 'margin-left:auto;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;font-weight:bold;font-size:13px;color:var(--yellow);';
-    tracker.innerHTML = `⭐️ Score: ${currentScore}`;
-    nav.appendChild(tracker);
+
+  if (document.querySelector('.q-section') && window.quizBank) {
+    // Hide old tracker if exists
+    const oldTracker = document.getElementById('quiz-tracker');
+    if(oldTracker) oldTracker.style.display = 'none';
 
     let wrongStreak = 0;
 
-    const unanswered = quizBank
-      .map((q, i) => ({ ...q, id: i }))
-      .filter(q => !localStorage.getItem(`quiz_answered_${q.id}`));
+    const allAnswered = JSON.parse(localStorage.getItem('oaishi_answered') || '[]');
+    const wrongVault = JSON.parse(localStorage.getItem('oaishi_wrong_quizzes') || '[]');
+
+    let pool = window.quizBank.map((q, i) => ({ ...q, id: i }));
+    
+    // First priority: Quizzes in the wrong vault
+    let toReview = pool.filter(q => wrongVault.includes(q.id));
+    // Second priority: Quizzes not answered yet
+    let unanswered = pool.filter(q => !allAnswered.includes(q.id) && !wrongVault.includes(q.id));
+
+    // Fallback: If they answered literally everything perfectly, reset to entire pool!
+    if (toReview.length === 0 && unanswered.length === 0) {
+      unanswered = [...pool];
+    }
 
     const pageSections = Array.from(document.querySelectorAll('.q-section'));
 
     let validSections = pageSections
-      .filter(sec => unanswered.some(q => q.section === sec.id))
+      .filter(sec => toReview.some(q => q.section === sec.id) || unanswered.some(q => q.section === sec.id))
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
 
     validSections.forEach(section => {
-      const pool = unanswered.filter(q => q.section === section.id);
-      const quiz = pool[Math.floor(Math.random() * pool.length)];
+      let sectionPool = toReview.filter(q => q.section === section.id);
+      if(sectionPool.length === 0) {
+        sectionPool = unanswered.filter(q => q.section === section.id);
+      }
+      const quiz = sectionPool[Math.floor(Math.random() * sectionPool.length)];
+      if(!quiz) return;
 
       const quizDiv = document.createElement('div');
       quizDiv.className = 'quiz-box';
@@ -417,31 +749,72 @@ document.addEventListener('DOMContentLoaded', () => {
       btns.forEach(btn => {
         btn.addEventListener('click', e => {
           btns.forEach(b => { b.disabled = true; b.style.opacity = '0.5'; b.style.cursor = 'default'; });
-          localStorage.setItem(`quiz_answered_${quiz.id}`, 'true');
+          
+          if(!allAnswered.includes(quiz.id)) allAnswered.push(quiz.id);
+          localStorage.setItem('oaishi_answered', JSON.stringify(allAnswered));
 
           const picked = parseInt(e.target.getAttribute('data-idx'));
           resultDiv.style.display = 'block';
 
           if (picked === quiz.correct) {
             wrongStreak = 0;
+            currentStreak++;
+            localStorage.setItem('oaishi_streak', currentStreak);
+
+            if (wrongVault.includes(quiz.id)) {
+              wrongVault.splice(wrongVault.indexOf(quiz.id), 1);
+              localStorage.setItem('oaishi_wrong_quizzes', JSON.stringify(wrongVault));
+            }
+
             e.target.style.background = 'var(--mint)';
+            e.target.style.color      = '#000';
             e.target.style.opacity    = '1';
             resultDiv.style.color     = 'var(--mint)';
-            resultDiv.textContent     = 'Correct! Brilliant as always! ✨';
+
+            const correctPraise = [
+              'Correct! Brain is working overtime today! 🧠✨',
+              'Yes! Nailed it! Was there ever any doubt? 💅',
+              'That\'s right! Knowledge unlocked! 🔓',
+              'Correct! Keep this energy for the exam! 🔥',
+              'Boom! Got it in one! 🎯'
+            ];
+            resultDiv.textContent = correctPraise[Math.floor(Math.random() * correctPraise.length)];
             currentScore++;
             localStorage.setItem('oaishi_score', currentScore);
-            tracker.innerHTML = `⭐️ Score: ${currentScore}`;
-            showLoveMessage(e.clientX, e.clientY, "Correct! You're so smart! 🥰");
+            updateHud();
+            const ex = e.target.getBoundingClientRect();
+            showLoveMessage(ex.left + ex.width / 2, ex.top, "Correct! You're so smart! 🥰");
           } else {
             wrongStreak++;
+            currentStreak = 0;
+            localStorage.setItem('oaishi_streak', 0);
+            updateHud();
+
+            if (!wrongVault.includes(quiz.id)) {
+              wrongVault.push(quiz.id);
+              localStorage.setItem('oaishi_wrong_quizzes', JSON.stringify(wrongVault));
+            }
+
             e.target.style.background              = 'var(--coral)';
+            e.target.style.color                   = '#fff';
             e.target.style.opacity                 = '1';
             btns[quiz.correct].style.background    = 'var(--mint)';
+            btns[quiz.correct].style.color         = '#000';
             btns[quiz.correct].style.opacity       = '1';
             resultDiv.style.color                  = 'var(--coral)';
+
+            const wrongResponses = [
+              'Not quite — but the correct answer is highlighted! 💛',
+              'Oops! Study that one again, it\'ll come up! 📚',
+              'Almost! This one\'s going back into the review vault. 🔄'
+            ];
+            const roastResponses = [
+              'Three wrong in a row... Is your brain buffering? 🐢💻',
+              'Okay we might need to read that section one more time! 😂'
+            ];
             resultDiv.textContent = wrongStreak >= 3
-              ? (wrongStreak = 0, 'Wrong again... Is your brain running on Internet Explorer today? 🐢💻')
-              : 'Oops, not quite! Keep trying, honey! 💛';
+              ? (wrongStreak = 0, roastResponses[Math.floor(Math.random() * roastResponses.length)])
+              : wrongResponses[Math.floor(Math.random() * wrongResponses.length)];
           }
         });
       });

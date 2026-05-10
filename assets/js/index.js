@@ -96,8 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "I love you, Oaishi! ❤️",
       "I believe in you honey! ✨",
       "You're my favorite genius 🥰",
-      "I'm so proud of honey! 💛",
-      "Don't stress, you got can do it love! 🧠"
+      "I'm so proud of you honey! 💛",
+      "Don't stress, you can do it love! 🧠"
     ];
     msg.textContent = messages[Math.floor(Math.random() * messages.length)];
 

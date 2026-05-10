@@ -18,6 +18,12 @@ body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--te
 ::selection { background: var(--yellow); color: #000; }
 
 /* SCROLL */
-::-webkit-scrollbar { width: 6px; } 
-::-webkit-scrollbar-track { background: var(--bg); } 
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* NAV — always on top */
+nav { z-index: 400; position: relative; }
+
+/* VOCAB CONTROLS (shared between pages) */
+.vocab-controls { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }

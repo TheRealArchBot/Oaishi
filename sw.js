@@ -1,4 +1,4 @@
-const CACHE_NAME = 'oaishi-study-cache-v1';
+const CACHE_NAME = 'oaishi-study-cache-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -10,49 +10,51 @@ const ASSETS_TO_CACHE = [
   './assets/js/index.js',
   './assets/js/notes.js',
   './assets/js/quiz-bank.js',
+  './assets/js/vocab-data.js',
   'https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap'
 ];
 
-// Install event - cache all static assets
+// ── Install: pre-cache offline fallback assets, then activate immediately ──
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[Service Worker] Caching all files');
-        return cache.addAll(ASSETS_TO_CACHE);
-      })
+      .then(cache => cache.addAll(ASSETS_TO_CACHE))
+      .then(() => self.skipWaiting())
   );
 });
 
-// Activate event - clean up old caches
+// ── Activate: wipe all old caches, claim all tabs immediately ──────────────
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== CACHE_NAME) {
-            console.log('[Service Worker] Clearing Old Cache');
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
+    caches.keys()
+      .then(keys => Promise.all(
+        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+      ))
+      .then(() => self.clients.claim())
   );
 });
 
-// Fetch event - serve from cache if offline
+// ── Fetch: Network-first for EVERYTHING ───────────────────────────────────
+// When online  → always fetches fresh from network, updates cache silently.
+// When offline → falls back to cached version so the app still works.
 self.addEventListener('fetch', event => {
+  // Only handle GET requests, ignore chrome-extension / non-http
+  if (event.request.method !== 'GET') return;
+  if (!event.request.url.startsWith('http')) return;
+
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached response if found
-        if (response) {
-          return response;
+    fetch(event.request)
+      .then(networkResponse => {
+        // Got a valid response from the network — update the cache with it
+        if (networkResponse && networkResponse.status === 200) {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         }
-        // Otherwise fetch from network
-        return fetch(event.request).catch(() => {
-          // If network fails (offline) and not in cache, we could return a fallback page here if we had one
-        });
+        return networkResponse;
+      })
+      .catch(() => {
+        // Network failed (offline) — serve from cache
+        return caches.match(event.request);
       })
   );
 });
