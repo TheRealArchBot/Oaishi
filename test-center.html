@@ -481,12 +481,18 @@
           },
           {
             id: 'linguistics', name: 'Linguistics Notes', icon: '🧠', desc: 'Saussure, Chomsky, Phonetics, Syntax & more.', sections: [
-              { id: 'ling1', name: 'Foundations', icon: '👴', p: 'Saussure & Chomsky' },
-              { id: 'ling3', name: 'Sounds', icon: '🗣️', p: 'Phonetics & Phonology' },
-              { id: 'ling5', name: 'Words & Sentences', icon: '🧱', p: 'Morphology & Syntax' },
-              { id: 'ling7', name: 'Meaning & Mind', icon: '🤔', p: 'Semantics, Pragmatics & Psycholing' },
-              { id: 'ling9', name: 'Society', icon: '🌍', p: 'Sociolinguistics, Pidgins & Creoles' },
-              { id: 'ling12', name: 'Cheatsheet', icon: '⚡', p: 'Quick Review & Definitions' }
+              { id: 'ling1', name: 'Saussure & Chomsky', icon: '👴', p: 'Foundations of modern linguistics' },
+              { id: 'ling2', name: 'Phonetics', icon: '🗣️', p: 'Speech sound production and IPA' },
+              { id: 'ling3', name: 'Phonology', icon: '🔊', p: 'Sound systems and patterns' },
+              { id: 'ling4', name: 'Morphology', icon: '🧩', p: 'Word structure and morphemes' },
+              { id: 'ling5', name: 'Syntax', icon: '🧱', p: 'Sentence structure and grammar rules' },
+              { id: 'ling6', name: 'Semantics', icon: '💡', p: 'Word, phrase, and sentence meaning' },
+              { id: 'ling7', name: 'Pragmatics', icon: '💬', p: 'Meaning in context and speech acts' },
+              { id: 'ling8', name: 'Sociolinguistics', icon: '🌍', p: 'Language and society' },
+              { id: 'ling9', name: 'Psycholinguistics', icon: '🧠', p: 'Language processing in the mind/brain' },
+              { id: 'ling10', name: 'Language Acquisition', icon: '👶', p: 'How first/second languages are learned' },
+              { id: 'ling11', name: 'Pidgin, Creole & Standardization', icon: '🌐', p: 'Contact languages and planning' },
+              { id: 'ling12', name: 'Cheatsheet Review', icon: '⚡', p: 'Final revision mix' }
             ]
           }
         ],
@@ -660,17 +666,12 @@
         const staticTopics = selectedTopics.filter(t => t !== 'vocab');
         if (staticTopics.length > 0) {
           let filteredStatic = window.quizBank.filter(q => {
+            if (!q || typeof q.section !== 'string') return false;
             if (q.section === 'q7' || q.section === 'q9') {
               return staticTopics.includes('q7') || staticTopics.includes('q9');
             }
             if (q.section.startsWith('ling')) {
-              if (staticTopics.includes('ling1') && (q.section === 'ling1' || q.section === 'ling2')) return true;
-              if (staticTopics.includes('ling3') && (q.section === 'ling3' || q.section === 'ling4')) return true;
-              if (staticTopics.includes('ling5') && (q.section === 'ling5' || q.section === 'ling6')) return true;
-              if (staticTopics.includes('ling7') && (q.section === 'ling7' || q.section === 'ling8' || q.section === 'ling10')) return true;
-              if (staticTopics.includes('ling9') && (q.section === 'ling9' || q.section === 'ling11')) return true;
-              if (staticTopics.includes('ling12') && q.section === 'ling12') return true;
-              return false;
+              return staticTopics.includes(q.section);
             }
             return staticTopics.includes(q.section);
           });
@@ -686,15 +687,28 @@
 
         // 2. Dynamic Vocab
         if (selectedTopics.includes('vocab') && window.vocabDatabase) {
-          const count = selectedTopics.length === 1 ? 20 : 10;
-          for (let i = 0; i < count; i++) {
+          const count = selectedTopics.length === 1 ? 30 : 15;
+          let attempts = 0;
+          while (testPool.length < count && attempts < count * 8) {
+            attempts++;
             const word = window.vocabDatabase[Math.floor(Math.random() * window.vocabDatabase.length)];
-            const distractors = window.vocabDatabase
+            let distractors = window.vocabDatabase
               .filter(w => w.cat === word.cat && w.adv !== word.adv)
               .sort(() => 0.5 - Math.random())
               .slice(0, 2);
 
-            const options = [word.adv, ...distractors.map(d => d.adv)].sort(() => 0.5 - Math.random());
+            // Fallback in case a category has too few alternatives
+            if (distractors.length < 2) {
+              const fallback = window.vocabDatabase
+                .filter(w => w.adv !== word.adv && !distractors.some(d => d.adv === w.adv))
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 2 - distractors.length);
+              distractors = distractors.concat(fallback);
+            }
+
+            const uniqueOptions = [...new Set([word.adv, ...distractors.map(d => d.adv)])];
+            if (uniqueOptions.length < 3) continue;
+            const options = uniqueOptions.sort(() => 0.5 - Math.random());
             testPool.push({
               q: `Which academic word is a stronger replacement for <strong>"${word.simple}"</strong>?`,
               options: options,
@@ -705,7 +719,12 @@
 
         // Shuffle final pool and limit
         testPool.sort(() => 0.5 - Math.random());
-        testPool = testPool.slice(0, 15);
+        const practiceLimit = selectedCourse?.id === 'linguistics'
+          ? 30
+          : selectedCourse?.id === 'special-vocab'
+            ? 30
+            : 15;
+        testPool = testPool.slice(0, practiceLimit);
         totalQuestions = testPool.length;
       }
 
