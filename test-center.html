@@ -686,15 +686,26 @@
 
         // 2. Dynamic Vocab
         if (selectedTopics.includes('vocab') && window.vocabDatabase) {
-          const count = selectedTopics.length === 1 ? 20 : 10;
+          const count = selectedTopics.length === 1 ? 30 : 15;
           for (let i = 0; i < count; i++) {
             const word = window.vocabDatabase[Math.floor(Math.random() * window.vocabDatabase.length)];
-            const distractors = window.vocabDatabase
+            let distractors = window.vocabDatabase
               .filter(w => w.cat === word.cat && w.adv !== word.adv)
               .sort(() => 0.5 - Math.random())
               .slice(0, 2);
 
-            const options = [word.adv, ...distractors.map(d => d.adv)].sort(() => 0.5 - Math.random());
+            // Fallback in case a category has too few alternatives
+            if (distractors.length < 2) {
+              const fallback = window.vocabDatabase
+                .filter(w => w.adv !== word.adv && !distractors.some(d => d.adv === w.adv))
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 2 - distractors.length);
+              distractors = distractors.concat(fallback);
+            }
+
+            const uniqueOptions = [...new Set([word.adv, ...distractors.map(d => d.adv)])];
+            if (uniqueOptions.length < 3) continue;
+            const options = uniqueOptions.sort(() => 0.5 - Math.random());
             testPool.push({
               q: `Which academic word is a stronger replacement for <strong>"${word.simple}"</strong>?`,
               options: options,
@@ -705,6 +716,11 @@
 
         // Shuffle final pool and limit
         testPool.sort(() => 0.5 - Math.random());
+        const practiceLimit = selectedCourse?.id === 'linguistics'
+          ? 30
+          : selectedCourse?.id === 'special-vocab'
+            ? 30
+            : 15;
         const practiceLimit = selectedCourse?.id === 'linguistics' ? 30 : 15;
         testPool = testPool.slice(0, practiceLimit);
         totalQuestions = testPool.length;
