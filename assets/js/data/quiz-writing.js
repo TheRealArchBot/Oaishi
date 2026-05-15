@@ -239,4 +239,35 @@ window.quizWriting = [
   { section:"q10", q:"A stronger academic word for 'Prove wrong' is:", options:["Refute / Rebut","Disagree","Say no to"], correct:0 },
   { section:"q10", q:"What does 'Mitigate' mean?", options:["To make something worse","To lessen the severity of something","To completely eliminate"], correct:1 },
 
+
+  // Q4: ESSAY ANATOMY
+  { section:"q4", q:"What does 'unity' in a paragraph mean?", options:["All sentences support one main idea","Using many advanced words","Writing at least ten lines"], correct:0 },
+  { section:"q4", q:"What does 'coherence' refer to?", options:["Logical flow and clear connection between ideas","Only correct spelling","Long sentences"], correct:0 },
+  { section:"q4", q:"A topic sentence should usually appear:", options:["At the start of a body paragraph","Only in the conclusion","In the title"], correct:0 },
+  { section:"q4", q:"Which part of the essay states the main argument?", options:["Thesis statement","Hook only","Concluding sentence"], correct:0 },
+  { section:"q4", q:"Supporting sentences should:", options:["Explain/prove the topic sentence","Introduce unrelated ideas","Repeat the hook"], correct:0 },
+  { section:"q4", q:"Which is best for paragraph unity?", options:["One central claim with relevant evidence","Several unrelated mini-topics","Random examples"], correct:0 },
+  { section:"q4", q:"A concluding sentence in a paragraph should:", options:["Wrap up the main point and transition forward","Add a new argument","Repeat every detail"], correct:0 },
+  { section:"q4", q:"Which improves coherence most?", options:["Using transitions like however, moreover, therefore","Adding emojis","Switching tense frequently"], correct:0 },
+
+  // Q5: INTRODUCTION & BODY DEVELOPMENT
+  { section:"q5", q:"A strong hook does what?", options:["Grabs attention and leads into the topic","Gives all evidence immediately","Repeats the title"], correct:0 },
+  { section:"q5", q:"In an intro funnel, order is:", options:["Broad context → specific focus → thesis","Thesis → random detail → hook","Conclusion → thesis → body"], correct:0 },
+  { section:"q5", q:"Background information should:", options:["Prepare the reader for the thesis","Replace the thesis","Include every source"], correct:0 },
+  { section:"q5", q:"What does TS-SS-EX pattern emphasize?", options:["Topic sentence, supporting sentence, explanation","Title, subtitle, ending","Transition, summary, extra quote"], correct:0 },
+  { section:"q5", q:"Good evidence in a body paragraph should be:", options:["Relevant, specific, and explained","Very long but unrelated","Only personal feeling"], correct:0 },
+  { section:"q5", q:"What is a common mistake in body paragraphs?", options:["No explanation after evidence","Clear topic sentence","Logical transitions"], correct:0 },
+  { section:"q5", q:"A thesis should be:", options:["Debatable and specific","A vague topic word","A question with no position"], correct:0 },
+  { section:"q5", q:"Which sentence best works as a thesis?", options:["Social media use among teens should be limited in school hours because it harms focus and sleep.","Social media exists.","I like social media maybe."], correct:0 },
+
+  // Q6: TEXT ANALYSIS / IDENTIFICATION
+  { section:"q6", q:"In text analysis tasks, first step is to:", options:["Identify thesis and paragraph functions","Memorize one quote","Rewrite the whole essay"], correct:0 },
+  { section:"q6", q:"If asked to identify topic sentences, you should look for:", options:["Sentences that state each paragraph's main point","Any sentence with a comma","Only the last sentence"], correct:0 },
+  { section:"q6", q:"When improving a weak paragraph, you should:", options:["Add clearer claim + evidence + explanation","Only increase length","Delete transitions"], correct:0 },
+  { section:"q6", q:"A coherent analysis answer should include:", options:["Claim, proof from text, and interpretation","Opinion only","Vocabulary list only"], correct:0 },
+  { section:"q6", q:"If a body paragraph drifts off-topic, best fix is:", options:["Revise details to match thesis/topic sentence","Add unrelated examples","Move it to intro"], correct:0 },
+  { section:"q6", q:"In exam analysis questions, 'identify devices' means:", options:["Name and justify rhetorical/structural features","Count total words","Find spelling mistakes only"], correct:0 },
+  { section:"q6", q:"A strong rewritten topic sentence should be:", options:["Specific, arguable, and aligned to thesis","One vague noun phrase","A random quotation"], correct:0 },
+  { section:"q6", q:"When adding an extra body paragraph, it must:", options:["Support the same thesis with new relevant reason","Introduce unrelated new thesis","Repeat intro exactly"], correct:0 },
+
 ];

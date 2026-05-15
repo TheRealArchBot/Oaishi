@@ -27,3 +27,48 @@ nav { z-index: 400; position: relative; }
 
 /* VOCAB CONTROLS (shared between pages) */
 .vocab-controls { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+
+
+/* QUICK NOTEPAD WIDGET (shared) */
+.notepad-widget {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: min(340px, calc(100vw - 24px));
+  background: rgba(28, 28, 40, 0.96);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  z-index: 1200;
+  transform: translateY(calc(100% - 44px));
+  transition: transform 0.28s ease;
+}
+.notepad-widget.open { transform: translateY(0); }
+.notepad-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--yellow);
+}
+.notepad-body { padding: 12px; }
+.notepad-body textarea {
+  width: 100%;
+  min-height: 130px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+  padding: 10px;
+  resize: vertical;
+  font-family: inherit;
+}
+.notepad-body textarea:focus {
+  outline: none;
+  border-color: var(--yellow);
+}
+.notepad-toggle-icon { transition: transform 0.3s ease; font-size: 12px; }
+.notepad-widget.open .notepad-toggle-icon { transform: rotate(180deg); }

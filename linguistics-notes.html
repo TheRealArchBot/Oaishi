@@ -1154,18 +1154,19 @@
       <h3>Classification of Morphemes</h3>
       <div class="vd-container">
   <div class="vd-title" style="color:var(--coral);">Morpheme Classification</div>
-  <div class="vd-tree-container">
-    <div class="badge b-purple" style="font-size:1.3rem; padding:10px 30px; margin-bottom:0; z-index:2; box-shadow:0 0 20px rgba(199,125,255,0.3);">MORPHEMES</div>
-    <div class="vd-tree-row">
-      <div class="vd-branch-h" style="width:50%;"></div>
+  <div class="vd-tree-container morph-tree">
+    <div class="badge b-purple morph-root">MORPHEMES</div>
+    <div class="vd-root-branch" aria-hidden="true"></div>
+    <div class="vd-tree-row morph-split-row">
+      <div class="vd-branch-h morph-branch-h"></div>
       <div class="vd-node-flex">
         <div class="vd-branch-v"></div>
-        <div class="badge b-sky" style="font-size:1.1rem; padding:8px 20px; margin-bottom:0; z-index:2; box-shadow:0 0 15px rgba(110,181,255,0.2);">FREE<br><span style="font-size:0.75rem;font-weight:normal;letter-spacing:1px;color:rgba(255,255,255,0.7);">(stand alone)</span></div>
-        <div class="vd-tree-row" style="width:90%; gap:12px;">
-          <div class="vd-branch-h" style="width:55%;"></div>
+        <div class="badge b-sky morph-group-badge">FREE<br><span class="morph-badge-sub">(stand alone)</span></div>
+        <div class="vd-tree-row morph-child-row">
+          <div class="vd-branch-h morph-child-branch"></div>
           <div class="vd-node-flex">
             <div class="vd-branch-v"></div>
-            <div class="vd-card c-mint" style="padding:16px; text-align:center; width:100%;">
+            <div class="vd-card c-mint morph-leaf-card">
               <div style="color:var(--mint); font-weight:800; font-size:0.95rem; letter-spacing:1px;">LEXICAL</div>
               <div class="vd-label">(content)</div>
               <div style="font-size:0.85rem; margin-top:8px;">cat, run, big</div>
@@ -1173,7 +1174,7 @@
           </div>
           <div class="vd-node-flex">
             <div class="vd-branch-v"></div>
-            <div class="vd-card c-yellow" style="padding:16px; text-align:center; width:100%;">
+            <div class="vd-card c-yellow morph-leaf-card">
               <div style="color:var(--yellow); font-weight:800; font-size:0.95rem; letter-spacing:1px;">FUNCTIONAL</div>
               <div class="vd-label">(grammar)</div>
               <div style="font-size:0.85rem; margin-top:8px;">the, and, to</div>
@@ -1184,12 +1185,12 @@
       
       <div class="vd-node-flex">
         <div class="vd-branch-v"></div>
-        <div class="badge b-coral" style="font-size:1.1rem; padding:8px 20px; margin-bottom:0; z-index:2; box-shadow:0 0 15px rgba(255,107,107,0.2);">BOUND<br><span style="font-size:0.75rem;font-weight:normal;letter-spacing:1px;color:rgba(255,255,255,0.7);">(need a base)</span></div>
-        <div class="vd-tree-row" style="width:90%; gap:12px;">
-          <div class="vd-branch-h" style="width:55%;"></div>
+        <div class="badge b-coral morph-group-badge">BOUND<br><span class="morph-badge-sub">(need a base)</span></div>
+        <div class="vd-tree-row morph-child-row">
+          <div class="vd-branch-h morph-child-branch"></div>
           <div class="vd-node-flex">
             <div class="vd-branch-v"></div>
-            <div class="vd-card c-pink" style="padding:16px; text-align:center; width:100%;">
+            <div class="vd-card c-pink morph-leaf-card">
               <div style="color:var(--pink); font-weight:800; font-size:0.95rem; letter-spacing:1px;">DERIVATIONAL</div>
               <div class="vd-label">(new words)</div>
               <div style="font-size:0.85rem; margin-top:8px;">un-, -ness, re-</div>
@@ -1197,7 +1198,7 @@
           </div>
           <div class="vd-node-flex">
             <div class="vd-branch-v"></div>
-            <div class="vd-card c-orange" style="padding:16px; text-align:center; width:100%;">
+            <div class="vd-card c-orange morph-leaf-card">
               <div style="color:var(--orange); font-weight:800; font-size:0.95rem; letter-spacing:1px;">INFLECTIONAL</div>
               <div class="vd-label">(grammar)</div>
               <div style="font-size:0.85rem; margin-top:8px;">-s, -ed, -ing</div>

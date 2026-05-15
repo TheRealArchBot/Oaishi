@@ -475,18 +475,29 @@
               { id: 'q1', name: 'Essay Basics', icon: '📝', p: 'Hooks, Thesis, Structure' },
               { id: 'q2', name: 'Paragraph Types', icon: '📖', p: 'Narrative, Cause, Compare' },
               { id: 'q3', name: 'Writing Process', icon: '✍️', p: 'ARMS, CUPS, Drafting' },
+              { id: 'q4', name: 'Essay Anatomy', icon: '🧩', p: 'Parts, Unity, Coherence' },
+              { id: 'q5', name: 'Introductions & Body', icon: '🎯', p: 'Hooks, Background, TS-SS-EX' },
+              { id: 'q6', name: 'Text Analysis', icon: '🔎', p: 'Identify parts & improve essays' },
               { id: 'q7', name: 'Grammar & Logic', icon: '⚖️', p: 'Transitions, Run-ons' },
-              { id: 'q8', name: 'Prewriting', icon: '📊', p: 'Outlines, Diagrams' }
+              { id: 'q8', name: 'Prewriting', icon: '📊', p: 'Outlines, Diagrams' },
+              { id: 'q9', name: 'Assertions', icon: '📢', p: 'Opinion vs claim, evidence' },
+              { id: 'q10', name: 'Academic Vocab', icon: '💬', p: 'Formal word choice upgrade' }
             ]
           },
           {
             id: 'linguistics', name: 'Linguistics Notes', icon: '🧠', desc: 'Saussure, Chomsky, Phonetics, Syntax & more.', sections: [
-              { id: 'ling1', name: 'Foundations', icon: '👴', p: 'Saussure & Chomsky' },
-              { id: 'ling3', name: 'Sounds', icon: '🗣️', p: 'Phonetics & Phonology' },
-              { id: 'ling5', name: 'Words & Sentences', icon: '🧱', p: 'Morphology & Syntax' },
-              { id: 'ling7', name: 'Meaning & Mind', icon: '🤔', p: 'Semantics, Pragmatics & Psycholing' },
-              { id: 'ling9', name: 'Society', icon: '🌍', p: 'Sociolinguistics, Pidgins & Creoles' },
-              { id: 'ling12', name: 'Cheatsheet', icon: '⚡', p: 'Quick Review & Definitions' }
+              { id: 'ling1', name: 'Saussure', icon: '👴', p: 'Sign, langue/parole, synchronic' },
+              { id: 'ling2', name: 'Chomsky', icon: '🧠', p: 'UG, LAD, competence/performance' },
+              { id: 'ling3', name: 'Phonetics', icon: '🗣️', p: 'Articulation, IPA, sound classes' },
+              { id: 'ling4', name: 'Phonology', icon: '🔊', p: 'Phoneme, allophone, processes' },
+              { id: 'ling5', name: 'Morphology', icon: '🧱', p: 'Morpheme types, word formation' },
+              { id: 'ling6', name: 'Syntax', icon: '🌳', p: 'Phrase structure, constituents' },
+              { id: 'ling7', name: 'Semantics', icon: '💡', p: 'Meaning, relations, ambiguity' },
+              { id: 'ling8', name: 'Pragmatics', icon: '🗨️', p: 'Context, implicature, speech acts' },
+              { id: 'ling9', name: 'Sociolinguistics', icon: '🌍', p: 'Language and society' },
+              { id: 'ling10', name: 'Psycholinguistics', icon: '🧪', p: 'Acquisition and processing' },
+              { id: 'ling11', name: 'Pidgin & Creole', icon: '🧬', p: 'Contact languages and change' },
+              { id: 'ling12', name: 'Cheatsheet', icon: '⚡', p: 'Quick review and definitions' }
             ]
           }
         ],
@@ -662,15 +673,6 @@
           let filteredStatic = window.quizBank.filter(q => {
             if (q.section === 'q7' || q.section === 'q9') {
               return staticTopics.includes('q7') || staticTopics.includes('q9');
-            }
-            if (q.section.startsWith('ling')) {
-              if (staticTopics.includes('ling1') && (q.section === 'ling1' || q.section === 'ling2')) return true;
-              if (staticTopics.includes('ling3') && (q.section === 'ling3' || q.section === 'ling4')) return true;
-              if (staticTopics.includes('ling5') && (q.section === 'ling5' || q.section === 'ling6')) return true;
-              if (staticTopics.includes('ling7') && (q.section === 'ling7' || q.section === 'ling8' || q.section === 'ling10')) return true;
-              if (staticTopics.includes('ling9') && (q.section === 'ling9' || q.section === 'ling11')) return true;
-              if (staticTopics.includes('ling12') && q.section === 'ling12') return true;
-              return false;
             }
             return staticTopics.includes(q.section);
           });
