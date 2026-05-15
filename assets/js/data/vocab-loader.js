@@ -7,6 +7,15 @@
     window.vocabCat_Connecting  || [],
     window.vocabCat_Bonus       || [],
   ];
-  window.vocabDatabase = [].concat(...cats);
+  const merged = [].concat(...cats);
+  const seen = new Set();
+  window.vocabDatabase = merged.filter(entry => {
+    const simple = (entry.simple || '').trim().toLowerCase();
+    const adv = (entry.adv || '').trim().toLowerCase();
+    const key = `${simple}::${adv}`;
+    if (!simple || !adv || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
   console.log('[VocabLoader] Loaded', window.vocabDatabase.length, 'words');
 })();
