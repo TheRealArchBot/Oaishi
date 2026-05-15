@@ -342,21 +342,21 @@
         <div id="step-1-wrap">
           <p style="color:var(--muted);margin-bottom:20px;">Step 1: Which semester are we practicing today?</p>
           <div class="topic-grid">
-            <div class="topic-card sem-card" data-sem="sem2">
+            <div class="topic-card sem-card" data-sem="sem2" onclick="selectSemester('sem2')">
               <div class="icon">🌸</div>
               <div class="topic-info">
                 <h3>Semester 2</h3>
                 <p>Developing Writing, Literature...</p>
               </div>
             </div>
-            <div class="topic-card sem-card" data-sem="sem3">
+            <div class="topic-card sem-card" data-sem="sem3" onclick="selectSemester('sem3')">
               <div class="icon">🌊</div>
               <div class="topic-info">
                 <h3>Semester 3</h3>
                 <p>Advanced Composition, History...</p>
               </div>
             </div>
-            <div class="topic-card sem-card" data-sem="sem4">
+            <div class="topic-card sem-card" data-sem="sem4" onclick="selectSemester('sem4')">
               <div class="icon">🍁</div>
               <div class="topic-info">
                 <h3>Semester 4</h3>
@@ -364,7 +364,7 @@
               </div>
             </div>
             <!-- SPECIAL VOCAB OPTION -->
-            <div class="topic-card sem-card special" data-sem="vocab-only">
+            <div class="topic-card sem-card special" data-sem="vocab-only" onclick="selectSemester('vocab-only')">
               <div class="icon">💎</div>
               <div class="topic-info">
                 <h3 style="color:var(--pink);">Special: Vocab</h3>
@@ -555,35 +555,35 @@
       }
 
       // ── Flow Control ──────────────────────────────
+      window.selectSemester = function (sem) {
+        if (sem !== 'vocab-only' && (!courses[sem] || courses[sem].length === 0)) return;
+        selectedSem = sem;
+
+        if (selectedSem === 'vocab-only') {
+          selectedCourse = {
+            id: 'special-vocab', name: 'Special Vocabulary', icon: '💎', sections: [
+              { id: 'vocab', name: 'Power Vocab', icon: '💎', p: '520+ Academic Words' }
+            ]
+          };
+          currentStep = 3;
+          renderTopicGrid();
+          setTimeout(() => {
+            const vocabCard = document.querySelector('#topic-grid .topic-card');
+            if (vocabCard) vocabCard.click();
+          }, 50);
+        } else {
+          currentStep = 2;
+          renderCourseGrid();
+        }
+        updateFlowUI();
+      };
+
       function initSemesterSelection() {
         document.querySelectorAll('.sem-card').forEach(card => {
           const sem = card.dataset.sem;
           if (sem !== 'vocab-only' && (!courses[sem] || courses[sem].length === 0)) {
             card.classList.add('hidden');
-            return;
           }
-
-          card.addEventListener('click', () => {
-            selectedSem = sem;
-
-            if (selectedSem === 'vocab-only') {
-              selectedCourse = {
-                id: 'special-vocab', name: 'Special Vocabulary', icon: '💎', sections: [
-                  { id: 'vocab', name: 'Power Vocab', icon: '💎', p: '520+ Academic Words' }
-                ]
-              };
-              currentStep = 3;
-              renderTopicGrid();
-              setTimeout(() => {
-                const vocabCard = document.querySelector('#topic-grid .topic-card');
-                if (vocabCard) vocabCard.click();
-              }, 50);
-            } else {
-              currentStep = 2;
-              renderCourseGrid();
-            }
-            updateFlowUI();
-          });
         });
       }
 
