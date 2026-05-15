@@ -117,6 +117,17 @@ function showLoveMessage(x, y, text = null) {
 // Main DOMContentLoaded Block
 // ──────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (backToTopBtn) {
+    const toggleBackToTop = () => {
+      backToTopBtn.classList.toggle('show', window.scrollY > 500);
+    };
+    toggleBackToTop();
+    window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   // ── Notepad Widget ──────────────────────────
   const notepad  = document.getElementById('notepad-widget');
