@@ -666,6 +666,7 @@
         const staticTopics = selectedTopics.filter(t => t !== 'vocab');
         if (staticTopics.length > 0) {
           let filteredStatic = window.quizBank.filter(q => {
+            if (!q || typeof q.section !== 'string') return false;
             if (q.section === 'q7' || q.section === 'q9') {
               return staticTopics.includes('q7') || staticTopics.includes('q9');
             }
@@ -687,7 +688,9 @@
         // 2. Dynamic Vocab
         if (selectedTopics.includes('vocab') && window.vocabDatabase) {
           const count = selectedTopics.length === 1 ? 30 : 15;
-          for (let i = 0; i < count; i++) {
+          let attempts = 0;
+          while (testPool.length < count && attempts < count * 8) {
+            attempts++;
             const word = window.vocabDatabase[Math.floor(Math.random() * window.vocabDatabase.length)];
             let distractors = window.vocabDatabase
               .filter(w => w.cat === word.cat && w.adv !== word.adv)
@@ -721,7 +724,6 @@
           : selectedCourse?.id === 'special-vocab'
             ? 30
             : 15;
-        const practiceLimit = selectedCourse?.id === 'linguistics' ? 30 : 15;
         testPool = testPool.slice(0, practiceLimit);
         totalQuestions = testPool.length;
       }
