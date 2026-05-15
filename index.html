@@ -21,11 +21,11 @@
     </div>
     <div class="stats">
       <div class="stat">
-        <div class="stat-num" id="course-count">2</div>
+        <div class="stat-num" id="course-count">3</div>
         <div class="stat-label">Courses</div>
       </div>
       <div class="stat">
-        <div class="stat-num" id="note-count">2</div>
+        <div class="stat-num" id="note-count">3</div>
         <div class="stat-label">Note Files</div>
       </div>
       <div class="stat">
@@ -59,6 +59,28 @@
 
       <div class="section-label">📂 Course Notes</div>
       <div class="grid" id="card-grid">
+        <a href="linguistics-notes.html" class="course-card c-coral" data-sem="sem2"
+          data-name="linguistics">
+          <div class="card-top">
+            <div class="card-icon">🧠</div>
+            <div class="card-meta">
+              <div class="card-code">Linguistics</div>
+              <div class="card-name">Complete Notes</div>
+              <div class="card-semester">Semester 2</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-desc">Saussure, Chomsky, Phonetics, Syntax, Semantics & all the cheatsheets you need.</div>
+          </div>
+          <div class="card-footer">
+            <div class="card-tags">
+              <span class="tag" style="background:rgba(255,107,107,0.15);color:var(--coral);">12 Topics</span>
+              <span class="tag" style="background:rgba(78,204,163,0.15);color:var(--mint);">Fun Format</span>
+            </div>
+            <span class="card-arrow">→</span>
+          </div>
+        </a>
+
         <a href="english-writing-exam.html" class="course-card c-yellow" data-sem="sem2"
           data-name="developing writing skill">
           <div class="card-top">
@@ -149,7 +171,26 @@
     </a>
   </div>
 
-  <script src="assets/js/index.js"></script>
+  <!-- NOTEPAD WIDGET -->
+  <div class="notepad-widget" id="notepad-widget">
+    <div class="notepad-header" id="notepad-header">
+      <span>📝 Quick Notes</span>
+      <span class="notepad-toggle-icon">▲</span>
+    </div>
+    <div class="notepad-body">
+      <textarea id="notepad-textarea" placeholder="Jot down important points here..."></textarea>
+    </div>
+  </div>
+
+  <!-- Modular Feature Scripts -->
+  <script src="assets/js/features/love-messages.js"></script>
+  <script src="assets/js/features/pwa-init.js"></script>
+  <script src="assets/js/features/hub-logic.js"></script>
+  <script src="assets/js/features/easter-eggs.js"></script>
+  <script src="assets/js/features/roasts.js"></script>
+  <script src="assets/js/features/notepad.js"></script>
+
+
 </body>
 
 </html>

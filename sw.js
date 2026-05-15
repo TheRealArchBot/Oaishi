@@ -1,18 +1,40 @@
-const CACHE_NAME = 'oaishi-study-cache-v3';
+const CACHE_NAME = 'oaishi-study-cache-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './english-writing-exam.html',
+  './linguistics-notes.html',
   './vocab-builder.html',
+  './test-center.html',
   './assets/css/shared.css',
   './assets/css/index.css',
   './assets/css/notes.css',
-  './assets/js/index.js',
-  './assets/js/notes.js',
-  './assets/js/quiz-bank.js',
-  './assets/js/vocab-data.js',
+  
+  // Data
+  './assets/js/data/vocab-action.js',
+  './assets/js/data/vocab-descriptive.js',
+  './assets/js/data/vocab-connecting.js',
+  './assets/js/data/vocab-bonus.js',
+  './assets/js/data/vocab-loader.js',
+  './assets/js/data/quiz-writing.js',
+  './assets/js/data/quiz-linguistics.js',
+  './assets/js/data/quiz-fun.js',
+  './assets/js/data/quiz-loader.js',
+
+  // Features
+  './assets/js/features/love-messages.js',
+  './assets/js/features/pwa-init.js',
+  './assets/js/features/hub-logic.js',
+  './assets/js/features/easter-eggs.js',
+  './assets/js/features/reading-progress.js',
+  './assets/js/features/nav-highlight.js',
+  './assets/js/features/notepad.js',
+  './assets/js/features/roasts.js',
+  './assets/js/features/quiz-engine.js',
+
   'https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap'
 ];
+
 
 // ── Install: pre-cache offline fallback assets, then activate immediately ──
 self.addEventListener('install', event => {
