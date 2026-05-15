@@ -703,7 +703,9 @@
               distractors = distractors.concat(fallback);
             }
 
-            const options = [word.adv, ...distractors.map(d => d.adv)].sort(() => 0.5 - Math.random());
+            const uniqueOptions = [...new Set([word.adv, ...distractors.map(d => d.adv)])];
+            if (uniqueOptions.length < 3) continue;
+            const options = uniqueOptions.sort(() => 0.5 - Math.random());
             testPool.push({
               q: `Which academic word is a stronger replacement for <strong>"${word.simple}"</strong>?`,
               options: options,
