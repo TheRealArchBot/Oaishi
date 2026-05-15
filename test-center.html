@@ -721,6 +721,7 @@
           : selectedCourse?.id === 'special-vocab'
             ? 30
             : 15;
+        const practiceLimit = selectedCourse?.id === 'linguistics' ? 30 : 15;
         testPool = testPool.slice(0, practiceLimit);
         totalQuestions = testPool.length;
       }
